@@ -9,6 +9,7 @@ const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3); // Slight dark overlay for contrast
+  z-index: 9999999
 `;
 
 const ModalContainer = styled(motion.div)`
@@ -16,17 +17,14 @@ const ModalContainer = styled(motion.div)`
   height: 50%;
   background: rgba(130, 130, 130, 0.2); // Transparent background for glass effect
   backdrop-filter: blur(10px); // Blur effect for glassmorphism
-  box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.1),           // Soft shadow for depth
-    0 0 25px rgba(173, 216, 230, 0.7),       // Increase the glow radius and opacity
-    0 0 50px rgba(173, 216, 230, 0.5);       // Additional glow for shininess
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1),0 0 25px rgba(196, 255, 65, 0.7),0 0 50px rgba(173, 216, 230, 0.5);
   position: absolute;
   top: 45%;
   left: 80%;
   transform: translate(-80%, -45%);
   border-radius: 40px;
   overflow: hidden; // Ensures the border animation stays within the container
-
+  z-index: 9999999;
   // The animated border effect
   &:before {
     content: "";
@@ -35,7 +33,7 @@ const ModalContainer = styled(motion.div)`
     left: 0;
     right: 0;
     bottom: 0;
-    border: 2px solid #01a1b3; // 1px solid white border
+    border: 2px solid whitesmoke; // 1px solid white border
     border-radius: inherit; // Match modal's border-radius
     box-sizing: border-box;
     animation: snake-border 4s linear infinite; // Animation running in a loop

@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { gsap } from "gsap";
+import styled from "styled-components";
 import beeModel from "../assets/model/modelinput_final.glb"; // 3D model
+import Modal from "../components/Modal";
 import obj1 from "../assets/mining/1.png";
 import obj2 from "../assets/mining/2.png";
 import obj3 from "../assets/mining/3.png";
@@ -11,13 +13,68 @@ import obj5 from "../assets/mining/5.png";
 import obj6 from "../assets/mining/6.png";
 
 import TrustWalletConnect from "../components/TrustWalletConnect"; // Connect Wallet component
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css"; // Import Swiper styles
+
+const ModalContent = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: #5c3aff;
+  }
+`;
+
+const CloseButton = styled.svg`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  cursor: pointer;
+`;
 
 const LandingPage3 = () => {
+  const [isOpen1, toggle1] = useState(false);
+  const [isOpen2, toggle2] = useState(false);
+  const [isOpen3, toggle3] = useState(false);
+  const [isOpen4, toggle4] = useState(false);
+  const [isOpen5, toggle5] = useState(false);
+  const [isOpen6, toggle6] = useState(false);
   const beeRef = useRef(); // Ref for the bee model
   const cameraRef = useRef(); // Ref for the camera
   const rendererRef = useRef(); // Ref for the renderer
   const mixerRef = useRef(); // Ref for the animation mixer
   const gltfRef = useRef();
+
+  const handleOpenModal = (index, open) => {
+    if (open === true) {
+      const objectElementList = document.querySelectorAll(`.obj-item`);
+      objectElementList.forEach((item) => {
+        item.style.zIndex = "999999";
+      });
+    }
+    if (index === 1) {
+      toggle1(open);
+    } else if (index === 2) {
+      toggle2(open);
+    } else if (index === 3) {
+      toggle3(open);
+    } else if (index === 4) {
+      toggle4(open);
+    } else if (index === 5) {
+      toggle5(open);
+    } else if (index === 6) {
+      toggle6(open);
+    }
+  };
+
+  const handleAnimation = () => {
+    setAnimation((prev) => !prev);
+  };
 
   // Positions and rotations for different sections
   const arrPositionModel = [
@@ -32,13 +89,29 @@ const LandingPage3 = () => {
   // Function to handle rotation of the model to face the object
   const handleFaceToObject = (objClassName) => {
     const objectElement = document.querySelector(`.${objClassName}`);
+    const rect = objectElement.getBoundingClientRect();
+    const elementPosition = {
+      top: rect.top, // Distance from the top of the viewport
+      left: rect.left, // Distance from the left of the viewport
+      right: rect.right, // Distance from the right of the viewport
+      bottom: rect.bottom, // Distance from the bottom of the viewport
+      width: rect.width, // Width of the element
+      height: rect.height, // Height of the element
+    };
+
+    console.log("Object Element Position:", elementPosition);
+
     if (!objectElement || !beeRef.current || !cameraRef.current) return;
-    objectElement.style.zIndex = '0';
+    const objectElementList = document.querySelectorAll(`.obj-item`);
+    objectElementList.forEach((item) => {
+      item.style.zIndex = "0";
+    });
+
     if (objClassName === "obj-1") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: -20,
-        y: -10,
+        x: -16,
+        y: -13,
         z: 0,
         duration: 2,
         ease: "power1.out",
@@ -52,14 +125,14 @@ const LandingPage3 = () => {
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
+          playAnimation(objClassName);
         },
       });
     } else if (objClassName === "obj-2") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: -21,
-        y: 4,
+        x: -15,
+        y: 0,
         z: 0,
         duration: 2,
         ease: "power1.out",
@@ -73,14 +146,14 @@ const LandingPage3 = () => {
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
+          playAnimation(objClassName);
         },
       });
     } else if (objClassName === "obj-3") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: -2,
-        y: -1,
+        x: 5,
+        y: -8,
         z: 0,
         duration: 2,
         ease: "power1.out",
@@ -90,18 +163,18 @@ const LandingPage3 = () => {
       gsap.to(beeRef.current.rotation, {
         x: 0,
         y: 0.2,
-        z: 0.5,
+        z: 0.2,
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
+          playAnimation(objClassName);
         },
       });
     } else if (objClassName === "obj-4") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: 0,
-        y: -10,
+        x: -8,
+        y: -6,
         z: 0,
         duration: 2,
         ease: "power1.out",
@@ -115,14 +188,14 @@ const LandingPage3 = () => {
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
-          objectElement.style.zIndex = '99999999';
+          playAnimation(objClassName);
+          objectElement.style.zIndex = "99999999";
         },
       });
     } else if (objClassName === "obj-5") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: 24,
+        x: 15,
         y: -10,
         z: 0,
         duration: 2,
@@ -137,14 +210,14 @@ const LandingPage3 = () => {
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
+          playAnimation(objClassName);
         },
       });
     } else if (objClassName === "obj-6") {
       // Animate the model's position and rotation
       gsap.to(beeRef.current.position, {
-        x: 20,
-        y: 3,
+        x: 12,
+        y: 0,
         z: 0,
         duration: 2,
         ease: "power1.out",
@@ -154,16 +227,14 @@ const LandingPage3 = () => {
       gsap.to(beeRef.current.rotation, {
         x: 0,
         y: 3,
-        z: 0.1,
+        z: 0,
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
         onComplete: () => {
-          playAnimation();
+          playAnimation(objClassName);
         },
       });
     }
-
-    
   };
 
   // Execute animation when clicking on obj-1
@@ -173,7 +244,7 @@ const LandingPage3 = () => {
   };
 
   // Function to play the animation
-  const playAnimation = () => {
+  const playAnimation = (objName) => {
     if (!beeRef.current || !mixerRef.current || !gltfRef.current) return; // Ensure all references are valid
 
     const action = mixerRef.current.clipAction(gltfRef.current.animations[0]);
@@ -200,10 +271,27 @@ const LandingPage3 = () => {
         z: 0,
         duration: 2, // Smooth transition duration
         ease: "power1.out", // Easing for smooth animation
+        onComplete: () => {
+          if (objName === "obj-1") {
+            handleOpenModal(1, true);
+          } else if (objName === "obj-2") {
+            handleOpenModal(2, true);
+          } else if (objName === "obj-3") {
+            handleOpenModal(3, true);
+          } else if (objName === "obj-4") {
+            handleOpenModal(4, true);
+          } else if (objName === "obj-5") {
+            handleOpenModal(5, true);
+          } else if (objName === "obj-6") {
+            handleOpenModal(6, true);
+          }
+        },
       });
 
       // Stop the animation after the timeout
       action.stop();
+
+      handleOpenModal(true);
     }, timeoutDuration);
   };
 
@@ -260,14 +348,14 @@ const LandingPage3 = () => {
           x: newCoordinates.position.x,
           y: newCoordinates.position.y,
           z: newCoordinates.position.z,
-          duration: 3,
+          duration: 1,
           ease: "power1.out",
         });
         gsap.to(beeRef.current.rotation, {
           x: newCoordinates.rotation.x,
           y: newCoordinates.rotation.y - 1,
           z: newCoordinates.rotation.z,
-          duration: 3,
+          duration: 1,
           ease: "power1.out",
         });
       }
@@ -343,7 +431,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-1");
               }}
-              className="obj-1"
+              className="obj-item obj-1"
               src={obj1}
               alt=""
             />
@@ -351,7 +439,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-2");
               }}
-              className="obj-2"
+              className="obj-item obj-2"
               src={obj2}
               alt=""
             />
@@ -359,7 +447,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-3");
               }}
-              className="obj-3"
+              className="obj-item obj-3"
               src={obj3}
               alt=""
             />
@@ -367,7 +455,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-4");
               }}
-              className="obj-4"
+              className="obj-item obj-4"
               src={obj4}
               alt=""
             />
@@ -375,7 +463,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-5");
               }}
-              className="obj-5"
+              className="obj-item obj-5"
               src={obj5}
               alt=""
             />
@@ -383,7 +471,7 @@ const LandingPage3 = () => {
               onClick={() => {
                 executeAnimation("obj-6");
               }}
-              className="obj-6"
+              className="obj-item obj-6"
               src={obj6}
               alt=""
             />
@@ -391,6 +479,420 @@ const LandingPage3 = () => {
         </div>
       </div>
       <div id="container3D"></div>
+      <Modal isOpen={isOpen1}>
+        <ModalContent>
+          <CloseButton
+            style={{ zIndex: "999999999" }}
+            onClick={(e) => handleOpenModal(1, false)}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <div className="flex flex-1 w-full p-12 sm:p-[100px] gap-6">
+            <div className="flex flex-col w-full flex-auto gap-5">
+              <p className="text-4xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                The Importance of Crypto
+              </p>
+              <p className="text-white">
+                Market Capitalization: Crypto reached $1.17 trillion (2023),
+                with Bitcoin and Ethereum leading the way.
+              </p>
+              <p className="text-white">
+                Trading Volume: Binance processes over $76 billion per day.
+              </p>
+              <p className="text-white">
+                Users: 420 million people own crypto, with an increasing number
+                of countries legalizing it.
+              </p>
+              <p className="text-white">
+                Blockchain Applications: Over 80% of major banks are investing
+                in this technology.
+              </p>
+            </div>
+          </div>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen2}>
+        <ModalContent>
+          <CloseButton
+            style={{ zIndex: "999999999" }}
+            onClick={(e) => handleOpenModal(2, false)}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <div className="flex flex-1 w-full p-12 sm:p-[100px] gap-6">
+            <div className="flex flex-col w-full flex-auto gap-5">
+              <p className="text-4xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                What is Kaspool ?
+              </p>
+              <p className="text-white">
+                Kaspool is a platform for mining digital assets through coin
+                mining pools. With a coin based on Kaspa's DAG technology, it
+                represents a pioneering approach to enhancing performance
+                without sacrificing decentralization.
+              </p>
+              <p className="text-white">
+                Kaspool is committed to providing opportunities for quick and
+                sustainable profits.
+              </p>
+            </div>
+          </div>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen3}>
+        <ModalContent>
+          <CloseButton
+            style={{ zIndex: "999999999" }}
+            onClick={(e) => handleOpenModal(3, false)}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <div className="flex flex-1 w-full p-12 sm:p-[100px] gap-6">
+            <div className="flex flex-col w-full flex-auto gap-5">
+              <p className="text-4xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                BlockDAG Technology
+              </p>
+              <p className="text-white">
+                Kaspool utilizes the BlockDAG platform and references GhostDAG
+                technology, which minimizes the waste of computational resources
+                and creates parallel blocks. This enables the processing of a
+                large volume of transactions without issues related to network
+                congestion or orphan blocks.
+              </p>
+            </div>
+          </div>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen4}>
+        <ModalContent>
+          <CloseButton
+            onClick={(e) => handleOpenModal(4, false)}
+            style={{ zIndex: "9999" }}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  KASPOOL MAIN FEATURES
+                </p>
+                <p className="text-white pl-8">MULTI-SOURCE MINING</p>
+                <p className="text-white pl-16">
+                  KASPOOL will develop a digital asset mining system from
+                  various sources, leveraging the power of the community to
+                  optimize mining efforts.
+                </p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  KASPOOL MAIN FEATURES
+                </p>
+                <p className="text-white pl-8">KASPOOL COIN</p>
+                <p className="text-white pl-16">
+                  KASPOOL will incorporate the best technical criteria from
+                  Kaspa, including:
+                </p>
+
+                <p className="text-white pl-16">
+                  The kHeavyHash algorithm, which enhances mining efficiency and
+                  reduces energy consumption.
+                </p>
+
+                <p className="text-white pl-16">
+                  GhostDAG technology, which ensures network integrity and
+                  allows for near-instant transaction confirmations.
+                </p>
+
+                <p className="text-white pl-16">
+                  Complete decentralization, ensuring that everyone can
+                  participate in mining and transaction validation without
+                  third-party control.
+                </p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  KASPOOL MAIN FEATURES
+                </p>
+                <p className="text-white pl-8">
+                  STABLE AND FAIR INVESTMENT VALUES:
+                </p>
+                <p className="text-white pl-16">
+                  The main goal of Kaspool is to create an investment ecosystem
+                  that offers high returns while ensuring stability. Thanks to
+                  BlockDAG technology, Kaspool will provide sustainable and
+                  long-term investment opportunities for investors.
+                </p>
+                <p className="text-white pl-16">
+                  The value of investment returns will be fairly distributed
+                  based on contributions made within the mining network.
+                </p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  KASPOOL MAIN FEATURES
+                </p>
+                <p className="text-white pl-8">SECURITY AND TRANSPARENCY:</p>
+                <p className="text-white pl-16">
+                  Kaspool will implement strict security principles similar to
+                  Kaspa, utilizing PoW (Proof-of-Work) technology with the
+                  kHeavyHash algorithm, ensuring high security while optimizing
+                  energy efficiency.
+                </p>
+                <p className="text-white pl-16">
+                  The user management and interaction system will be based on
+                  Web3.0, ensuring security and transparency.
+                </p>
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen5}>
+        <ModalContent>
+          <CloseButton
+            onClick={(e) => handleOpenModal(5, false)}
+            style={{ zIndex: "9999" }}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  Development Strategy
+                </p>
+                <p className="text-white pl-8">Q4 - 2024</p>
+                <p className="text-white pl-16">
+                  Complete technology tests for mining pools.
+                </p>
+                <p className="text-white pl-8">Q1 2025</p>
+                <p className="text-white pl-16">
+                  Launch of the multi-platform wallet, KasPool Wallet.
+                </p>
+                <p className="text-white pl-8">Q2/2025</p>
+                <p className="text-white pl-16">
+                  Launch of the testNet for the private blockchain system,
+                  KasPoolChain.
+                </p>
+                <p className="text-white pl-8">Q3-Q4/2025</p>
+                <p className="text-white pl-16">
+                  Update the TestNet system and launch the KSP coin on the
+                  KasPoolChain network.
+                </p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="flex flex-col flex-auto h-full sm:p-[200px] pt-[20px] pl-[20px] pr-[20px] sm:gap-5 gap-5">
+                <p className="text-5xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                  Development Strategy
+                </p>
+                <p className="text-white pl-8">Q1/2026</p>
+                <p className="text-white pl-16">
+                  Official launch of KasPoolChain
+                </p>
+                <p className="text-white pl-8">Q1/2026</p>
+                <p className="text-white pl-16">
+                  Official launch of KasPoolChain
+                </p>
+                <p className="text-white pl-8">2027</p>
+                <p className="text-white pl-16">
+                  Launch of the digital asset exchange, KasExchange
+                </p>
+                <p className="text-white pl-8">POST-2027</p>
+                <p className="text-white pl-16">
+                  Launch of an open decentralized platform, allowing users to
+                  access exclusive BlockDAG technologies and create their own
+                  applications.
+                </p>
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpen6}>
+        <ModalContent>
+          <CloseButton
+            style={{ zIndex: "999999999" }}
+            onClick={(e) => handleOpenModal(6, false)}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20.39 20.39"
+          >
+            <title>X</title>
+            <line
+              x1="19.39"
+              y1="19.39"
+              x2="1"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="1"
+              y1="19.39"
+              x2="19.39"
+              y2="1"
+              fill="none"
+              stroke="#5c3aff"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </CloseButton>
+          <div className="flex flex-1 w-full p-12 sm:p-[100px] gap-6">
+            <div className="flex flex-col w-full flex-auto gap-5">
+              <p className="text-4xl sm:text-2xl font-extrabold subpixel-antialiased text-cyan-400">
+                Advantages for Investors
+              </p>
+              <p className="text-white">
+                Stable profits: Clear ROI with low mining costs.
+              </p>
+              <p className="text-white">
+                High security: DAG technology protects assets.
+              </p>
+              <p className="text-white">
+                High liquidity: Easily exchangeable on major exchanges.
+              </p>
+            </div>
+          </div>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
