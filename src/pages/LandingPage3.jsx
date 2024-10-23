@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { gsap } from "gsap";
-import '../landingPage.css';
 import beeModel from "../assets/model/modelinput_final.glb"; // 3D model
 import obj1 from "../assets/mining/1.png";
 import obj2 from "../assets/mining/2.png";
