@@ -44,6 +44,7 @@ const TrustWalletConnect = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("bep20");
     localStorage.removeItem("management");
+    window.location.href = "/";
   };
 
   return (
