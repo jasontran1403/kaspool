@@ -1,121 +1,108 @@
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
 import ReactDOM from "react-dom/client";
+import Modal from "react-modal";
+import Axios from "axios";
+import { BrowserRouter } from "react-router-dom";
 import Router from "./routes";
+import OrientationWarning from "./components/OrientationWarning"; // Thêm component cảnh báo quay màn hình
+import { API_ENDPOINT } from "./constants";
 import "./index.css";
 
-import { API_ENDPOINT } from "./constants";
-import { BrowserRouter } from "react-router-dom";
-
 function App() {
-  const [isConnected] = useState(localStorage.getItem("walletAddress")?.length > 0 ? true : false);
+  const [isConnected, setIsConnected] = useState(
+    !!localStorage.getItem("walletAddress")
+  ); // Kiểm tra trạng thái kết nối ví
   const [lastStatus, setLastStatus] = useState();
-  const isAdmin = window.location.href.includes("/admin");
-  const id = location.pathname.split("/admin/dashboard/")[1];
+  const isAdmin = window.location.href.includes("/admin"); // Kiểm tra URL có chứa '/admin' không
+  const id = location.pathname.split("/admin/dashboard/")[1]; // Lấy ID từ URL
 
   useEffect(() => {
-    var timeout;
+    if (isAdmin && id) {
+      // Xử lý cho Admin
+      const data = JSON.stringify({
+        walletAddress: id,
+      });
 
-    if (isAdmin) {
-      timeout = setTimeout(() => {
-        let data = JSON.stringify({
-          walletAddress: id,
-        });
+      const config = {
+        method: "post",
+        url: `${API_ENDPOINT}auth/admin-jwt`,
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        data,
+      };
 
-        let config = {
-          method: "post",
-          url: `${API_ENDPOINT}auth/admin-jwt`,
-          headers: {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "69420",
-          },
-          data: data,
-        };
+      Axios.request(config).then((response) => {
+        console.log("Admin Authenticated with ID: " + id);
+        localStorage.setItem("walletAddress", response.data.wallet_address);
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("is_in_tree", response.data.is_in_tree);
+        localStorage.setItem("is_lock", response.data.is_lock);
+        localStorage.setItem("bep20", response.data.bep20);
+      });
+    } else if (isConnected) {
+      // Xử lý cho người dùng đã kết nối ví
+      const data = JSON.stringify({
+        walletAddress: localStorage.getItem("walletAddress"),
+        publicKey: localStorage.getItem("walletAddress"),
+        walletStateInit: localStorage.getItem("walletAddress"),
+      });
 
-        Axios.request(config).then((response) => {
-          console.log("ok123 " + id);
-          localStorage.setItem("walletAddress", response.data.wallet_address);
-          localStorage.setItem("access_token", response.data.access_token);
-          localStorage.setItem("is_in_tree", response.data.is_in_tree);
-          localStorage.setItem("is_lock", response.data.is_lock);
-          localStorage.setItem("bep20", response.data.bep20);
-        });
-      }, 500);
+      const config = {
+        method: "post",
+        url: `${API_ENDPOINT}auth/authenticate`,
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        data,
+      };
+
+      Axios.request(config).then((response) => {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("is_in_tree", response.data.is_in_tree);
+        localStorage.setItem("is_lock", response.data.is_lock);
+        localStorage.setItem("bep20", response.data.bep20);
+      });
     } else {
-      if (isConnected) {
-        // Lưu địa chỉ ví vào localStorage
-        
-        timeout = setTimeout(() => {
-          let data = JSON.stringify({
-            walletAddress: localStorage.getItem("walletAddress"),
-            publicKey: localStorage.getItem("walletAddress"),
-            walletStateInit: localStorage.getItem("walletAddress"),
-          });
+      // Xử lý khi người dùng ngắt kết nối ví
+      localStorage.removeItem("walletAddress");
+      localStorage.removeItem("publicKey");
+      localStorage.removeItem("walletStateInit");
+      localStorage.removeItem("is_in_tree");
+      localStorage.removeItem("is_lock");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("bep20");
 
-          let config = {
-            method: "post",
-            url: `${API_ENDPOINT}auth/authenticate`,
-            headers: {
-              "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420",
-            },
-            data: data,
-          };
+      const config = {
+        method: "get",
+        url: `${API_ENDPOINT}auth/logout/${localStorage.getItem(
+          "access_token"
+        )}`,
+        headers: {
+          "ngrok-skip-browser-warning": "69420",
+        },
+      };
 
-          Axios.request(config).then((response) => {
-            localStorage.setItem("access_token", response.data.access_token);
-            localStorage.setItem("is_in_tree", response.data.is_in_tree);
-            localStorage.setItem("is_lock", response.data.is_lock);
-            localStorage.setItem("bep20", response.data.bep20);
-          });
-        }, 500);
-      } else {
-        // Xóa thông tin ví khi ngắt kết nối
-        localStorage.removeItem("walletAddress");
-        localStorage.removeItem("publicKey");
-        localStorage.removeItem("walletStateInit");
-        localStorage.removeItem("is_in_tree");
-        localStorage.removeItem("is_lock");
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("bep20");
-        localStorage.removeItem("management");
-
-        let config = {
-          method: "get",
-          url: `${API_ENDPOINT}auth/logout/${localStorage.getItem(
-            "access_token"
-          )}`,
-          headers: {
-            "ngrok-skip-browser-warning": "69420",
-          },
-        };
-
-        Axios.request(config).then((response) => {
-          if (response.data) {
-            if (lastStatus) {
-              setLastStatus(false);
-              window.location.href = "/";
-            }
-          }
-        });
-      }
+      Axios.request(config).then((response) => {
+        if (response.data && lastStatus) {
+          setLastStatus(false);
+          window.location.href = "/";
+        }
+      });
     }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isConnected]);
+  }, [isConnected, isAdmin, id, lastStatus]);
 
   return <Router />;
 }
 
-Modal.setAppElement("#root");
+Modal.setAppElement("#root"); // Thiết lập Modal
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
-    <BrowserRouter>
+  <BrowserRouter>
+    <OrientationWarning>
       <App />
-    </BrowserRouter>
-  // </React.StrictMode>
+    </OrientationWarning>
+  </BrowserRouter>
 );
