@@ -18,8 +18,7 @@ const TrustWalletConnect = () => {
         setAccount(accountAddress);
         // Kiểm tra mạng BSC (Binance Smart Chain)
         const chainId = await web3.eth.getChainId();
-        console.log(chainId);
-        if (chainId === 56n) {
+        if (chainId === BigInt(56)) {
           localStorage.setItem("walletAddress", accountAddress);
           localStorage.setItem("publicKey", accountAddress);
           localStorage.setItem("walletStateInit", accountAddress);
