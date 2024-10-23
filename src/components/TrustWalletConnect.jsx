@@ -3,6 +3,7 @@ import Web3 from "web3";
 
 const TrustWalletConnect = () => {
   const [account, setAccount] = useState(null);
+  const [isConnected] = useState(localStorage.getItem("walletAddress")?.length > 0);
 
   // Hàm kết nối với Trust Wallet
   const connectWallet = async () => {
@@ -22,7 +23,7 @@ const TrustWalletConnect = () => {
           localStorage.setItem("walletAddress", accountAddress);
           localStorage.setItem("publicKey", accountAddress);
           localStorage.setItem("walletStateInit", accountAddress);
-          window.location.href = "/dashboard";
+          window.location.href = "/";
         }
       } catch (error) {
         console.error("Lỗi kết nối:", error);
@@ -47,8 +48,11 @@ const TrustWalletConnect = () => {
 
   return (
     <div>
-      {account ? (
-        <div>
+      {isConnected ? (
+        <div style={{ display: "flex", gap: "15px" }}>
+          <button style={buttonDashboardStyle}>
+            <a href="/dashboard">Dashboard</a>
+          </button>
           <button onClick={disconnectWallet} style={disconnectButtonStyle}>
             Disconnect
           </button>
@@ -68,6 +72,16 @@ const buttonStyle = {
   fontSize: "16px",
   backgroundColor: "#3498db",
   color: "white",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+};
+
+const buttonDashboardStyle = {
+  padding: "10px 20px",
+  fontSize: "16px",
+  backgroundColor: "aqua",
+  color: "green",
   border: "none",
   borderRadius: "5px",
   cursor: "pointer",

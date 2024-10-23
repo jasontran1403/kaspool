@@ -152,7 +152,14 @@ header .content-fit {
 }
 header .content-fit nav ul .landingpage-nav{
   display: flex;
+  flex-direction: column;
   gap: 2em;
+}
+
+.landingpage-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 #banner .title {

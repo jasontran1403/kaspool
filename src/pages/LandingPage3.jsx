@@ -898,3 +898,13 @@ const LandingPage3 = () => {
 };
 
 export default LandingPage3;
+
+const buttonStyle = {
+  padding: "10px 20px",
+  fontSize: "16px",
+  backgroundColor: "#3498db",
+  color: "white",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+};
