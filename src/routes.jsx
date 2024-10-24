@@ -31,7 +31,7 @@ import WithdrawDaily from "./pages/WithdrawDaily";
 import WithdrawDirect from "./pages/WithdrawDirect";
 import WithdrawBinary from "./pages/WithdrawBinary";
 import WithdrawLeader from "./pages/WithdrawLeader";
-import LandingPage3 from "./pages/LandingPage3";
+import LandingPage3 from "./pages/LandingPage4";
 
 export default function Router() {
     // Initialize with the value from localStorage

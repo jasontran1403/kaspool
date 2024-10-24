@@ -26,10 +26,12 @@ const customStyles = {
     bottom: "auto",
     transform: "translate(-50%, -50%)",
     padding: "0px!important",
+    backgroundColor: "rgb(31 41 55 / var(--tw-bg-opacity))",
+
   },
   overlay: {
     zIndex: 1000,
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    backgroundColor: "rgb(31 41 55 / var(--tw-bg-opacity))",
   },
 };
 

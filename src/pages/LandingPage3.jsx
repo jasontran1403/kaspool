@@ -425,7 +425,6 @@ const LandingPage3 = () => {
       </header>
       <div className="section" id="banner">
         <div className="content-fit">
-          <div className="title">KASPOOL</div>
           <div className="obj">
             <img
               onClick={() => {

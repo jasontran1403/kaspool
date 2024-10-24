@@ -3,7 +3,9 @@ import Web3 from "web3";
 
 const TrustWalletConnect = () => {
   const [account, setAccount] = useState(null);
-  const [isConnected] = useState(localStorage.getItem("walletAddress")?.length > 0);
+  const [isConnected] = useState(
+    localStorage.getItem("walletAddress")?.length > 0
+  );
 
   // Hàm kết nối với Trust Wallet
   const connectWallet = async () => {
@@ -50,18 +52,30 @@ const TrustWalletConnect = () => {
   return (
     <div>
       {isConnected ? (
-        <div style={{ display: "flex", gap: "15px" }}>
-          <button style={buttonDashboardStyle}>
-            <a href="/dashboard">Dashboard</a>
-          </button>
-          <button onClick={disconnectWallet} style={disconnectButtonStyle}>
-            Disconnect
-          </button>
+        <div className="blockchain-header__account" id="wallet-connect-section">
+          <a className="blc-btn-dashboard" href="/dashboard">
+            <span>
+              <i className="fas fa-user" />
+              Dashboard
+            </span>
+          </a>
+
+          <a className="blc-btn" onClick={disconnectWallet}>
+            <span>
+              <i className="fas fa-user" />
+              Disconnect
+            </span>
+          </a>
         </div>
       ) : (
-        <button onClick={connectWallet} style={buttonStyle}>
-          Connect
-        </button>
+        <div className="blockchain-header__account" id="wallet-connect-section" onClick={connectWallet}>
+          <a className="blc-btn">
+            <span>
+              <i className="fas fa-user" />
+              Connect
+            </span>
+          </a>
+        </div>
       )}
     </div>
   );

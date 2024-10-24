@@ -19,7 +19,7 @@ const Form2 = ({ code, closeModal }) => {
 
   return (
     <>
-      <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4" style={{ width: "15svw" }}>
+      <div className="bg-gray shadow-md rounded px-8 pt-8 pb-8 mb-4" style={{ width: "15svw" }}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"

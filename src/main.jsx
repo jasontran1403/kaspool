@@ -8,6 +8,8 @@ import OrientationWarning from "./components/OrientationWarning"; // Thêm compo
 import { API_ENDPOINT } from "./constants";
 import "./index.css";
 
+
+
 function App() {
   const [isConnected, setIsConnected] = useState(
     !!localStorage.getItem("walletAddress")
@@ -101,8 +103,6 @@ Modal.setAppElement("#root"); // Thiết lập Modal
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <OrientationWarning>
-      <App />
-    </OrientationWarning>
+    <App />
   </BrowserRouter>
 );
