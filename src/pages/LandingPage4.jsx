@@ -534,7 +534,7 @@ const LandingPage4 = () => {
                     <th>Without Gadget</th>
                   </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                   <tr>
                     <td>coindox</td>
                     <td>
@@ -595,7 +595,7 @@ const LandingPage4 = () => {
                       <img src={active} alt="" />
                     </td>
                   </tr>
-                </tbody>
+                </tbody> */}
               </table>
             </div>
           </section>
