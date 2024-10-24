@@ -5688,7 +5688,7 @@ body .mfp-wrap .mfp-container .mfp-content .mfp-close:hover::after {
   -ms-transform: translateY(155px);
   transform: translateY(155px);
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column-reverse;
 }

@@ -124,11 +124,18 @@ const MainDashboard = () => {
               wallet={true}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
-            <WalletCard2
+            {/* <WalletCard2
               content={"Kaspool Token"}
               amount={listBalance[1]?.balance}
               unit={"KASPOOL"}
               wallet={true}
+              className="flex-1 w-full max-w-xs" // Adjust width for small screens
+            /> */}
+            <WalletCard4
+              content={"Maxout"}
+              amount={listBalance[7]?.balance}
+              unit={"USDT"}
+              wallet={false}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
             <WalletCard5
@@ -205,7 +212,7 @@ const MainDashboard = () => {
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
           </div>
-          <div
+          {/* <div
             style={{
               display: "flex",
               flexDirection: "row",
@@ -224,7 +231,7 @@ const MainDashboard = () => {
               wallet={false}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
-          </div>
+          </div> */}
         </div>
         
       </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TrustWalletConnect from "../components/TrustWalletConnect"; // Connect Wallet component
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css"; // Import Swiper styles
-import importance from "/assets/img/bg/uo_bg.png";
+import importance from "../landingpage-assets/img/bg/uo_bg.png";
 import styled from "styled-components";
 import "../landingpage-assets/css/bootstrap.min.css";
 import "../landingpage-assets/css/fontawesome.css";
@@ -32,6 +32,18 @@ const Menu = styled.nav`
 const LandingPage4 = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // State to manage menu visibility
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Set a timeout to hide the loader after 1.5 seconds
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,7 +113,7 @@ const LandingPage4 = () => {
 
   return (
     <div className="home-blockchain">
-      <div id="xb-loadding" className="xb-loader style-2">
+      {loading && <div id="xb-loadding" className="xb-loader style-2">
         <div className="honeycomb">
           <div />
           <div />
@@ -111,8 +123,8 @@ const LandingPage4 = () => {
           <div />
           <div />
         </div>
-      </div>
-      <div className="progress-wrap style-2">
+      </div>}
+      {!loading && <><div className="progress-wrap style-2">
         <svg
           className="progress-circle svg-content"
           width="100%"
@@ -134,7 +146,7 @@ const LandingPage4 = () => {
                   <div className="header__logo">
                     <a href="/">
                       <img
-                        src="assets/img/resources/logo-white.png"
+                        src="/src/landingpage-assets/img/resources/logo-white.png"
                         width={100}
                         height={30}
                         alt=""
@@ -244,7 +256,7 @@ const LandingPage4 = () => {
           <nav className="side-mobile-menu">
             <a className="header__logo mb-30" href="#!">
               <img
-                src="assets/img/resources/logo-white.png"
+                src="/src/landingpage-assets/img/resources/logo-white.png"
                 width={100}
                 height={30}
                 alt=""
@@ -278,7 +290,7 @@ const LandingPage4 = () => {
         <main>
           <section
             className="hero hero__blockchain pos-rel bg_img"
-            data-background="assets/img/bg/blockchain_hero_bg.png"
+            data-background="/src/landingpage-assets/img/bg/blockchain_hero_bg.png"
           >
             <div className="container">
               <div className="row align-items-center">
@@ -306,18 +318,18 @@ const LandingPage4 = () => {
                   <div className="hero__blockchain-icon pos-rel">
                     <div className="icon ul_li icon--1 absolute">
                       <span className="text-white mr-5">Secure &amp; Safe</span>
-                      <img src="assets/img/icon/sc.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/sc.svg" alt="" />
                     </div>
                     <div className="icon ul_li icon--2 absolute">
                       <span className="text-white mr-5">Tested</span>
-                      <img src="assets/img/icon/sc.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/sc.svg" alt="" />
                     </div>
                     <div className="icon ul_li icon--3 absolute">
                       <span className="text-white mr-5">Trustworthy</span>
-                      <img src="assets/img/icon/sc.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/sc.svg" alt="" />
                     </div>
                     <div className="icon ul_li icon--4 absolute">
-                      <img src="assets/img/icon/sc.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/sc.svg" alt="" />
                       <span className="text-white ml-5">Optimized</span>
                     </div>
                   </div>
@@ -335,13 +347,13 @@ const LandingPage4 = () => {
                 <div className="col-lg-4">
                   <div className="user-option__item">
                     {/* <div class="icon pos-rel ">
-                              <img src="assets/img/icon/up_01.svg" alt="">
+                              <img src="/src/landingpage-assets/img/icon/up_01.svg" alt="">
                           </div>
                           <h3 class="heading">Personal</h3> */}
                     <ul className="user-option__list list-unstyled mt-45">
                       <li>
                         <span>
-                          <img src="assets/img/icon/check_badge.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/check_badge.svg" alt="" />
                         </span>
                         <h4>Confidentiality</h4>
                         <p>
@@ -351,7 +363,7 @@ const LandingPage4 = () => {
                       </li>
                       <li>
                         <span>
-                          <img src="assets/img/icon/check_badge.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/check_badge.svg" alt="" />
                         </span>
                         <h4>Security</h4>
                         <p>
@@ -360,12 +372,12 @@ const LandingPage4 = () => {
                         </p>
                       </li>
                       {/* <li>
-                                  <span><img src="assets/img/icon/check_badge.svg" alt=""></span>
+                                  <span><img src="/src/landingpage-assets/img/icon/check_badge.svg" alt=""></span>
                                   <h4>Easy access to personal data</h4>
                                   <p>It's essential to be cautious about sharing.</p>
                               </li>
                               <li>
-                                  <span><img src="assets/img/icon/check_badge.svg" alt=""></span>
+                                  <span><img src="/src/landingpage-assets/img/icon/check_badge.svg" alt=""></span>
                                   <h4>Testing and proactive communication</h4>
                                   <p>Testing and proactive communication are essential components of successful projects,</p>
                               </li> */}
@@ -380,13 +392,13 @@ const LandingPage4 = () => {
                 <div className="col-lg-4">
                   <div className="user-option__item style2">
                     {/* <div class="icon pos-rel">
-                              <img src="assets/img/icon/up_02.svg" alt="">
+                              <img src="/src/landingpage-assets/img/icon/up_02.svg" alt="">
                           </div>
                           <h3 class="heading">Commercial</h3> */}
                     <ul className="user-option__list mt-45 list-unstyled">
                       <li>
                         <span>
-                          <img src="assets/img/icon/check_badge.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/check_badge.svg" alt="" />
                         </span>
                         <h4>Automation</h4>
                         <p>
@@ -396,7 +408,7 @@ const LandingPage4 = () => {
                       </li>
                       <li>
                         <span>
-                          <img src="assets/img/icon/check_badge.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/check_badge.svg" alt="" />
                         </span>
                         <h4>Compliance with regulations</h4>
                         <p>
@@ -405,12 +417,12 @@ const LandingPage4 = () => {
                         </p>
                       </li>
                       {/* <li>
-                                  <span><img src="assets/img/icon/check_badge.svg" alt=""></span>
+                                  <span><img src="/src/landingpage-assets/img/icon/check_badge.svg" alt=""></span>
                                   <h4>Building a new financial network</h4>
                                   <p>Building a new financial network is an ambitious.</p>
                               </li>
                               <li>
-                                  <span><img src="assets/img/icon/check_badge.svg" alt=""></span>
+                                  <span><img src="/src/landingpage-assets/img/icon/check_badge.svg" alt=""></span>
                                   <h4>Startups for blockchain</h4>
                                   <p>Startups in the blockchain industry have been flourishing in recent years, leveraging.</p>
                               </li> */}
@@ -425,19 +437,19 @@ const LandingPage4 = () => {
               <div className="row align-items-center">
                 <div className="col-lg-6">
                   <div className="blc-about__img pos-rel text-center wow fadeInLeft">
-                    <img src="assets/img/about/about_shape1.png" alt="" />
+                    <img src="/src/landingpage-assets/img/about/about_shape1.png" alt="" />
                     <div className="shape shape--1">
                       <div>
-                        <img src="assets/img/about/about_shape2.png" alt="" />
+                        <img src="/src/landingpage-assets/img/about/about_shape2.png" alt="" />
                       </div>
                     </div>
                     <div className="shape shape--2">
                       <div>
-                        <img src="assets/img/about/about_shape3.png" alt="" />
+                        <img src="/src/landingpage-assets/img/about/about_shape3.png" alt="" />
                       </div>
                     </div>
                     <div className="icon">
-                      <img src="assets/img/icon/syber_icon.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/syber_icon.svg" alt="" />
                     </div>
                   </div>
                 </div>
@@ -462,27 +474,27 @@ const LandingPage4 = () => {
                     </div>
                     <ul className="blc-about__list ul_li mt-none-20">
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Privacy and Security
                       </li>
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Cost and Complexity
                       </li>
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Immutable Data
                       </li>
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Regulatory Compliance
                       </li>
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Interoperability
                       </li>
                       <li>
-                        <img src="assets/img/icon/ul_icon.svg" alt="" />
+                        <img src="/src/landingpage-assets/img/icon/ul_icon.svg" alt="" />
                         Energy Consumption
                       </li>
                     </ul>
@@ -494,7 +506,7 @@ const LandingPage4 = () => {
           <section
             id="feature"
             className="advantages advantages-bg pb-120"
-            data-background="assets/img/bg/advantages_bg.png"
+            data-background="/src/landingpage-assets/img/bg/advantages_bg.png"
           >
             <div className="container">
               <div className="sec-title style2 text-center mb-60">
@@ -523,61 +535,61 @@ const LandingPage4 = () => {
                   <tr>
                     <td>coindox</td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                   </tr>
                   <tr>
                     <td>Civic</td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                   </tr>
                   <tr>
                     <td>Vilid.global</td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                   </tr>
                   <tr>
                     <td>Hypr</td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_deactive.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_deactive.svg" alt="" />
                     </td>
                     <td>
-                      <img src="assets/img/icon/badge_active.svg" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/badge_active.svg" alt="" />
                     </td>
                   </tr>
                 </tbody>
@@ -602,7 +614,7 @@ const LandingPage4 = () => {
                     <ul className="solution__list list-unstyled">
                       <li>
                         <div className="icon">
-                          <img src="assets/img/icon/s_01.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/s_01.svg" alt="" />
                         </div>
                         <h4>MULTI-SOURCE MINING</h4>
                         <p className="content">
@@ -613,7 +625,7 @@ const LandingPage4 = () => {
                       </li>
                       <li>
                         <div className="icon">
-                          <img src="assets/img/icon/s_02.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/s_02.svg" alt="" />
                         </div>
                         <h4>KASPOOL COIN</h4>
                         <p className="content">
@@ -636,7 +648,7 @@ const LandingPage4 = () => {
                       </li>
                       <li>
                         <div className="icon">
-                          <img src="assets/img/icon/s_03.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/s_03.svg" alt="" />
                         </div>
                         <h4>STABLE AND FAIR INVESTMENT VALUES:</h4>
                         <p className="content">
@@ -654,7 +666,7 @@ const LandingPage4 = () => {
                       </li>
                       <li>
                         <div className="icon">
-                          <img src="assets/img/icon/s_04.svg" alt="" />
+                          <img src="/src/landingpage-assets/img/icon/s_04.svg" alt="" />
                         </div>
                         <h4>SECURITY AND TRANSPARENCY:</h4>
                         <p className="content">
@@ -673,26 +685,26 @@ const LandingPage4 = () => {
                 </div>
                 <div className="col-lg-6">
                   <div className="solution__img pos-rel">
-                    <img src="assets/img/shape/s_circle_1.png" alt="" />
+                    <img src="/src/landingpage-assets/img/shape/s_circle_1.png" alt="" />
                     <div className="solution__img-sml">
                       <div className="circle circle--1">
                         <div data-parallax='{"x" : -60}'>
-                          <img src="assets/img/shape/s_circle_2.png" alt="" />
+                          <img src="/src/landingpage-assets/img/shape/s_circle_2.png" alt="" />
                         </div>
                       </div>
                       <div className="circle circle--2">
                         <div data-parallax='{"x" : 60}'>
-                          <img src="assets/img/shape/s_circle_3.png" alt="" />
+                          <img src="/src/landingpage-assets/img/shape/s_circle_3.png" alt="" />
                         </div>
                       </div>
                       <div className="circle circle--3">
                         <div data-parallax='{"y" : -60}'>
-                          <img src="assets/img/shape/s_circle_4.png" alt="" />
+                          <img src="/src/landingpage-assets/img/shape/s_circle_4.png" alt="" />
                         </div>
                       </div>
                     </div>
                     <div className="solution__icon">
-                      <img src="assets/img/icon/s_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/s_icon.png" alt="" />
                     </div>
                   </div>
                 </div>
@@ -714,7 +726,7 @@ const LandingPage4 = () => {
                   <ul className="token-update__data list-unstyled">
                     <li>
                       <img
-                        src="assets/img/resources/img1.jpg"
+                        src="/src/landingpage-assets/img/resources/img1.jpg"
                         width={100}
                         height={100}
                         alt="Description of the image"
@@ -725,7 +737,7 @@ const LandingPage4 = () => {
                     </li>
                     <li>
                       <img
-                        src="assets/img/resources/img2.jpg"
+                        src="/src/landingpage-assets/img/resources/img2.jpg"
                         width={100}
                         height={100}
                         alt="Description of the image"
@@ -734,7 +746,7 @@ const LandingPage4 = () => {
                     </li>
                     <li>
                       <img
-                        src="assets/img/resources/img3.jpg"
+                        src="/src/landingpage-assets/img/resources/img3.jpg"
                         width={100}
                         height={100}
                         alt="Description of the image"
@@ -743,7 +755,7 @@ const LandingPage4 = () => {
                     </li>
                     <li>
                       <img
-                        src="assets/img/resources/img3.jpg"
+                        src="/src/landingpage-assets/img/resources/img3.jpg"
                         width={100}
                         height={100}
                         alt="Description of the image"
@@ -755,7 +767,7 @@ const LandingPage4 = () => {
                     </li>
                     <li>
                       <img
-                        src="assets/img/resources/img5.jpg"
+                        src="/src/landingpage-assets/img/resources/img5.jpg"
                         width={100}
                         height={100}
                         alt="Description of the image"
@@ -774,7 +786,7 @@ const LandingPage4 = () => {
           <section
             id="team"
             className="team team__bg pb-120"
-            data-background="assets/img/bg/team_sec_bg.png"
+            data-background="/src/landingpage-assets/img/bg/team_sec_bg.png"
           >
             <div className="container">
               <div className="sec-title style2 text-center mb-60">
@@ -787,7 +799,7 @@ const LandingPage4 = () => {
                 <div className="col-xl-4 col-lg-6 col-md-6 mt-30">
                   <div className="team__single text-center pos-rel">
                     <div className="avatar">
-                      <img src="assets/img/resources/cto.jpg" alt="" />
+                      <img src="/src/landingpage-assets/img/resources/cto.jpg" alt="" />
                     </div>
                     <div className="content">
                       <h3>DAVID HARRISON</h3>
@@ -798,7 +810,7 @@ const LandingPage4 = () => {
                 <div className="col-xl-4 col-lg-6 col-md-6 mt-30">
                   <div className="team__single style2 text-center">
                     <div className="avatar">
-                      <img src="assets/img/resources/ceo.jpg" alt="" />
+                      <img src="/src/landingpage-assets/img/resources/ceo.jpg" alt="" />
                     </div>
                     <div className="content">
                       <h3>MICHAEL REYNOLDS</h3>
@@ -809,7 +821,7 @@ const LandingPage4 = () => {
                 <div className="col-xl-4 col-lg-6 col-md-6 mt-30">
                   <div className="team__single text-center">
                     <div className="avatar">
-                      <img src="assets/img/resources/coo.jpg" alt="" />
+                      <img src="/src/landingpage-assets/img/resources/coo.jpg" alt="" />
                     </div>
                     <div className="content">
                       <h3>JESSICA CARTER</h3>
@@ -831,7 +843,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box ">
                   <div className="roadmap__list-inner item-1">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 1 <br /> Q4/2023
@@ -846,7 +858,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-2">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 2 <br /> Q1/2025
@@ -861,7 +873,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-3">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 3 <br /> Q2/2025
@@ -877,7 +889,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-4">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 4 <br /> Q3-Q4/2025
@@ -893,7 +905,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-5">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 5 <br /> Q1/2026
@@ -908,7 +920,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-6">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 6 <br /> Q1/2026
@@ -923,7 +935,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-7">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 7 <br /> 2027
@@ -938,7 +950,7 @@ const LandingPage4 = () => {
                 <div className="roadmap__list-box">
                   <div className="roadmap__list-inner item-8">
                     <div className="icon">
-                      <img src="assets/img/icon/rm_icon.png" alt="" />
+                      <img src="/src/landingpage-assets/img/icon/rm_icon.png" alt="" />
                     </div>
                     <h3 className="black-text">
                       Stage 8 <br /> POST 2027
@@ -1068,7 +1080,7 @@ const LandingPage4 = () => {
         </main>
         <footer
           className="site-footer footer__blockchain pos-rel pt-95 bg_img"
-          data-background="assets/img/bg/footer_bg2.jpg"
+          data-background="/src/landingpage-assets/img/bg/footer_bg2.jpg"
         >
           <div className="container">
             <div className="footer__copyright-blc ul_li_between">
@@ -1095,7 +1107,7 @@ const LandingPage4 = () => {
             </div>
           </div>
         </footer>
-      </div>
+      </div></>}
     </div>
   );
 };
