@@ -6,7 +6,8 @@
 	=    		 Preloader			      =
 	=============================================*/
 	function preloader() {
-		$('#xb-loadding').delay(0).fadeOut();
+		$('#xb-loadding').delay(500).fadeOut();
+		console.log('ok');
 	};
 
 	$(window).on('load', function () {
