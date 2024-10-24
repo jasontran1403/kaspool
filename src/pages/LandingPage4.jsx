@@ -120,10 +120,10 @@ const LandingPage4 = () => {
           window.location.href = "/";
         }
       } catch (error) {
-        console.error("Lỗi kết nối:", error);
+        console.error("Error: ", error);
       }
     } else {
-      alert("Vui lòng cài đặt Trust Wallet hoặc MetaMask.");
+      alert("Please install any wallet platform that support BSC Network.");
     }
   };
 
