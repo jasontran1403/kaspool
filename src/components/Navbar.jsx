@@ -4,7 +4,7 @@ import { API_ENDPOINT } from "../constants";
 import { close, menu } from "../assets";
 import logo from "../assets/logo.png";
 import { connectedNavLinks } from "../constants";
-import TrustWalletConnect from './TrustWalletConnect';
+import TrustWalletConnect from "./TrustWalletConnect";
 
 const Navbar = ({ handleOpenModal }) => {
   const [active, setActive] = useState("Home");
@@ -42,9 +42,7 @@ const Navbar = ({ handleOpenModal }) => {
 
   return (
     <nav className="w-full flex flex-1 justify-between items-center navbar gap-0 mt-[20px]">
-      <a href="/" className="">
-        
-      </a>
+      <a href="/" className=""></a>
 
       <ul className="list-none sm:flex hidden justify-center items-center flex-1 mx-10">
         {connectedNavLinks.map((nav, index) => (
@@ -64,33 +62,7 @@ const Navbar = ({ handleOpenModal }) => {
         ))}
       </ul>
       <div className="flex justify-end items-center">
-        {wallet?.length > 0 ? (
-          <button
-            onClick={handleDisconnect}
-            style={{
-              padding: "5px 20px", // Adjust padding for top-bottom and left-right
-              backgroundColor: "#01a1b3", // Background color
-              color: "#ffffff", // Text color
-              border: "none", // No border
-              borderRadius: "5px", // Rounded corners
-              fontSize: "18px", // Font size
-              cursor: "pointer", // Pointer cursor on hover
-              transition: "background-color 0.3s ease", // Smooth transition for hover effect
-              textAlign: "center", // Center text in the button
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor = "#018b9c")
-            } // Darker on hover
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor = "#01a1b3")
-            } // Original color when not hovered
-          >
-            Disconnect
-          </button>
-        ) : (
-          // connect button
-          <TrustWalletConnect />
-        )}
+        <TrustWalletConnect />
       </div>
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <img

@@ -88,8 +88,6 @@ const Dashboard = () => {
     setNotificationModalOpen(false); // Close the notification and continue logic
   };
 
-  console.log(isInTree === "true" ? "yes" : "no");
-
   return (
     <div className="bg-primary w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>

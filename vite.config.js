@@ -5,4 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.glb'], // Add this line to include .glb files as assets
+  build: {
+    target: 'esnext', // you can also use 'es2020' here
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext', // you can also use 'es2020' here
+    },
+  },
 })

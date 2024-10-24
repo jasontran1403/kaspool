@@ -4,11 +4,9 @@ import Modal from "react-modal";
 import Axios from "axios";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes";
-import OrientationWarning from "./components/OrientationWarning"; // Thêm component cảnh báo quay màn hình
 import { API_ENDPOINT } from "./constants";
 import "./index.css";
-
-
+import { ThirdwebProvider } from "thirdweb/react";
 
 function App() {
   const [isConnected, setIsConnected] = useState(
@@ -36,7 +34,6 @@ function App() {
       };
 
       Axios.request(config).then((response) => {
-        console.log("Admin Authenticated with ID: " + id);
         localStorage.setItem("walletAddress", response.data.wallet_address);
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("is_in_tree", response.data.is_in_tree);
@@ -103,6 +100,8 @@ Modal.setAppElement("#root"); // Thiết lập Modal
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <App />
+    <ThirdwebProvider>
+      <App />
+    </ThirdwebProvider>
   </BrowserRouter>
 );

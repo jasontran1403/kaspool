@@ -79,38 +79,7 @@ const UserNavbar = () => {
         ))}
       </ul>
       <div className="flex justify-end items-center">
-        {wallet?.length > 0 ? (
-          <button
-            onClick={handleDisconnect}
-            style={{
-              display: "flex", // Flex for centering
-              alignItems: "center", // Center vertically
-              justifyContent: "center", // Center horizontally
-              padding: "10px 20px", // Adjust padding for top-bottom and left-right
-              backgroundColor: "#01a1b3", // Background color
-              color: "#ffffff", // Text color
-              border: "none", // No border
-              borderRadius: "5px", // Rounded corners
-              fontSize: "18px", // Font size
-              cursor: "pointer", // Pointer cursor on hover
-              transition: "background-color 0.3s ease", // Smooth transition for hover effect
-              textAlign: "center", // Center text in the button
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor = "#018b9c")
-            } // Darker on hover
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor = "#01a1b3")
-            } // Original color when not hovered
-          >
-            Disconnect
-          </button>
-        ) : (
-          // <TonConnectButton
-          //   className="lg:ml-10 mr-4" // Add margin-left for spacing
-          // />
-          <TrustWalletConnect />
-        )}
+        <TrustWalletConnect />
       </div>
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <img

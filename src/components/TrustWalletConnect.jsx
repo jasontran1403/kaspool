@@ -1,43 +1,50 @@
-import React, { useState } from "react";
-import Web3 from "web3";
+import React, { useEffect, useState } from "react";
+import { createThirdwebClient } from "thirdweb";
+import { ConnectButton, useWalletInfo, useDisconnect } from "thirdweb/react";
+import { createWallet } from "thirdweb/wallets";
+import { useActiveAccount } from "thirdweb/react";
+import { useAddress } from "@thirdweb-dev/react";
+
+const client = createThirdwebClient({
+  clientId: "c4917b86730652d8197cc695ca2b38eb",
+});
+
+const wallets = [
+  createWallet("io.metamask"),
+  createWallet("com.coinbase.wallet"),
+  createWallet("com.trustwallet.app"),
+  createWallet("org.uniswap"),
+];
 
 const TrustWalletConnect = () => {
-  const [account, setAccount] = useState(null);
-  const [isConnected] = useState(
+  const activeAccount = useActiveAccount();
+  const { isConnected } = useWalletInfo(client);
+  const disconnect = useDisconnect(); // Sử dụng hook useDisconnect
+  const [isLocalConnected, setIsLocalConnected] = useState(
     localStorage.getItem("walletAddress")?.length > 0
   );
 
-  // Hàm kết nối với Trust Wallet
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      try {
-        // Yêu cầu kết nối tài khoản
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        const accountAddress = accounts[0];
-        setAccount(accountAddress);
-        // Kiểm tra mạng BSC (Binance Smart Chain)
-        const chainId = await web3.eth.getChainId();
-        if (chainId === BigInt(56)) {
-          localStorage.setItem("walletAddress", accountAddress);
-          localStorage.setItem("publicKey", accountAddress);
-          localStorage.setItem("walletStateInit", accountAddress);
-          window.location.href = "/";
-        }
-      } catch (error) {
-        console.error("Error: ", error);
-      }
-    } else {
-      alert("Please install any wallet platform that support BSC Network.");
+  useEffect(() => {
+    if (activeAccount?.address) {
+      localStorage.setItem("walletAddress", activeAccount.address);
+      localStorage.setItem("publicKey", activeAccount.address);
+      localStorage.setItem("walletStateInit", activeAccount.address);
     }
-  };
+  }, [activeAccount]);
 
-  // Hàm ngắt kết nối ví
+  const handleConnect = () => {
+    setTimeout(() => {
+      if (activeAccount?.address) {
+        localStorage.setItem("walletAddress", activeAccount.address);
+        localStorage.setItem("publicKey", activeAccount.address);
+        localStorage.setItem("walletStateInit", activeAccount.address);
+      }
+    }, 3000); // Thời gian chờ là 3000 milliseconds (3 giây)
+  };
+  
+
+  // Handle wallet disconnection
   const disconnectWallet = () => {
-    setAccount(null);
     localStorage.removeItem("walletAddress");
     localStorage.removeItem("publicKey");
     localStorage.removeItem("walletStateInit");
@@ -51,60 +58,21 @@ const TrustWalletConnect = () => {
 
   return (
     <div>
-      {isConnected ? (
-        <div className="blockchain-header__account" id="wallet-connect-section">
-          <a className="blc-btn-dashboard" href="/dashboard">
-            <span>
-              <i className="fas fa-user" />
-              Dashboard
-            </span>
-          </a>
+      <ConnectButton
+      connectButton={{ label: "Connect" }}
 
-          <a className="blc-btn" onClick={disconnectWallet}>
-            <span>
-              <i className="fas fa-user" />
-              Disconnect
-            </span>
-          </a>
-        </div>
-      ) : (
-        <div className="blockchain-header__account" id="wallet-connect-section" onClick={connectWallet}>
-          <a className="blc-btn">
-            <span>
-              <i className="fas fa-user" />
-              Connect
-            </span>
-          </a>
-        </div>
-      )}
+        client={client}
+        wallets={wallets}
+        connectModal={{
+          size: "compact",
+          title: "Kaspool",
+          showThirdwebBranding: false,
+        }}
+        onConnect={() => handleConnect()}
+        onDisconnect={() => disconnectWallet()}
+      />
     </div>
   );
-};
-
-// Custom style for the buttons
-const buttonStyle = {
-  padding: "10px 20px",
-  fontSize: "16px",
-  backgroundColor: "#3498db",
-  color: "white",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-};
-
-const buttonDashboardStyle = {
-  padding: "10px 20px",
-  fontSize: "16px",
-  backgroundColor: "aqua",
-  color: "green",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-};
-
-const disconnectButtonStyle = {
-  ...buttonStyle, // Kế thừa các thuộc tính từ buttonStyle
-  backgroundColor: "#e74c3c", // Màu nền khác cho nút ngắt kết nối
 };
 
 export default TrustWalletConnect;
