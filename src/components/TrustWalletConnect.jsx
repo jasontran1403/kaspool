@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createThirdwebClient } from "thirdweb";
-import { ConnectButton, useWalletInfo, useDisconnect, useActiveWalletChain, useActiveAccount } from "thirdweb/react";
+import {
+  ConnectButton,
+  useWalletInfo,
+  useDisconnect,
+  useActiveWalletChain,
+  useActiveAccount,
+} from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -29,12 +35,10 @@ const TrustWalletConnect = () => {
 
   useEffect(() => {
     if (activeAccount?.address) {
-
-      if (chainId.id === BSC_CHAIN_ID) {
-        localStorage.setItem("walletAddress", activeAccount.address);
-        localStorage.setItem("publicKey", activeAccount.address);
-        localStorage.setItem("walletStateInit", activeAccount.address);
-      } else {
+      localStorage.setItem("walletAddress", activeAccount.address);
+      localStorage.setItem("publicKey", activeAccount.address);
+      localStorage.setItem("walletStateInit", activeAccount.address);
+      if (chainId.id !== BSC_CHAIN_ID) {
         toast.warning("Please switch your network to Binance Smart Chain", {
           position: "top-right",
           autoClose: 1500,
