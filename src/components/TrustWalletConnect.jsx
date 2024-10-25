@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { createThirdwebClient } from "thirdweb";
-import { ConnectButton, useWalletInfo, useDisconnect } from "thirdweb/react";
+import { ConnectButton, useWalletInfo, useDisconnect, useActiveWalletChain, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
-import { useActiveAccount } from "thirdweb/react";
-import { useAddress } from "@thirdweb-dev/react";
 
 const client = createThirdwebClient({
   clientId: "c4917b86730652d8197cc695ca2b38eb",
 });
+
+const BSC_CHAIN_ID = 56; // Binance Smart Chain Mainnet Chain ID
 
 const wallets = [
   createWallet("io.metamask"),
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
   createWallet("org.uniswap"),
-  createWallet("com.safepal")
+  createWallet("com.safepal"),
 ];
 
 const TrustWalletConnect = () => {
+  const chainId = useActiveWalletChain();
   const activeAccount = useActiveAccount();
   const { isConnected } = useWalletInfo(client);
   const disconnect = useDisconnect(); // Sử dụng hook useDisconnect
@@ -27,12 +28,25 @@ const TrustWalletConnect = () => {
 
   useEffect(() => {
     if (activeAccount?.address) {
-      localStorage.setItem("walletAddress", activeAccount.address);
-      localStorage.setItem("publicKey", activeAccount.address);
-      localStorage.setItem("walletStateInit", activeAccount.address);
+
+      if (chainId.id === BSC_CHAIN_ID) {
+        localStorage.setItem("walletAddress", activeAccount.address);
+        localStorage.setItem("publicKey", activeAccount.address);
+        localStorage.setItem("walletStateInit", activeAccount.address);
+      } else {
+        alert("Please switch your network to Binance Smart Chain.");
+      }
     }
   }, [activeAccount]);
-  
+
+  const handleConnect = async () => {
+    if (activeAccount?.address) {
+      if (chainId.id !== BSC_CHAIN_ID) {
+        alert("Please switch your network to Binance Smart Chain.");
+      }
+    }
+  };
+
   // Handle wallet disconnection
   const disconnectWallet = () => {
     localStorage.removeItem("walletAddress");
