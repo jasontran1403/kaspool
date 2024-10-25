@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createThirdwebClient } from "thirdweb";
 import { ConnectButton, useWalletInfo, useDisconnect, useActiveWalletChain, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
+import { ToastContainer, toast } from "react-toastify";
 
 const client = createThirdwebClient({
   clientId: "c4917b86730652d8197cc695ca2b38eb",
@@ -34,7 +35,10 @@ const TrustWalletConnect = () => {
         localStorage.setItem("publicKey", activeAccount.address);
         localStorage.setItem("walletStateInit", activeAccount.address);
       } else {
-        alert("Please switch your network to Binance Smart Chain.");
+        toast.warning("Please switch your network to Binance Smart Chain", {
+          position: "top-right",
+          autoClose: 1500,
+        });
       }
     }
   }, [activeAccount]);
@@ -42,7 +46,10 @@ const TrustWalletConnect = () => {
   const handleConnect = async () => {
     if (activeAccount?.address) {
       if (chainId.id !== BSC_CHAIN_ID) {
-        alert("Please switch your network to Binance Smart Chain.");
+        toast.warning("Please switch your network to Binance Smart Chain", {
+          position: "top-right",
+          autoClose: 1500,
+        });
       }
     }
   };
@@ -74,6 +81,7 @@ const TrustWalletConnect = () => {
         onConnect={() => handleConnect()}
         onDisconnect={() => disconnectWallet()}
       />
+      <ToastContainer stacked />
     </div>
   );
 };
