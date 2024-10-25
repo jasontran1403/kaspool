@@ -14,6 +14,7 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
   createWallet("org.uniswap"),
+  createWallet("com.safepal")
 ];
 
 const TrustWalletConnect = () => {
@@ -31,18 +32,7 @@ const TrustWalletConnect = () => {
       localStorage.setItem("walletStateInit", activeAccount.address);
     }
   }, [activeAccount]);
-
-  const handleConnect = () => {
-    setTimeout(() => {
-      if (activeAccount?.address) {
-        localStorage.setItem("walletAddress", activeAccount.address);
-        localStorage.setItem("publicKey", activeAccount.address);
-        localStorage.setItem("walletStateInit", activeAccount.address);
-      }
-    }, 3000); // Thời gian chờ là 3000 milliseconds (3 giây)
-  };
   
-
   // Handle wallet disconnection
   const disconnectWallet = () => {
     localStorage.removeItem("walletAddress");
@@ -59,8 +49,7 @@ const TrustWalletConnect = () => {
   return (
     <div>
       <ConnectButton
-      connectButton={{ label: "Connect" }}
-
+        connectButton={{ label: "Connect" }}
         client={client}
         wallets={wallets}
         connectModal={{
