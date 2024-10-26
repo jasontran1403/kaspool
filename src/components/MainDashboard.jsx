@@ -124,20 +124,14 @@ const MainDashboard = () => {
               wallet={true}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
-            {/* <WalletCard2
-              content={"Kaspool Token"}
-              amount={listBalance[1]?.balance}
-              unit={"KASPOOL"}
+            <WalletCard2
+              content={"Transfer"}
+              amount={listBalance[6]?.balance}
+              unit={"USDT"}
               wallet={true}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
-            /> */}
-            <WalletCard4
-              content={"Maxout"}
-              amount={listBalance[7]?.balance}
-              unit={"USDT"}
-              wallet={false}
-              className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
+            
             <WalletCard5
               content={"Total Mining"}
               amount={totalMining}
@@ -207,6 +201,13 @@ const MainDashboard = () => {
               amount={
                 listBalance[4]?.balance
               }
+              unit={"USDT"}
+              wallet={false}
+              className="flex-1 w-full max-w-xs" // Adjust width for small screens
+            />
+            <WalletCard4
+              content={"Maxout"}
+              amount={listBalance[7]?.balance}
               unit={"USDT"}
               wallet={false}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens

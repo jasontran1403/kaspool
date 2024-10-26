@@ -17,21 +17,11 @@ const TransferItem = ({ swapHistory }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [listWalletType] = useState([
-    { id: 1, name: "Mapchain Wallet" },
     { id: 2, name: "Transfer Wallet" },
   ]);
   const [balances, setBalances] = useState([]);
   const [amountSwap, setAmountSwap] = useState(0);
   const [walletTypeId, setWalletTypeId] = useState(1);
-
-  const handleSetWalletType = (walletTypeId) => {
-    setWalletTypeId(Number(walletTypeId));
-    if (walletTypeId == 1) {
-      setBalance(balances[1].balance);
-    } else if (walletTypeId == 2) {
-      setBalance(balances[6].balance);
-    }
-  };
 
   const [listBalance, setListBalance] = useState([]);
   
@@ -48,7 +38,7 @@ const TransferItem = ({ swapHistory }) => {
     Axios.request(config)
       .then((response) => {
         setBalances(response.data.balances);
-        setBalance(response.data.balances[1].balance);
+        setBalance(response.data.balances[6].balance);
       })
       .catch((error) => {
         console.log(error);
@@ -95,8 +85,8 @@ const TransferItem = ({ swapHistory }) => {
           to: to,
           amount: amount,
           status: 1,
-          type: 0,
-          walletType: walletTypeId,
+          type: 1,
+          walletType: 1,
         });
 
         let config = {
@@ -166,29 +156,11 @@ const TransferItem = ({ swapHistory }) => {
           <h2 className={styles.heading2}>Internal Transfer</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="walletType">
-                Wallet Type
-              </label>
-              <select
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="walletType"
-                value={walletTypeId}
-                onChange={(e) => handleSetWalletType(e.target.value)}
-              >
-                {listWalletType.map((pkg) => (
-                  <option key={pkg.id} value={pkg.id}>
-                    {pkg.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-6">
               <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
                 Balance
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={balance}
@@ -201,7 +173,7 @@ const TransferItem = ({ swapHistory }) => {
                 Transfer to
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Display name or wallet address"
@@ -217,7 +189,7 @@ const TransferItem = ({ swapHistory }) => {
                 Amount
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={amount}
@@ -232,7 +204,7 @@ const TransferItem = ({ swapHistory }) => {
                 Fee
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={fee}

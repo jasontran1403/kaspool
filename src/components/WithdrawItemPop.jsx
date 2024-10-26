@@ -115,26 +115,6 @@ const WithdrawItemPop = ({ depositHistory }) => {
         <div className="flex-1 flex flex-col">
           <h2 className={styles.heading2}>Withdraw</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
-              <label
-                className="block text-white text-sm font-bold mb-2"
-                htmlFor="packageName"
-              >
-                Network
-              </label>
-              <select
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="packageName"
-                value={networkSelected}
-                onChange={(e) => setNetworkSelected(Number(e.target.value))}
-              >
-                {listNetwork.map((network) => (
-                  <option key={network.id} value={network.id}>
-                    {network.name}
-                  </option>
-                ))}
-              </select>
-            </div>
             <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"
@@ -143,7 +123,7 @@ const WithdrawItemPop = ({ depositHistory }) => {
                 Wallet Address
               </label>
               <input
-                className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Wallet address that recevive that withdraw order amount"
@@ -161,7 +141,7 @@ const WithdrawItemPop = ({ depositHistory }) => {
                 Amount
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text" // Use "text" to fully control input validation
                 value={amount}
@@ -192,7 +172,7 @@ const WithdrawItemPop = ({ depositHistory }) => {
                 Fee
               </label>
               <input
-                className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Fee 2% of total withdrawal amount"

@@ -1,6 +1,6 @@
 import { people01, people02, people03, facebook, instagram, linkedin, youtube, telegram, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
 
-// export const API_ENDPOINT = "http://localhost:8888/api/v1/";
+// export const API_ENDPOINT = "http://localhost:8889/api/v1/";
 export const API_ENDPOINT = "https://115.79.196.67:8889/api/v1/";
 export const users = [
   {

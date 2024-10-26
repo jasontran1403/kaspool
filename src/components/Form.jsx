@@ -91,7 +91,9 @@ const Form = () => {
           })
           .catch((error) => {
             setButtonDisabled(false);
-            console.log(error);
+            toast.error(response.data, {
+              position: "top-center",
+            });
           });
       }
     });

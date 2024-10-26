@@ -143,7 +143,7 @@ const WithdrawItemMCT = ({ depositHistory }) => {
                 Wallet Address
               </label>
               <input
-                className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Wallet address that recevive that withdraw order amount"
@@ -161,7 +161,7 @@ const WithdrawItemMCT = ({ depositHistory }) => {
                 Amount
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text" // Use "text" to fully control input validation
                 value={amount}
@@ -192,7 +192,7 @@ const WithdrawItemMCT = ({ depositHistory }) => {
                 Fee
               </label>
               <input
-                className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Fee 2% of total withdrawal amount"

@@ -7,6 +7,7 @@ import DepositUSDT from "./pages/DepositUSDT";
 import DepositMCT from "./pages/DepositMCT";
 import SwapUsdtMCT from "./pages/SwapUsdtMCT";
 import Transfer from "./pages/Transfer";
+import TransferUSDT from "./pages/TransferUSDT";
 import WithdrawUSDT from "./pages/WithdrawUSDT";
 import WithdrawMCT from "./pages/WithdrawMCT";
 import Tree from "./pages/Tree";
@@ -121,6 +122,10 @@ export default function Router() {
         {
             path: "/withdraw-leader",
             element: isConnectedToWallet ? <WithdrawLeader /> : <Navigate to="/" />
+        },
+        {
+            path: "/transfer-usdt",
+            element: isConnectedToWallet ? <TransferUSDT /> : <Navigate to="/" />
         },
         {
             path: "/transfer-direct",

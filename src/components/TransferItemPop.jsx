@@ -156,29 +156,11 @@ const TransferItemPop = ({ swapHistory }) => {
           <h2 className={styles.heading2}>Internal Transfer</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="walletType">
-                Wallet Type
-              </label>
-              <select
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="walletType"
-                value={walletTypeId}
-                onChange={(e) => handleSetWalletType(e.target.value)}
-              >
-                {listWalletType.map((pkg) => (
-                  <option key={pkg.id} value={pkg.id}>
-                    {pkg.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-6">
               <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
                 Balance
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={balance}
@@ -191,7 +173,7 @@ const TransferItemPop = ({ swapHistory }) => {
                 Transfer to
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 placeholder="Display name or wallet address"
@@ -207,7 +189,7 @@ const TransferItemPop = ({ swapHistory }) => {
                 Amount
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={amount}
@@ -222,7 +204,7 @@ const TransferItemPop = ({ swapHistory }) => {
                 Fee
               </label>
               <input
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
                 value={fee}

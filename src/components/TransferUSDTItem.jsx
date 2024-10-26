@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
 
-const TransferItemDirect = ({ swapHistory }) => {
+const TransferUSDTItem = ({ swapHistory }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [walletAddress, setWalletAddress] = useState(localStorage.getItem("walletAddress"));
   const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
@@ -17,11 +17,10 @@ const TransferItemDirect = ({ swapHistory }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [listWalletType] = useState([
-    { id: 1, name: "Direct commission" },
+    { id: 1, name: "USDT Wallet" },
   ]);
   const [balances, setBalances] = useState([]);
   const [amountSwap, setAmountSwap] = useState(0);
-  const [walletTypeId, setWalletTypeId] = useState(1);
 
   const [listBalance, setListBalance] = useState([]);
   
@@ -38,7 +37,7 @@ const TransferItemDirect = ({ swapHistory }) => {
     Axios.request(config)
       .then((response) => {
         setBalances(response.data.balances);
-        setBalance(response.data.balances[2].balance);
+        setBalance(response.data.balances[0].balance);
       })
       .catch((error) => {
         console.log(error);
@@ -85,8 +84,8 @@ const TransferItemDirect = ({ swapHistory }) => {
           to: to,
           amount: amount,
           status: 1,
-          type: 2,
-          walletType: walletTypeId,
+          type: 1,
+          walletType: 2,
         });
 
         let config = {
@@ -224,4 +223,4 @@ const TransferItemDirect = ({ swapHistory }) => {
   );
 };
 
-export default TransferItemDirect;
+export default TransferUSDTItem;

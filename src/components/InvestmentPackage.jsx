@@ -34,6 +34,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
     Axios.request(config)
       .then((response) => {
         setMapchain(response.data.balances[0].balance);
+        setTransfer(response.data.balances[6].balance)
       })
       .catch((error) => {
         console.log(error);
@@ -195,7 +196,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
               Mining package amount
             </label>
             <input
-              className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="number"
               value={miningAmount}
@@ -211,10 +212,25 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
               USDT Balance
             </label>
             <input
-              className="bg-white shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="balance"
               type="text"
               value={formattedPrice(mapchain)}
+              readOnly
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="transfer"
+            >
+              Transfer Balance
+            </label>
+            <input
+              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="transfer"
+              type="text"
+              value={formattedPrice(transfer)}
               readOnly
             />
           </div>
