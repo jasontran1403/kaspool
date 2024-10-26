@@ -62,7 +62,7 @@ const WithdrawItemDaily = ({ depositHistory }) => {
       if (result.isConfirmed) {
         let data = JSON.stringify({
           walletAddress: walletAddress,
-          toWalletAddress: toWallet,
+          toWalletAddress: toWallet,  
           amount: amount,
           method: 7,
           walletType: networkSelected,

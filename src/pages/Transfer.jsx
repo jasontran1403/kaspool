@@ -30,6 +30,7 @@ const Transfer = () => {
   const [isLock] = useState(localStorage.getItem("is_lock"));
   const [modalLock, setModalLock] = useState(false);
   const isSmallScreen = window.innerWidth <= 768;
+  
 
   useEffect(() => {
     // Only proceed when notification is closed

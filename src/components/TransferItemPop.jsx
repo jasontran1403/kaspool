@@ -7,6 +7,8 @@ import Button from "./Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const TransferItemPop = ({ swapHistory }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -22,6 +24,38 @@ const TransferItemPop = ({ swapHistory }) => {
   const [balances, setBalances] = useState([]);
   const [amountSwap, setAmountSwap] = useState(0);
   const [walletTypeId, setWalletTypeId] = useState(1);
+
+  const [displayName, setDisplayName] = useState("Display name of receiver");
+
+  const handleGetDisplayName = () => {
+    if (to == "" || !to) return;
+    let config = {
+      method: "get",
+      url: `${API_ENDPOINT}auth/get-display-name/${to}`, // Adjusted URL
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        if (response.data.length > 0) {
+          setDisplayName(response.data);
+        } else {
+          setDisplayName("No display name was set yet");
+        }
+        toast.success("Display name field was updated", {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      })
+      .catch(() => {
+        toast.error("An error occurred. Please try again.", {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      });
+  };
 
   const [listBalance, setListBalance] = useState([]);
   
@@ -169,18 +203,43 @@ const TransferItemPop = ({ swapHistory }) => {
             </div>
 
             <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="tokenBalance"
+              >
                 Transfer to
               </label>
+              <div className="flex items-center bg-white shadow border rounded w-full">
+                <input
+                  className="bg-white text-dark w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="tokenBalance"
+                  type="text"
+                  placeholder="Display name or wallet address"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                />
+                <FontAwesomeIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={handleGetDisplayName}
+                  icon={faMagnifyingGlass}
+                  className="text-gray-500 mr-3"
+                />
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="tokenBalance"
+              >
+                Display name of receiver
+              </label>
               <input
-                className="bg-white text-dark text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
-                placeholder="Display name or wallet address"
-                value={to}
-                onChange={(e) => {
-                  setTo(e.target.value);
-                }}
+                value={displayName}
+                readOnly
               />
             </div>
 

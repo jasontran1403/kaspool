@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styles from "../style";
 import styled from "styled-components";
 import promotion from "../assets/promotion.jpg";
-import { MainDashboard, UserNavbar } from "../components";
+import { FooterDashboard, MainDashboard, UserNavbar } from "../components";
 import Form from "../components/Form";
 import LockModal from "../components/LockModal";
 
@@ -27,14 +27,12 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     padding: "0px!important",
     backgroundColor: "rgb(31 41 55 / var(--tw-bg-opacity))",
-
   },
   overlay: {
     zIndex: 1000,
     backgroundColor: "rgb(31 41 55 / var(--tw-bg-opacity))",
   },
 };
-
 
 const Dashboard = () => {
   const [walletAddress, setWalletAddress] = useState(
@@ -113,6 +111,12 @@ const Dashboard = () => {
           </Modal>
         </div>
       )}
+
+      <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+        <div className={`${styles.boxWidthDashboard}`}>
+          <FooterDashboard />
+        </div>
+      </div>
     </div>
   );
 };
