@@ -250,7 +250,7 @@ const LandingPage4RefCode = () => {
                                 </a>
                               </li>
                               <li>
-                                <a className="scrollspy-btn" href="/dashboard">
+                                <a className="scrollspy-btn" href={`/dashboard/refcode=${refcode}`}>
                                   Dashboard
                                 </a>
                               </li>
