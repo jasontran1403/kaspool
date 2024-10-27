@@ -291,7 +291,6 @@ const LandingPage4 = () => {
             <main>
               <section
                 className="hero hero__blockchain pos-rel bg_img"
-                data-background="/src/landingpage-assets/img/bg/blockchain_hero_bg.png"
               >
                 <div className="container">
                   <div className="row align-items-center">
@@ -483,7 +482,6 @@ const LandingPage4 = () => {
               <section
                 id="feature"
                 className="advantages advantages-bg pb-120"
-                data-background="/src/landingpage-assets/img/bg/advantages_bg.png"
               >
                 <div className="container">
                   <div className="sec-title style2 text-center mb-60">
@@ -769,7 +767,6 @@ const LandingPage4 = () => {
               <section
                 id="team"
                 className="team team__bg pb-120"
-                data-background="../landingpage-assets/img/bg/team_sec_bg.png"
               >
                 <div className="container">
                   <div className="sec-title style2 text-center mb-60">
@@ -1063,7 +1060,6 @@ const LandingPage4 = () => {
             </main>
             <footer
               className="site-footer footer__blockchain pos-rel pt-95 bg_img"
-              data-background="/src/landingpage-assets/img/bg/footer_bg2.jpg"
             >
               <div className="container">
                 <div className="footer__copyright-blc ul_li_between">

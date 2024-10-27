@@ -233,6 +233,7 @@ span {
 
 .bg_img {
   background-position: center center;
+  background-image: url(/src/landingpage-assets/img/bg/blockchain_hero_bg.png);
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -3323,6 +3324,87 @@ h6 {
   }
 }
 
+.item-1 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm1.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-2 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm2.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-3 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm3.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-4 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm4.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-1 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm1.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-5 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm5.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-6 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm6.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-7 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm7.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.item-8 {
+  border-radius: 20px;
+  opacity: 0.5;
+  background-image: url(../img/resources/rm8.jpg)!important;
+  z-index: 999;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .ico-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -5751,6 +5833,10 @@ body .mfp-wrap .mfp-container .mfp-content .mfp-close:hover::after {
   line-height: 18px;
   margin-left: 21px;
 }
+
+.team {
+  background-image: url(/src/landingpage-assets/img/bg/team_sec_bg.png);
+}
 .roadmap__head .icon {
   width: 74px;
   height: 74px;
@@ -5818,6 +5904,10 @@ body .mfp-wrap .mfp-container .mfp-content .mfp-close:hover::after {
   .roadmap__year .year--start {
     left: -10px;
   }
+}
+
+.site-footer {
+  background-image: url(/src/landingpage-assets/img/bg/footer_bg2.jpg);
 }
 .roadmap__year .year--end {
   right: -36px;
@@ -8140,6 +8230,7 @@ blockquote span {
 .advantages-bg {
   background-repeat: no-repeat;
   background-position: center 76%;
+  background-image: url(/src/landingpage-assets/img/bg/advantages_bg.png);
 }
 
 .advantages-table {
@@ -8612,7 +8703,9 @@ blockquote span {
 }
 
 .black-text {
-  color: rgb(255, 255, 255)!important; /* Light gray */}
+  color: rgb(255, 255, 255)!important; /* Light gray */
+  opacity: 1!important;
+}
 /*----------------------------------------*/
 /*  21. newslatter
 /*----------------------------------------*/
