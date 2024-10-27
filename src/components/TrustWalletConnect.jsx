@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createThirdwebClient } from "thirdweb";
+import { createThirdwebClient, defineChain } from "thirdweb";
 import {
   ConnectButton,
   useWalletInfo,
@@ -32,6 +32,14 @@ const TrustWalletConnect = () => {
   const [isLocalConnected, setIsLocalConnected] = useState(
     localStorage.getItem("walletAddress")?.length > 0
   );
+
+  const bscChain = defineChain({
+    id: 56, // BSC Mainnet chain ID
+    rpc: "https://bsc-dataseed.binance.org/" // BSC RPC endpoint
+  });
+  
+  console.log("A ", bscChain);
+
 
   useEffect(() => {
     if (activeAccount?.address) {
@@ -75,6 +83,7 @@ const TrustWalletConnect = () => {
     <div>
       <ConnectButton
         connectButton={{ label: "Connect" }}
+        chain={bscChain}
         client={client}
         wallets={wallets}
         connectModal={{

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styles from "../style";
 import styled from "styled-components";
-import { MainDashboard, Footer, UserNavbar } from "../components";
+import { MainDashboard, Footer, UserNavbar, FooterDashboard } from "../components";
 import TransferCardDirect from "../components/TransferCardDirect";
 import LockModal from "../components/LockModal";
 
@@ -59,7 +59,7 @@ const TransferDirect = () => {
   }
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
@@ -130,10 +130,18 @@ const TransferDirect = () => {
           </div>
         </div>
       ) : (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
           <></>
           // Modal noti
+          </div>
+        </div>
+      )}
+
+{isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
           </div>
         </div>
       )}

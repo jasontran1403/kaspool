@@ -8,6 +8,7 @@ import {
   Footer,
   UserNavbar,
   InvestmentCard,
+  FooterDashboard,
 } from "../components";
 import { API_ENDPOINT } from "../constants";
 import LockModal from "../components/LockModal";
@@ -65,7 +66,7 @@ const Investment = () => {
   }
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className="w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
@@ -124,19 +125,28 @@ const Investment = () => {
               }}
             >
               Your account is temporarily locked due to abusing a vulnerability
-              for profit, please check your email for further details information about this situation.
+              for profit, please check your email for further details
+              information about this situation.
             </p>
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={`${styles.flexStart} bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <InvestmentCard />
           </div>
         </div>
       ) : (
         <></>
-            // Modal noti
+        // Modal noti
+      )}
+
+      {isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
+          </div>
+        </div>
       )}
     </div>
   );

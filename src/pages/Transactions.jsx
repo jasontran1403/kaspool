@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styles from "../style";
 import styled from "styled-components";
 
-import { TransactionsPage, UserNavbar } from "../components";
+import { FooterDashboard, TransactionsPage, UserNavbar } from "../components";
 import Form from "../components/Form";
 import TransactionsCard from "../components/TransactionsCard";
 import LockModal from "../components/LockModal";
@@ -72,7 +72,7 @@ const Transactions = () => {
   }
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidthDashboard}`}>
           <UserNavbar />
@@ -136,7 +136,7 @@ const Transactions = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <TransactionsPage />
           </div>
@@ -144,6 +144,14 @@ const Transactions = () => {
       ) : (
         <></>
             // Modal noti
+      )}
+
+{isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
+          </div>
+        </div>
       )}
     </div>
   );

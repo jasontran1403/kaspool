@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../style";
 import styled from "styled-components";
 
-import { TreeVisualize, UserNavbar } from "../components";
+import { FooterDashboard, TreeVisualize, UserNavbar } from "../components";
 import Form from "../components/Form";
 import Modal from "react-modal";
 import LockModal from "../components/LockModal";
@@ -71,7 +71,7 @@ const Tree = () => {
   }
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidthDashboard}`}>
           <UserNavbar />
@@ -135,7 +135,7 @@ const Tree = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <div
             className={`${styles.boxWidthDashboard}`}
             style={{ overflowY: "scroll" }}
@@ -146,6 +146,14 @@ const Tree = () => {
       ) : (
         <></>
             // Modal noti
+      )}
+
+{isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
+          </div>
+        </div>
       )}
     </div>
   );

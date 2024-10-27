@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styles from "../style";
-import { Footer, UserNavbar } from "../components";
+import { Footer, FooterDashboard, UserNavbar } from "../components";
 import WithdrawCardUSDT from "../components/WithdrawCardUSDT";
 import Modal from "react-modal";
 const customStyles = {
@@ -42,14 +42,14 @@ const WithdrawUSDT = () => {
     window.location.href = "/dashboard";
   };
   return (
-    <div className="bg-primary w-full h-full">
+    <div className="w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
         </div>
       </div>
 
-      <div className={`bg-primary ${styles.flexStart} bg-image`}>
+      <div className={`${styles.flexStart} bg-image`}>
         <div className={`${styles.boxWidthDashboard}`}>
           {isInTree === "true" ? (
             <>
@@ -61,6 +61,14 @@ const WithdrawUSDT = () => {
           )}
         </div>
       </div>
+
+      {isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

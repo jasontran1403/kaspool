@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styles from "../style";
-import { SwapCardUsdtMCT, Footer, UserNavbar } from "../components";
+import { SwapCardUsdtMCT, Footer, UserNavbar, FooterDashboard } from "../components";
 import Modal from "react-modal";
 import styled from "styled-components";
 import LockModal from "../components/LockModal";
@@ -84,7 +84,7 @@ const SwapUsdtMCT = () => {
     closeLockModal();
   }
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
@@ -148,7 +148,7 @@ const SwapUsdtMCT = () => {
           </div>
         </LockModal>
       ) : (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
             {isInTree === "true" ? (
               <>
@@ -158,6 +158,14 @@ const SwapUsdtMCT = () => {
               <></>
             // Modal noti
             )}
+          </div>
+        </div>
+      )}
+
+{isInTree === "true" && (
+        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
+          <div className={`${styles.boxWidthDashboard}`}>
+            <FooterDashboard />
           </div>
         </div>
       )}
