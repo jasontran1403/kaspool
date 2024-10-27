@@ -13,6 +13,61 @@
   );
   --card-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
 }
+.card {
+  flex: 1 0 calc(33.33% - 20px); /* 3 cards displayed at once, accounting for gap */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in width */
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+  color: white; /* Text color */
+  text-align: center; /* Center align text */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Optional border */
+  border-radius: 10px; /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  backdrop-filter: blur(10px); /* Glass morph effect */
+  margin: 10px; /* Add margin to create gap between cards */
+}
+
+.slider-container {
+  overflow: hidden; /* Hide overflow for a clean look */
+  width: 100%; /* Set width according to your needs */
+}
+
+.slider {
+  display: flex; /* Use flexbox for horizontal layout */
+  width: 100%; /* Total width to accommodate all cards */
+  transition: transform 0.5s ease-in-out; /* Smooth transition for the slider */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .card {
+    flex: 1 0 100%; /* Each card takes full width */
+    margin: 0; /* Remove margin for full width cards */
+  }
+
+  .slider {
+    transition: transform 0.5s ease-in-out; /* Keep the same transition for sliding */
+  }
+}
+
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .card {
+    flex: 1 0 100%; /* Show 1 card at a time */
+    width: 100svw; /* Each card has 100svw */
+    margin: 0; /* Remove margin for full width */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  }
+  
+  .slider {
+    width: 100%; /* Adjust slider width */
+    margin-left: 0; /* Remove negative margin for slider */
+  }
+}
+
+
+
 
 .wallet-container {
   display: flex;

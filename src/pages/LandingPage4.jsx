@@ -42,6 +42,7 @@ import sIcon from "../landingpage-assets/img/icon/s_icon.png";
 import rmIcon from "../landingpage-assets/img/icon/rm_icon.png";
 
 import Web3 from "web3";
+import Slider from "../components/Slider";
 
 const Header = styled.header`
   transition: background-color 0.3s ease; /* Smooth transition for background color */
@@ -759,6 +760,22 @@ const LandingPage4 = () => {
                           </strong>
                         </li>
                       </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="token-update pb-130">
+                <div className="container">
+                  <div className="sec-title style2 text-center mb-60">
+                    <h2 className="sec-title__title text-50 mb-25">
+                      KASPOOL Mining Package
+                    </h2>
+                    <p>Stay Informed with Live Data and Analysis</p>
+                  </div>
+                  <div className="row mt-none-30">
+                    <div className="col-lg-12 mt-30">
+                      <Slider />
                     </div>
                   </div>
                 </div>
