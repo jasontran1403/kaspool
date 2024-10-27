@@ -100,9 +100,8 @@ const Form = ({ refcode }) => {
           .then((response) => {
             if (response.data === "ok") {
               setButtonDisabled(true);
-
               localStorage.setItem("is_in_tree", "true");
-              toast.success("Referral user updated successfully!", {
+              toast.success("Referral updated successfully!", {
                 position: "top-center",
                 autoClose: 1500,
                 onClose: () => window.location.href = "/dashboard",
