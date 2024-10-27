@@ -5,7 +5,7 @@ import styled from "styled-components";
 import promotion from "../assets/promotion.jpg";
 import { FooterDashboard, MainDashboard, UserNavbar } from "../components";
 import Form from "../components/Form";
-import LockModal from "../components/LockModal";
+import { useLocation, Navigate } from "react-router-dom";
 
 const CloseButton = styled.svg`
   width: 20px;
@@ -34,7 +34,7 @@ const customStyles = {
   },
 };
 
-const Dashboard = () => {
+const DashboardRefCode = () => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -53,23 +53,32 @@ const Dashboard = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalLock, setModalLock] = useState(false);
 
+  const location = useLocation();
+
+  // Extract the full path after "/"
+  const fullPath = location.pathname.slice(11); // Remove leading "/"
+  // Check if the path matches "refcode=<actual-code>"
+  const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
+
+  const refcode = refcodeMatch ? refcodeMatch[1] : null;
+
   function handleOpenModal(open) {
     closeLockModal();
   }
 
   useEffect(() => {
     if (isInTree === "true") {
-      setModalLock(false);
+      setIsOpen(false);
     } else if (isInTree === "false") {
-      setModalLock(true);
+      setIsOpen(true);
     }
 
-    // if (isLock === "true") {
-    //   setModalLock(true);
-    // } else if (isLock === "false") {
-    //   setModalLock(false);
-    // }
-  }, [isInTree]); // Trigger when notification modal closes
+    if (isLock === "true") {
+      setModalLock(true);
+    } else if (isLock === "false") {
+      setModalLock(false);
+    }
+  }, [isInTree, isLock]); // Trigger when notification modal closes
 
   const closeModal = () => {
     setIsOpen(false);
@@ -81,6 +90,8 @@ const Dashboard = () => {
 
   // Determine if the screen is small or large
   const isSmallScreen = window.innerWidth <= 768;
+
+  console.log(refcode);
 
   const closeNotificationModal = () => {
     setNotificationModalOpen(false); // Close the notification and continue logic
@@ -95,77 +106,24 @@ const Dashboard = () => {
       </div>
 
       {/* Lock Modal */}
-      {isInTree === "true" && (
+      {isInTree === "true" ? (
         <div className={`bg-primary ${styles.flexStart} bg-image`}>
-          <MainDashboard />
+          <h1>You in the tree</h1>
         </div>
-      )}
-
-      <LockModal
-        isOpen={modalLock}
-        onRequestClose={closeLockModal}
-        contentLabel="Account lock"
-      >
-        <CloseButton
-          onClick={(e) => handleOpenModal(false)}
-          style={{ zIndex: "9999" }}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20.39 20.39"
-        >
-          <title>X</title>
-          <line
-            x1="19.39"
-            y1="19.39"
-            x2="1"
-            y2="1"
-            fill="none"
-            stroke="#5c3aff"
-            strokeLinecap="round"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-          />
-          <line
-            x1="1"
-            y1="19.39"
-            x2="19.39"
-            y2="1"
-            fill="none"
-            stroke="#5c3aff"
-            strokeLinecap="round"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-          />
-        </CloseButton>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%", // Ensure the content takes the full height of the modal
-          }}
-        >
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: isSmallScreen ? "30px" : "40px", // Adjust line height based on screen size
-              color: "orangered",
-            }}
+      ) : (
+        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Update information"
           >
-            Your account is not in our system, please contact with your refferal
-            for further information.
-          </p>
-        </div>
-      </LockModal>
-
-      {isInTree === "true" && (
-        <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
-          <div className={`${styles.boxWidthDashboard}`}>
-            <FooterDashboard />
-          </div>
+            <Form refcode={refcode}/>
+          </Modal>
         </div>
       )}
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardRefCode;

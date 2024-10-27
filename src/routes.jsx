@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useRoutes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import DashboardRefCode from './pages/DashboardRefCode';
 import Error404 from "./pages/Error404";
 import Investment from "./pages/Investment";
 import DepositUSDT from "./pages/DepositUSDT";
@@ -33,6 +34,8 @@ import WithdrawDirect from "./pages/WithdrawDirect";
 import WithdrawBinary from "./pages/WithdrawBinary";
 import WithdrawLeader from "./pages/WithdrawLeader";
 import LandingPage3 from "./pages/LandingPage4";
+import LandingPage3RefCode from "./pages/LandingPage4RefCode";
+
 
 export default function Router() {
     // Initialize with the value from localStorage
@@ -52,8 +55,16 @@ export default function Router() {
             element: <LandingPage3 />
         },
         {
+            path: "/:refcode",
+            element: <LandingPage3RefCode />
+        },
+        {
             path: "/dashboard",
             element: isConnectedToWallet ? <Dashboard /> : <Navigate to="/" />
+        },
+        {
+            path: "/dashboard/:refcode",
+            element: isConnectedToWallet ? <DashboardRefCode /> : <Navigate to="/" />
         },
         {
             path: "/staking",
@@ -276,7 +287,6 @@ export default function Router() {
             path: "/admin/tree/:id",
             element: isAdmin ? <Tree /> : <Navigate to="/" />
         },
-        // end
         {
             path: "/disconnect",
             element: <DisconnectComponent />

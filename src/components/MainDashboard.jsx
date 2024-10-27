@@ -139,13 +139,13 @@ const MainDashboard = () => {
               wallet={false}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
             />
-            <ReflinkCard
+            {/* <ReflinkCard
               content={"Reflink"}
               walletAddress={walletAddress}
               leftRefCode={leftRefCode}
               rightRefCode={rightRefCode}
               className="flex-1 w-full max-w-xs" // Adjust width for small screens
-            />
+            /> */}
           </div>
 
           {/* Second Row - 3 Items */}

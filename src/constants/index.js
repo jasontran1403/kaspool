@@ -2,6 +2,7 @@ import { people01, people02, people03, facebook, instagram, linkedin, youtube, t
 
 // export const API_ENDPOINT = "http://localhost:8889/api/v1/";
 export const API_ENDPOINT = "https://115.79.196.67:8889/api/v1/";
+
 export const users = [
   {
     name: 'Jane Cooper 1', 

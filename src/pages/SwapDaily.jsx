@@ -156,14 +156,8 @@ const SwapDaily = () => {
                 <SwapCardDaily />
               </>
             ) : (
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Update sponsor"
-              >
-                <Form />
-              </Modal>
+              <></>
+            // Modal noti
             )}
           </div>
         </div>

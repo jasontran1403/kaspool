@@ -1,21 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
 
-const Form = () => {
+const Form = ({ refcode }) => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const [sponsorCode, setSponsorCode] = useState("");
+  const [sponsorCode, setSponsorCode] = useState(refcode);
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [accessToken] = useState(localStorage.getItem("access_token"));
-  
+
   const [showSponsorError, setShowSponsorError] = useState(true);
   const [showDisplayNameError, setShowDisplayNameError] = useState(true);
+  const [rootDisplayName, setRootDisplayName] = useState("");
+  const [placementDislayName, setPlacementDisplayName] = useState("");
+  const [side, setSide] = useState("");
+
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: `${API_ENDPOINT}management/get-ref-link-info/${refcode}`,
+      headers: { 
+        Authorization: accessToken,
+      }
+    };
+    
+    Axios.request(config)
+    .then((response) => {
+      setRootDisplayName(response.data.rootDisplayName);
+      setPlacementDisplayName(response.data.placementDisplayName);
+      setSide(response.data.side);
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    
+  }, []);
 
   const updateHandle = () => {
     // Check if fields are filled and set error states
@@ -28,7 +54,7 @@ const Form = () => {
 
     // If any required field is empty, return early
     if (isSponsorCodeEmpty || isDisplayNameEmpty) {
-      toast.error("Sponsor code and display name are required!", {
+      toast.error("Display name are required!", {
         position: "top-center",
       });
       return;
@@ -44,8 +70,8 @@ const Form = () => {
       cancelButtonText: "No, cancel",
       reverseButtons: true,
       customClass: {
-        confirmButton: 'custom-confirm-button', // Custom class for confirm button
-        cancelButton: 'custom-cancel-button',   // Custom class for cancel button
+        confirmButton: "custom-confirm-button", // Custom class for confirm button
+        cancelButton: "custom-cancel-button", // Custom class for cancel button
       },
       buttonsStyling: false,
     }).then((result) => {
@@ -53,7 +79,7 @@ const Form = () => {
         setButtonDisabled(true);
         let data = JSON.stringify({
           walletAddress: localStorage.getItem("walletAddress"),
-          code: sponsorCode,
+          code: refcode,
           email: email,
           phoneNumber: phoneNumber,
           displayName: displayName,
@@ -79,7 +105,7 @@ const Form = () => {
               toast.success("Referral user updated successfully!", {
                 position: "top-center",
                 autoClose: 1500,
-                onClose: () => window.location.reload(),
+                onClose: () => window.location.href = "/dashboard",
               });
             } else {
               setButtonDisabled(false);
@@ -102,33 +128,81 @@ const Form = () => {
   return (
     <>
       <div className="bg-gray dark:bg-gray-800 dark:border-gray-700 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="refcode"
+            >
+              Refcode
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="refcode"
+              type="text"
+              placeholder="Refcode"
+              value={refcode}
+              readOnly
+            />
+          </div>
+
+          <div>
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="rootDisplayName"
+            >
+              Root Display Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="rootDisplayName"
+              type="text"
+              placeholder="Root Display Name"
+              value={rootDisplayName}
+              readOnly
+            />
+          </div>
+
+          <div>
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="placementDisplayName"
+            >
+              Placement Display Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="placementDisplayName"
+              type="text"
+              placeholder="Placement Display Name"
+              value={placementDislayName}
+              readOnly
+            />
+          </div>
+
+          <div>
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="side"
+            >
+              Side
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              id="side"
+              type="text"
+              placeholder="Side"
+              value={side}
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className="mb-6">
           <label
             className="block text-white text-sm font-bold mb-2"
-            htmlFor="sponsorcode"
+            htmlFor="email"
           >
-            Sponsor code
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            id="sponsorcode"
-            type="text"
-            placeholder="Sponsor code"
-            value={sponsorCode}
-            onChange={(e) => {
-              setSponsorCode(e.target.value);
-              setShowSponsorError(e.target.value === ""); // Update error state
-            }}
-            required
-          />
-          {showSponsorError && (
-            <p className="text-red-500 text-xs italic">
-              **Sponsor code field is required
-            </p>
-          )}
-        </div>
-        <div className="mb-6">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input

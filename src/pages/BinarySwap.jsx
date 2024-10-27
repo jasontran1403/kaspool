@@ -72,12 +72,14 @@ const BinarySwap = () => {
     }
   }, [isInTree, isLock]); // Trigger when notification modal closes
 
-  const closeLockModal = () => {
-    setModalLock(false);
-  };
+  
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const closeLockModal = () => {
+    setModalLock(false);
   };
 
   function handleOpenModal(open) {

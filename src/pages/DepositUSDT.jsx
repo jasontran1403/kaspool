@@ -150,18 +150,8 @@ const DepositUSDT = () => {
           </div>
         </div>
       ) : (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
-          <div className={`${styles.boxWidthDashboard}`}>
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-              style={customStyles}
-              contentLabel="Update sponsor"
-            >
-              <Form />
-            </Modal>
-          </div>
-        </div>
+        <></>
+            // Modal noti
       )}
     </div>
   );
