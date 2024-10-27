@@ -151,8 +151,7 @@ const Dashboard = () => {
               color: "orangered",
             }}
           >
-            Your account is not in our system, please contact with your refferal
-            for further information.
+            Your account is not registered in our system. Please contact your referrer for further assistance.
           </p>
         </div>
       </LockModal>
