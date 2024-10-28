@@ -21,7 +21,7 @@ const TEXT_COLOR = "#E8FE61";
 const BSC_CHAIN_ID = 56; // Binance Smart Chain Mainnet Chain ID
 
 const wallets = [
-  createWallet("io.metamask"),
+  // createWallet("io.metamask"),
   // createWallet("com.coinbase.wallet"),
   // createWallet("com.trustwallet.app"),
   // createWallet("org.uniswap"),
