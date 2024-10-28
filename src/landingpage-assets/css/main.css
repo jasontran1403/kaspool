@@ -3588,6 +3588,7 @@ h6 {
 .btc-header {
   top: 15px;
 }
+
 @media (max-width: 767px) {
   .btc-header {
     top: 0;
@@ -3600,8 +3601,18 @@ h6 {
 
 @media (max-width: 291px) {
   .main-menu {
-    margin-left: 240px!important;
+    margin-left: 215px!important;
     margin-right: 0!important;
+  }
+
+  .header__left {
+    display: none;
+  }
+}
+
+@media (max-width: 392px) {
+  .header__left {
+    display: none;
   }
 }
 .btc-header .header-area {
