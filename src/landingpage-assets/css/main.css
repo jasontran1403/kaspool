@@ -3592,6 +3592,17 @@ h6 {
   .btc-header {
     top: 0;
   }
+
+  .main-menu {
+    z-index: 9999;
+  }
+}
+
+@media (max-width: 291px) {
+  .main-menu {
+    margin-left: 240px!important;
+    margin-right: 0!important;
+  }
 }
 .btc-header .header-area {
   padding: 15px 0;

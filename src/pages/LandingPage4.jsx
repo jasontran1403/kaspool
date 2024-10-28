@@ -208,6 +208,12 @@ const LandingPage4 = () => {
                       </nav>
                     </div>
                     <div className="header__action ul_li">
+                      <p className="blc-btn blc-btn-connect">
+                        <TrustWalletConnect
+                          transparent={true}
+                          label={"connect"}
+                        />
+                      </p>
                       <div className="d-lg-none">
                         <a
                           className="header__bar hamburger_menu"
@@ -250,12 +256,6 @@ const LandingPage4 = () => {
                           </Menu>
                         </a>
                       </div>
-                      <p className="blc-btn blc-btn-connect">
-                        <TrustWalletConnect
-                          transparent={true}
-                          label={"connect"}
-                        />
-                      </p>
                     </div>
                   </div>
                 </div>
