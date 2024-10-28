@@ -6,6 +6,7 @@ import {
   useDisconnect,
   useActiveWalletChain,
   useActiveAccount,
+  darkTheme,
 } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,17 +15,20 @@ const client = createThirdwebClient({
   clientId: "c4917b86730652d8197cc695ca2b38eb",
 });
 
+const BACKGROUND_COLOR = "#272487";
+const TEXT_COLOR = "#E8FE61";
+
 const BSC_CHAIN_ID = 56; // Binance Smart Chain Mainnet Chain ID
 
 const wallets = [
   createWallet("io.metamask"),
-  createWallet("com.coinbase.wallet"),
-  createWallet("com.trustwallet.app"),
-  createWallet("org.uniswap"),
+  // createWallet("com.coinbase.wallet"),
+  // createWallet("com.trustwallet.app"),
+  // createWallet("org.uniswap"),
   createWallet("com.safepal"),
 ];
 
-const TrustWalletConnect = () => {
+const TrustWalletConnect = ({ transparent, label }) => {
   const chainId = useActiveWalletChain();
   const activeAccount = useActiveAccount();
   const { isConnected } = useWalletInfo(client);
@@ -35,11 +39,8 @@ const TrustWalletConnect = () => {
 
   const bscChain = defineChain({
     id: 56, // BSC Mainnet chain ID
-    rpc: "https://bsc-dataseed.binance.org/" // BSC RPC endpoint
+    rpc: "https://bsc-dataseed.binance.org/", // BSC RPC endpoint
   });
-  
-  console.log("A ", bscChain);
-
 
   useEffect(() => {
     if (activeAccount?.address) {
@@ -82,10 +83,12 @@ const TrustWalletConnect = () => {
   return (
     <div>
       <ConnectButton
-        connectButton={{ label: "Connect" }}
+        connectButton={{ label }}
         chain={bscChain}
         client={client}
         wallets={wallets}
+        showAllWallets={false}
+        isEmbed={true}
         connectModal={{
           size: "compact",
           title: "Kaspool",

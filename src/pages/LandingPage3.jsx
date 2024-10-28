@@ -417,7 +417,9 @@ const LandingPage3 = () => {
           <nav>
             <ul className="landingpage-nav">
               <li>
-                <TrustWalletConnect />
+                <p className="blc-btn blc-btn-connect">
+                  <TrustWalletConnect transparent={true} label={"connect"} />
+                </p>
               </li>
             </ul>
           </nav>

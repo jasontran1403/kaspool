@@ -92,7 +92,9 @@ const UserNavbar = () => {
         ))}
       </ul>
       <div className="flex justify-end items-center">
-        <TrustWalletConnect />
+        <p className="blc-btn blc-btn-connect">
+          <TrustWalletConnect transparent={true} label={"connect"} />
+        </p>
       </div>
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <img

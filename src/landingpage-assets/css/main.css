@@ -3894,6 +3894,42 @@ h6 {
   position: relative;
   z-index: 1;
 }
+
+.blc-btn-started {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding: 15px 60px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.blc-btn-connect {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding: 15px 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
 .blc-btn::before,
 .blc-btn::after {
   position: absolute;
@@ -4496,7 +4532,7 @@ body .mfp-wrap .mfp-container .mfp-content .mfp-close:hover::after {
 }
 @media (max-width: 767px) {
   .hero__blockchain {
-    padding-top: 130px;
+    padding-top: 200px;
     min-height: 800px;
   }
 }
@@ -8570,10 +8606,33 @@ blockquote span {
   position: relative;
   z-index: 1;
 }
-@media (max-width: 767px) {
+
+.content {
+  width: 100%;
+}
+
+.content-bod {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .content {
+    width: 60%;
+  }
+
+  .content-bod {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
   .content {
     width: 80%;
   }
+}
+
+@media (max-width: 767px) {
+  
   .service__single {
     padding: 50px 30px;
   }

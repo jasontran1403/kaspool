@@ -250,7 +250,12 @@ const LandingPage4 = () => {
                           </Menu>
                         </a>
                       </div>
-                      <TrustWalletConnect />
+                      <p className="blc-btn blc-btn-connect">
+                        <TrustWalletConnect
+                          transparent={true}
+                          label={"connect"}
+                        />
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -290,9 +295,7 @@ const LandingPage4 = () => {
             </aside>
             <div className="body-overlay" />
             <main>
-              <section
-                className="hero hero__blockchain pos-rel bg_img"
-              >
+              <section className="hero hero__blockchain pos-rel bg_img">
                 <div className="container">
                   <div className="row align-items-center">
                     <div className="col-lg-7">
@@ -306,16 +309,23 @@ const LandingPage4 = () => {
                           game-changer.
                         </p>
                         <div className="btns">
+                          {/* <p className="blc-btn">
+                            <TrustWalletConnect
+                              transparent={true}
+                              className="blc-btn"
+                              label={"get started"}
+                            />
+                          </p> */}
                           <a className="blc-btn" href="#!">
                             get started
                           </a>
-                          <a className="blc-btn blc-btn--white" href="#!">
+                          {/* <a className="blc-btn blc-btn--white" href="#!">
                             white paper
-                          </a>
+                          </a> */}
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-5">
+                    <div className="col-lg-5" id="banner-content">
                       <div className="hero__blockchain-icon pos-rel">
                         <div className="icon ul_li icon--1 absolute">
                           <span className="text-white mr-5">
@@ -480,10 +490,7 @@ const LandingPage4 = () => {
                   </div>
                 </div>
               </section>
-              <section
-                id="feature"
-                className="advantages advantages-bg pb-120"
-              >
+              <section id="feature" className="advantages advantages-bg pb-120">
                 <div className="container">
                   <div className="sec-title style2 text-center mb-60">
                     <h2 className="sec-title__title text-50 mb-25">
@@ -501,11 +508,11 @@ const LandingPage4 = () => {
                   <table className="advantages-table table-responsive">
                     <thead>
                       <tr>
-                        <th>Futures</th>
-                        <th>IDV System</th>
-                        <th>Creating Apps</th>
-                        <th>Confidentiality</th>
-                        <th>Without Gadget</th>
+                        <th>Mining Pool</th>
+                        <th>KasPool Wallet</th>
+                        <th>KasPoolChain</th>
+                        <th>KasExchange</th>
+                        <th>Decentralized Platform</th>
                       </tr>
                     </thead>
                     {/* <tbody>
@@ -781,10 +788,7 @@ const LandingPage4 = () => {
                 </div>
               </section>
 
-              <section
-                id="team"
-                className="team team__bg pb-120"
-              >
+              <section id="team" className="team team__bg pb-120">
                 <div className="container">
                   <div className="sec-title style2 text-center mb-60">
                     <h2 className="sec-title__title text-50 mb-25">
@@ -798,7 +802,7 @@ const LandingPage4 = () => {
                         <div className="avatar">
                           <img src={cto} alt="" />
                         </div>
-                        <div className="content">
+                        <div className="content-bod">
                           <h3>DAVID HARRISON</h3>
                           <span>CTO</span>
                         </div>
@@ -809,7 +813,7 @@ const LandingPage4 = () => {
                         <div className="avatar">
                           <img src={ceo} alt="" />
                         </div>
-                        <div className="content">
+                        <div className="content-bod">
                           <h3>MICHAEL REYNOLDS</h3>
                           <span>CEO</span>
                         </div>
@@ -820,7 +824,7 @@ const LandingPage4 = () => {
                         <div className="avatar">
                           <img src={coo} alt="" />
                         </div>
-                        <div className="content">
+                        <div className="content-bod">
                           <h3>JESSICA CARTER</h3>
                           <span>COO</span>
                         </div>
@@ -1075,9 +1079,7 @@ const LandingPage4 = () => {
                 </div>
               </section>
             </main>
-            <footer
-              className="site-footer footer__blockchain pos-rel pt-95 bg_img"
-            >
+            <footer className="site-footer footer__blockchain pos-rel pt-95 bg_img">
               <div className="container">
                 <div className="footer__copyright-blc ul_li_between">
                   <div className="footer__copyright-text mt-15">

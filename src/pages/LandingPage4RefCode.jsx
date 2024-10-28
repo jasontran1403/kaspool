@@ -208,7 +208,10 @@ const LandingPage4RefCode = () => {
                             </a>
                           </li>
                           <li>
-                            <a className="scrollspy-btn" href={`/dashboard/refcode=${refcode}`}>
+                            <a
+                              className="scrollspy-btn"
+                              href={`/dashboard/refcode=${refcode}`}
+                            >
                               Dashboard
                             </a>
                           </li>
@@ -250,7 +253,10 @@ const LandingPage4RefCode = () => {
                                 </a>
                               </li>
                               <li>
-                                <a className="scrollspy-btn" href={`/dashboard/refcode=${refcode}`}>
+                                <a
+                                  className="scrollspy-btn"
+                                  href={`/dashboard/refcode=${refcode}`}
+                                >
                                   Dashboard
                                 </a>
                               </li>
@@ -258,7 +264,12 @@ const LandingPage4RefCode = () => {
                           </Menu>
                         </a>
                       </div>
-                      <TrustWalletConnect />
+                      <p className="blc-btn blc-btn-connect">
+                        <TrustWalletConnect
+                          transparent={true}
+                          label={"connect"}
+                        />
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -318,9 +329,9 @@ const LandingPage4RefCode = () => {
                           <a className="blc-btn" href="#!">
                             get started
                           </a>
-                          <a className="blc-btn blc-btn--white" href="#!">
+                          {/* <a className="blc-btn blc-btn--white" href="#!">
                             white paper
-                          </a>
+                          </a> */}
                         </div>
                       </div>
                     </div>
@@ -511,11 +522,11 @@ const LandingPage4RefCode = () => {
                   <table className="advantages-table table-responsive">
                     <thead>
                       <tr>
-                        <th>Futures</th>
-                        <th>IDV System</th>
-                        <th>Creating Apps</th>
-                        <th>Confidentiality</th>
-                        <th>Without Gadget</th>
+                        <th>Mining Pool</th>
+                        <th>KasPool Wallet</th>
+                        <th>KasPoolChain</th>
+                        <th>KasExchange</th>
+                        <th>Decentralized Platform</th>
                       </tr>
                     </thead>
                     {/* <tbody>
