@@ -5,8 +5,19 @@ import logo from "../assets/logo.png";
 import { userNavLinks } from "../constants";
 import { API_ENDPOINT } from "../constants";
 import TrustWalletConnect from "./TrustWalletConnect";
+import { useLocation, Navigate } from "react-router-dom";
 
 const UserNavbar = () => {
+  const locationRef = useLocation();
+
+  // Extract the full path after "/"
+  const fullPath = locationRef.pathname.slice(11); // Remove leading "/"
+  // Check if the path matches "refcode=<actual-code>"
+  const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
+
+  const refcode = refcodeMatch ? refcodeMatch[1] : null;
+
+  console.log(refcode);
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +83,8 @@ const UserNavbar = () => {
           >
             {isAdmin ? (
               <a href={`/admin/${nav.id}/${id}`}>{nav.title}</a>
+            ) : refcode !== null && nav.id === "dashboard" ? (
+              <a href={`/${nav.id}/refcode=${refcode}`}>{nav.title}</a>
             ) : (
               <a href={`/${nav.id}`}>{nav.title}</a>
             )}
@@ -106,6 +119,8 @@ const UserNavbar = () => {
               >
                 {isAdmin ? (
                   <a href={`/admin/${nav.id}/${id}`}>{nav.title}</a>
+                ) : refcode !== null && nav.id === "dashboard" ? (
+                  <a href={`/${nav.id}/refcode=${refcode}`}>{nav.title}</a>
                 ) : (
                   <a href={`/${nav.id}`}>{nav.title}</a>
                 )}
