@@ -241,7 +241,7 @@ body {
   padding-block: 10em;
 }
 header {
-  padding-block: 1em;
+  padding-block: 0;
   position: fixed;
   top: 0;
   width: 100%;
