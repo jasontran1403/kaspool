@@ -97,8 +97,8 @@ const LandingPage4RefCode = () => {
     };
   }, []);
 
+  console.log(refcode);
   const showMenuMobile = () => {
-    console.log("a");
     setIsOpen((prev) => !prev); // Toggle menu visibility
   };
 
@@ -106,48 +106,6 @@ const LandingPage4RefCode = () => {
   const [isConnected] = useState(
     localStorage.getItem("walletAddress")?.length > 0
   );
-
-  // Hàm kết nối với Trust Wallet
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      try {
-        // Yêu cầu kết nối tài khoản
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        const accountAddress = accounts[0];
-        setAccount(accountAddress);
-        // Kiểm tra mạng BSC (Binance Smart Chain)
-        const chainId = await web3.eth.getChainId();
-        if (chainId === BigInt(56)) {
-          localStorage.setItem("walletAddress", accountAddress);
-          localStorage.setItem("publicKey", accountAddress);
-          localStorage.setItem("walletStateInit", accountAddress);
-          window.location.href = "/";
-        }
-      } catch (error) {
-        console.error("Error: ", error);
-      }
-    } else {
-      alert("Please install any wallet platform that support BSC Network.");
-    }
-  };
-
-  // Hàm ngắt kết nối ví
-  const disconnectWallet = () => {
-    setAccount(null);
-    localStorage.removeItem("walletAddress");
-    localStorage.removeItem("publicKey");
-    localStorage.removeItem("walletStateInit");
-    localStorage.removeItem("is_in_tree");
-    localStorage.removeItem("is_lock");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("bep20");
-    localStorage.removeItem("management");
-    window.location.href = "/";
-  };
 
   return (
     <div className="home-blockchain">

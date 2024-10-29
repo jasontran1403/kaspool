@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Modal from "react-modal";
 import Axios from "axios";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import Router from "./routes";
 import { API_ENDPOINT } from "./constants";
 import "./index.css";
@@ -15,6 +15,15 @@ function App() {
   const [lastStatus, setLastStatus] = useState();
   const isAdmin = window.location.href.includes("/admin"); // Kiểm tra URL có chứa '/admin' không
   const id = location.pathname.split("/admin/dashboard/")[1]; // Lấy ID từ URL
+
+  const locationRef = useLocation();
+
+  // Extract the full path after "/"
+  const fullPath = locationRef.pathname.slice(1); // Remove leading "/"
+
+  // Check if the path matches "refcode=<actual-code>"
+  const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
+  const refcode = refcodeMatch ? refcodeMatch[1] : null;
 
   useEffect(() => {
     if (isAdmin && id) {

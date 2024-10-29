@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useLocation, useParams, useRoutes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import DashboardRefCode from './pages/DashboardRefCode';
 import Error404 from "./pages/Error404";
@@ -38,6 +38,14 @@ import LandingPage3RefCode from "./pages/LandingPage4RefCode";
 
 
 export default function Router() {
+    const locationRef = useLocation();
+
+  // Extract the full path after "/"
+  const fullPath = locationRef.pathname.slice(11); // Remove leading "/"
+  // Check if the path matches "refcode=<actual-code>"
+  const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
+
+  const refcode = refcodeMatch ? refcodeMatch[1] : null;
     // Initialize with the value from localStorage
     const [isConnectedToWallet, setIsConnectedToWallet] = useState(() => {
         return (
@@ -64,7 +72,7 @@ export default function Router() {
         },
         {
             path: "/dashboard/:refcode",
-            element: isConnectedToWallet ? <DashboardRefCode /> : <Navigate to="/" />
+            element: isConnectedToWallet ? <DashboardRefCode /> : <Navigate to={`/refcode=${refcode}`} />
         },
         {
             path: "/staking",

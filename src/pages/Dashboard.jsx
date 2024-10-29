@@ -6,6 +6,7 @@ import promotion from "../assets/promotion.jpg";
 import { FooterDashboard, MainDashboard, UserNavbar } from "../components";
 import Form from "../components/Form";
 import LockModal from "../components/LockModal";
+import { useLocation } from "react-router-dom";
 
 const CloseButton = styled.svg`
   width: 20px;
@@ -52,6 +53,15 @@ const Dashboard = () => {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalLock, setModalLock] = useState(false);
+
+  const location = useLocation();
+
+  // Extract the full path after "/"
+  const fullPath = location.pathname.slice(1); // Remove leading "/"
+
+  // Check if the path matches "refcode=<actual-code>"
+  const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
+  const refcode = refcodeMatch ? refcodeMatch[1] : null;
 
   function handleOpenModal(open) {
     closeLockModal();

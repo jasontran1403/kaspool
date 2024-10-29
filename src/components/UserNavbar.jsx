@@ -37,29 +37,6 @@ const UserNavbar = () => {
     openModal();
   };
 
-  const handleDisconnect = async () => {
-    // Xóa thông tin ví khi ngắt kết nối
-    localStorage.removeItem("walletAddress");
-    localStorage.removeItem("publicKey");
-    localStorage.removeItem("walletStateInit");
-    localStorage.removeItem("is_in_tree");
-    localStorage.removeItem("is_lock");
-    localStorage.removeItem("bep20");
-    let config = {
-      method: "get",
-      url: `${API_ENDPOINT}auth/logout/${localStorage.getItem("access_token")}`,
-      headers: {
-        "ngrok-skip-browser-warning": "69420",
-      },
-    };
-
-    Axios.request(config).then((response) => {
-      if (response.data) {
-        window.location.href = "/";
-      }
-    });
-  };
-
   return (
     <nav className="w-full flex flex-1 justify-between items-center navbar">
       <a href="/" className="">

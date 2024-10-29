@@ -98,7 +98,7 @@ const DashboardRefCode = () => {
   };
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidthDashboard}`}>
           <UserNavbar />
@@ -107,11 +107,11 @@ const DashboardRefCode = () => {
 
       {/* Lock Modal */}
       {isInTree === "true" ? (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <h1>You in the tree</h1>
         </div>
       ) : (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
