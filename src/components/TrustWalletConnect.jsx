@@ -44,6 +44,15 @@ const TrustWalletConnect = ({ transparent, label }) => {
 
   useEffect(() => {
     if (activeAccount?.address) {
+      if (localStorage.getItem("walletAddress") !== activeAccount.address) {
+        toast.success("Connect wallet success", {
+          position: "top-right",
+          autoClose: 1000,
+          onClose: (() => {
+            window.location.reload();
+          })
+        });
+      }
       localStorage.setItem("walletAddress", activeAccount.address);
       localStorage.setItem("publicKey", activeAccount.address);
       localStorage.setItem("walletStateInit", activeAccount.address);
