@@ -60,7 +60,7 @@ const Transfer = () => {
   }
 
   return (
-    <div className="bg-primary w-full h-full">
+    <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
@@ -125,7 +125,7 @@ const Transfer = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={`bg-primary ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <TransferCard />
           </div>

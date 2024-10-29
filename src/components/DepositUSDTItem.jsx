@@ -198,7 +198,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
               Amount
             </label>
             <input
-              className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
               value={amount}
