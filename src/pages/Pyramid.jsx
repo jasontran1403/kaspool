@@ -27,7 +27,8 @@ const Pyramid = () => {
                     </nav>
                 </div>
             </header>
-            <Canvas className="canvas-container" camera={{ position: [20, 35, 35] }}>
+            
+            <Canvas camera={{ position: [20, 35, 35] }}>
                 <Environment
                     files={IMAGE}
                     background

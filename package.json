@@ -26,7 +26,7 @@
     "@tanstack/react-query": "^5.55.4",
     "@tanstack/react-table": "^8.20.5",
     "@thirdweb-dev/react": "^3.13.1",
-    "@thirdweb-dev/sdk": "^4.0.99",
+    "@thirdweb-dev/sdk": "^3.10.67",
     "@tonconnect/ui": "^2.0.9",
     "@tonconnect/ui-react": "^2.0.9",
     "add": "^2.0.6",
