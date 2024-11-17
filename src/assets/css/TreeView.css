@@ -9,6 +9,7 @@
     flex-direction: column; /* Ensure the tree layout aligns vertically */
     height: 1200px;
     width: 2800px;
+    margin: 0 auto;
 }
 
 .tree ul {

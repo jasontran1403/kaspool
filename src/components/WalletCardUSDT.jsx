@@ -13,7 +13,7 @@ const WalletCardUSDT = ({ content, amount, unit, rank, wallet }) => {
       {/* Use flex to arrange content */}
       <div className="flex flex-col justify-between h-full pb-10">
         <div className="flex flex-col items-center pb-10">
-          <h5 className="mb-1 text-xl font-medium dark:text-white pt-10 text-center">
+          <h5 className="mb-1 text-xl font-medium dark:text-gray-400  pt-10 text-center">
             {content}
           </h5>
           <span className="text-sm  dark:text-gray-400 text-center">

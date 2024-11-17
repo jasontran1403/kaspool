@@ -136,7 +136,7 @@ const DirectTree = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={` ${styles.flexStart} bg-image pt-[10svw] pb-[30svw]`}>
+        <div className={` ${styles.flexStart} bg-image lg:pt-[5svw] sm:pt-[2svw] pb-[30svw]`}>
           <div
             className={`${styles.boxWidthDashboard}`}
             style={{ overflowY: "scroll" }}

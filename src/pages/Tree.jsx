@@ -135,7 +135,7 @@ const Tree = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={` ${styles.flexStart} pt-[10svw] bg-image`}>
+        <div className={` ${styles.flexStart} pt-[5svh] bg-image`}>
           <div
             className={`${styles.boxWidthDashboard}`}
             style={{ overflowY: "scroll" }}
@@ -145,10 +145,10 @@ const Tree = () => {
         </div>
       ) : (
         <></>
-            // Modal noti
+        // Modal noti
       )}
 
-{isInTree === "true" && (
+      {isInTree === "true" && (
         <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <FooterDashboard />
