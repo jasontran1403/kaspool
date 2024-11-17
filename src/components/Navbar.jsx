@@ -38,7 +38,7 @@ const Navbar = ({ handleOpenModal }) => {
           </li>
         ))}
       </ul>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center user-nav">
         <p className="blc-btn blc-btn-connect">
           <TrustWalletConnect transparent={true} label={"connect"} />
         </p>

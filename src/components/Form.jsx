@@ -136,7 +136,7 @@ const Form = ({ refcode }) => {
               Refcode
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-dark shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="refcode"
               type="text"
               placeholder="Refcode"
@@ -153,7 +153,7 @@ const Form = ({ refcode }) => {
               Root Display Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-dark shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="rootDisplayName"
               type="text"
               placeholder="Root Display Name"
@@ -170,7 +170,7 @@ const Form = ({ refcode }) => {
               Placement Display Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="placementDisplayName"
               type="text"
               placeholder="Placement Display Name"
@@ -187,7 +187,7 @@ const Form = ({ refcode }) => {
               Side
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="side"
               type="text"
               placeholder="Side"
@@ -205,7 +205,7 @@ const Form = ({ refcode }) => {
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
             placeholder="Email address"
@@ -221,7 +221,7 @@ const Form = ({ refcode }) => {
             Phone number
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="phoneNumber"
             type="text"
             placeholder="Phone number"
@@ -237,7 +237,7 @@ const Form = ({ refcode }) => {
             Display name
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="displayName"
             type="text"
             placeholder="Display name"
@@ -264,7 +264,7 @@ const Form = ({ refcode }) => {
         </div>
       </div>
 
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 };

@@ -75,7 +75,7 @@ const DirectTreeView = () => {
   );
 
   return (
-    <div className="p-6">
+    <div className="p-6 mt-[50px]">
       <div className="bg-gray-100 p-4 rounded-lg shadow-md">
         {loading ? ( // Show loading spinner if loading is true
           <div className="flex items-center justify-center" style={{ height: '39svw' }}>

@@ -239,7 +239,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
           </div>
         </div>
 
-        <ToastContainer stacked />
+        {/* <ToastContainer stacked /> */}
       </div>
     </section>
   );

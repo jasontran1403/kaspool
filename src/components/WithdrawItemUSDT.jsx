@@ -109,7 +109,7 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
   };
 
   return (
-    <div className={`investment-container $`}>
+    <div className={`investment-container`}>
       <section
         className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
       >

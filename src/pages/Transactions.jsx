@@ -136,7 +136,7 @@ const Transactions = () => {
           </div>
         </LockModal>
       ) : isInTree === "true" ? (
-        <div className={` ${styles.flexStart} bg-image`}>
+        <div className={` ${styles.flexStart} pt-[10svw] bg-image`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <TransactionsPage />
           </div>

@@ -227,7 +227,7 @@ const Tree = () => {
   };
 
   return (
-    <div className="tree">
+    <div className="tree mt-[50px]">
       <button
         className="glass-button"
         onClick={handleGoBack}
@@ -343,7 +343,7 @@ const Tree = () => {
           </section>
         </div>
       </ReflinkModal>
-      <ToastContainer stacked />
+      {/* <ToastContainer stacked /> */}
     </div>
   );
 };

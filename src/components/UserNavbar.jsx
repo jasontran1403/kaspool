@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { close, menu } from "../assets";
-import logo from "../assets/logo.png";
+import logo from "../landingpage-assets/img/resources/logo-white.png";
 import { userNavLinks } from "../constants";
 import { API_ENDPOINT } from "../constants";
 import TrustWalletConnect from "./TrustWalletConnect";
@@ -40,11 +40,11 @@ const UserNavbar = () => {
   return (
     <nav className="w-full flex flex-1 justify-between items-center navbar">
       <a href="/" className="">
-        {/* <img
+        <img
           src={logo}
           alt="hoobank"
-          className="hidden md:flex lg:w-[200px] lg:h-[80px] w-[160px] h-[60px] logo-glow"
-        /> */}
+          className="hidden md:flex lg:w-[120px] lg:h-[100px] w-[60px] h-[40px] logo-glow"
+        />
       </a>
       <ul className="list-none sm:flex hidden justify-center items-center flex-1 mx-10">
         {userNavLinks.map((nav, index) => (
@@ -68,12 +68,12 @@ const UserNavbar = () => {
           </li>
         ))}
       </ul>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center user-nav">
         <p className="blc-btn blc-btn-connect">
           <TrustWalletConnect transparent={true} label={"connect"} />
         </p>
       </div>
-      <div className="sm:hidden flex flex-1 justify-end items-center">
+      <div className="sm:hidden flex flex-1 justify-end items-center user-menu-nav">
         <img
           src={toggle ? close : menu}
           alt="menu"
@@ -88,6 +88,13 @@ const UserNavbar = () => {
           style={{ zIndex: 9999 }}
         >
           <ul className="list-none flex justify-end items-start flex-1 flex-col">
+          <li
+                
+                className={`font-poppins font-medium cursor-pointer text-[16px] text-white mb-4`}
+                onClick={() => setActive("Landing Page")}
+              >
+                  <a href={`/`}>Landing Page</a>
+              </li>
             {userNavLinks.map((nav, index) => (
               <li
                 key={nav.id}

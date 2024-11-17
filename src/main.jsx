@@ -7,6 +7,7 @@ import Router from "./routes";
 import { API_ENDPOINT } from "./constants";
 import "./index.css";
 import { ThirdwebProvider } from "thirdweb/react";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [isConnected, setIsConnected] = useState(
@@ -111,6 +112,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThirdwebProvider>
       <App />
+      <ToastContainer stacked />
     </ThirdwebProvider>
   </BrowserRouter>
 );

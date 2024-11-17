@@ -213,17 +213,11 @@ body {
 .landingpage {
   margin: 0;
   font-family: "Montserrat", sans-serif;
-  background-color: #1B1B1B;
-  color: #eef8ce;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  background-image: url(assets/mining/bg.jpg),
-  repeating-linear-gradient(
-      to right, transparent 0 500px, #b5c78433 500px 501px
-  );
-  background-size: cover;
   height: 100vh; /* Default height for larger screens */
 }
+
 .section {
   width: 100%;
   min-height: 100vh; /* Default for larger screens */
@@ -280,7 +274,9 @@ header .content-fit nav ul .landingpage-nav{
   position: relative;
   text-align: center;
 }
-
+.user-nav {
+  margin-right: 200px;
+}
 .section .decorate {
   position: absolute;
 }
@@ -358,6 +354,13 @@ header .content-fit nav ul .landingpage-nav{
   .landingpage {
       height: 100svh; /* Set max height for mobile devices */
   }
+  .user-nav {
+    margin-right: 0;
+  }
+
+  .user-menu-nav {
+    margin-right: 50px;
+  }
 
   .section {
       min-height: 100svh; /* Ensure sections also respect mobile height */
@@ -397,12 +400,17 @@ header .content-fit nav ul .landingpage-nav{
   padding: 20px; /* Add some padding for better spacing */
   box-sizing: border-box; /* Ensures padding is included in the width/height */
   overflow: hidden;
+  margin-top: 50px;
 }
 
 @media (max-width: 768px) {
   .investment-container {
     flex-direction: column; /* Stack content vertically on smaller screens */
     padding: 10px;
+  }
+
+  .css-10uwdj5 {
+    margin-bottom: 200px;
   }
 }
 

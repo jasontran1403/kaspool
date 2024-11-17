@@ -11,7 +11,7 @@ function Toast({ content }){
   return (
     <div>
       <button onClick={notify}>Notify !</button>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

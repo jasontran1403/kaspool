@@ -279,7 +279,7 @@ const SwapItemUsdtMCT = ({ swapHistory }) => {
             </div>
           </div>
 
-          <ToastContainer stacked />
+          {/* <ToastContainer stacked /> */}
         </div>
       </section>
     </div>

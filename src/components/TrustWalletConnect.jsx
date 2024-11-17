@@ -102,11 +102,12 @@ const TrustWalletConnect = ({ transparent, label }) => {
           size: "compact",
           title: "Kaspool",
           showThirdwebBranding: false,
+          className: "custom-modal-classname", // Add your modal-specific class name here
         }}
         onConnect={() => handleConnect()}
         onDisconnect={() => disconnectWallet()}
       />
-      <ToastContainer stacked />
+      {/* <ToastContainer stacked /> */}
     </div>
   );
 };
