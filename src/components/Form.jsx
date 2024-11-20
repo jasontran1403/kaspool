@@ -78,7 +78,7 @@ const Form = ({ refcode }) => {
       if (result.isConfirmed) {
         setButtonDisabled(true);
         let data = JSON.stringify({
-          walletAddress: localStorage.getItem("walletAddress"),
+          walletAddress: sessionStorage.getItem("walletAddress"),
           code: refcode,
           email: email,
           phoneNumber: phoneNumber,
@@ -90,7 +90,7 @@ const Form = ({ refcode }) => {
           url: `${API_ENDPOINT}management/updateRef`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: accessToken,
+            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
