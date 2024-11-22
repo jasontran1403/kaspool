@@ -79,7 +79,7 @@ const MainDashboard = () => {
       method: "get",
       url: `${API_ENDPOINT}management/balance/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };

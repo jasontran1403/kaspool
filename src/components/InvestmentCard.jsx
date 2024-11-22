@@ -31,7 +31,7 @@ const InvestmentCard = () => {
       method: "get",
       url: `${API_ENDPOINT}management/packages/${walletAddress}`,
       headers: {
-        Authorization: accessToken,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };

@@ -34,7 +34,7 @@ const TransferCardBinary = () => {
       method: "get",
       url: `${API_ENDPOINT}management/transfer-history/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };

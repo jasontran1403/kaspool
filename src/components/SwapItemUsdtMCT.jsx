@@ -38,7 +38,7 @@ const SwapItemUsdtMCT = ({ swapHistory }) => {
       method: "get",
       url: `${API_ENDPOINT}management/balance/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -120,7 +120,7 @@ const SwapItemUsdtMCT = ({ swapHistory }) => {
           url: `${API_ENDPOINT}management/swap`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,

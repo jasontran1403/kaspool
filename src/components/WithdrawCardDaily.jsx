@@ -17,7 +17,7 @@ const TABLE_HEAD = [
   "Note",
 ];
 
-const WithdrawCardDaily = () => {
+const WithdrawCardDaily = ({ balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -32,7 +32,7 @@ const WithdrawCardDaily = () => {
       method: "get",
       url: `${API_ENDPOINT}management/withdraw-history/${walletAddress}/7`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -49,7 +49,7 @@ const WithdrawCardDaily = () => {
   return (
     <>
       <div className="investment-container">
-        <WithdrawItemDaily />
+        <WithdrawItemDaily balance={balance} />
       </div>
 
       <div className={`${styles.flexCenter}`}>

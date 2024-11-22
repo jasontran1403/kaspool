@@ -26,7 +26,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
       method: "get",
       url: `${API_ENDPOINT}management/balance/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -103,7 +103,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
           url: `${API_ENDPOINT}management/invest`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
@@ -128,7 +128,10 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
           })
           .catch((error) => {
             setButtonDisabled(false);
-            console.log(error);
+            toast.error("Please try again later", {
+              position: "top-right",
+              autoClose: 1500,
+            });
           });
       }
     });

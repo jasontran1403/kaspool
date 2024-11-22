@@ -4,6 +4,8 @@ import styles from "../style";
 import { Footer, FooterDashboard, UserNavbar } from "../components";
 import Modal from "react-modal";
 import WithdrawCardPop from "../components/WithdrawCardPop";
+import { API_ENDPOINT } from "../constants";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -41,6 +43,27 @@ const WithdrawPop = () => {
     setNotificationModalOpen(false); // Close the notification and continue logic
     window.location.href = "/dashboard";
   };
+
+  const [balance, setBalance] = useState(0);
+  useEffect(() => {
+    let config = {
+      method: "get",
+      url: `${API_ENDPOINT}management/balance/${walletAddress}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        setBalance(response.data.balances[5].balance);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className=" w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
@@ -53,7 +76,7 @@ const WithdrawPop = () => {
         <div className={`${styles.boxWidthDashboard}`}>
           {isInTree === "true" ? (
             <>
-              <WithdrawCardPop />
+              <WithdrawCardPop balance={balance} />
             </>
           ) : (
             <></>

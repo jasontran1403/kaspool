@@ -127,7 +127,10 @@ const TransferItemDirect = ({ swapHistory }) => {
           .catch((error) => {
             setButtonDisabled(false);
 
-            console.log(error);
+            toast.error("Please try again later", {
+              position: "top-right",
+              autoClose: 1500,
+            });
           });
       }
     });

@@ -7,8 +7,9 @@
     overflow: hidden;
     /* display: flex; */
     flex-direction: column; /* Ensure the tree layout aligns vertically */
-    height: 1200px;
-    width: 2800px;
+    height: auto;
+    min-width: 700px;
+    width: auto;
     margin: 0 auto;
 }
 
@@ -26,6 +27,14 @@
     position: relative;
     padding: 20px 5px 0 5px;
     transition: all 0.5s;
+}
+
+.glass-button-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    justify-items: center;
+    align-items: center;
 }
 
 /* Connectors */
@@ -124,12 +133,14 @@ ul li a {
     color: lightblue; /* Text color */
     padding: 10px 20px; /* Padding for the button */
     font-size: 16px; /* Font size */
+    width: auto;
+    padding-left: 20px;
+    padding-right: 20px;
     cursor: pointer; /* Pointer on hover */
     backdrop-filter: blur(10px); /* Blur effect for glass morphism */
     transition: all 0.3s ease; /* Smooth transition */
     margin-top: 2%; /* Margin at the top */
     margin-left: 5%; /* Margin on the left */
-    position: absolute;
     z-index: 9999;
 }
 
@@ -139,3 +150,16 @@ ul li a {
     color: white; /* Change text color on hover */
 }
 
+@media (max-width: 768px) {
+    .tree {
+        min-width: 900px;
+    }
+
+    .tree-2 {
+        min-width: 1500px;
+    }
+
+    .tree-3 {
+        min-width: 2800px;
+    }
+}

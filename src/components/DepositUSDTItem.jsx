@@ -66,7 +66,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
           url: `${API_ENDPOINT}management/generate-qr`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
@@ -136,7 +136,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
           url: `${API_ENDPOINT}management/cancel-deposit`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,

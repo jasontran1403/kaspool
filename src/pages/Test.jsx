@@ -34,7 +34,7 @@ const Test = () => {
       url: `${API_ENDPOINT}management/userMapDown5Level`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
       data: data,
     };

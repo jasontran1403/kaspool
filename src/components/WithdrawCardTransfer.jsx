@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import HashCell from "./table/HashCell";
 import { API_ENDPOINT } from "../constants";
 import WithdrawTable from "./WithdrawTable";
-import WithdrawItemDirect from "./WithdrawItemDirect";
+import WithdrawItemTransfer from "./WithdrawItemTransfer";
 
 const TABLE_HEAD = [
   "Code",
@@ -17,7 +17,7 @@ const TABLE_HEAD = [
   "Note",
 ];
 
-const WithdrawCardDirect = ({ balance }) => {
+const WithdrawCardTransfer = ({ balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -30,7 +30,7 @@ const WithdrawCardDirect = ({ balance }) => {
   useEffect(() => {
     let config = {
       method: "get",
-      url: `${API_ENDPOINT}management/withdraw-history/${walletAddress}/3`,
+      url: `${API_ENDPOINT}management/withdraw-history/${walletAddress}/8`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
@@ -49,14 +49,14 @@ const WithdrawCardDirect = ({ balance }) => {
   return (
     <>
       <div className="investment-container">
-        <WithdrawItemDirect balance={balance} />
+        <WithdrawItemTransfer balance={balance} />
       </div>
 
       <div className={`${styles.flexCenter}`}>
-        <WithdrawTable TYPE={3} TABLE_NAME={"Recent withdraw"} TABLE_SUBNAME={"These are details about the lastest withdraw"} TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={withdrawHistory} />
+        <WithdrawTable TYPE={8} TABLE_NAME={"Recent withdraw"} TABLE_SUBNAME={"These are details about the lastest withdraw"} TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={withdrawHistory} />
       </div>
     </>
   );
 };
 
-export default WithdrawCardDirect;
+export default WithdrawCardTransfer;

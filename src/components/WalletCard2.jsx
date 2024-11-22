@@ -30,15 +30,16 @@ const WalletCard2 = ({ content, amount, unit, rank, wallet }) => {
             >
               Deposit
             </a>
+            */}
             <a
-              href={isAdmin ? "/admin/withdraw-kaspool/"+id : "/withdraw-kaspool"}
-              className="py-2 px-4 ms-2 text-sm font-medium  focus:outline-none bg-gray rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              href={isAdmin ? "/admin/withdraw-kaspool/"+id : "/withdraw-transfer"}
+              className="py-2 px-4 ms-2 text-sm font-medium  focus:outline-none bg-gray rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             >
               Withdraw
-            </a> */}
+            </a> 
             <a
               href={isAdmin ? "/admin/transfer/"+id : "/transfer"}
-              className="py-2 px-4 ms-2 text-sm font-medium  focus:outline-none bg-gray rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-dark:text-gray-200 text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              className="py-2 px-4 ms-2 text-sm font-medium  focus:outline-none bg-gray rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             >
               Transfer
             </a>

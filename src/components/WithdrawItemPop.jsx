@@ -8,7 +8,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import 'sweetalert2/src/sweetalert2.scss';
 import { API_ENDPOINT } from "../constants";
 
-const WithdrawItemPop = ({ depositHistory }) => {
+const WithdrawItemPop = ({ depositHistory, balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -27,7 +27,6 @@ const WithdrawItemPop = ({ depositHistory }) => {
 
   const [amount, setAmount] = useState(0);
   const [toWallet, setToWallet] = useState("");
-  const [balance, setBalance] = useState(100000000);
 
   const handleWithdraw = () => {
     if (toWallet === "") {
@@ -76,7 +75,7 @@ const WithdrawItemPop = ({ depositHistory }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              `Bearer ${accessToken}`,
+              `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
@@ -99,7 +98,10 @@ const WithdrawItemPop = ({ depositHistory }) => {
             }
           })
           .catch((error) => {
-            console.log(error);
+            toast.error("Please try again later", {
+              position: "top-right",
+              autoClose: 1500,
+            });
           });
       }
     });
@@ -115,6 +117,22 @@ const WithdrawItemPop = ({ depositHistory }) => {
         <div className="flex-1 flex flex-col">
           <h2 className={styles.heading2}>Withdraw</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-6">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="tokenBalance"
+              >
+                Current Available Balance
+              </label>
+              <input
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                id="tokenBalance"
+                type="text"
+                placeholder="Wallet address that recevive that withdraw order amount"
+                value={balance}
+                readOnly
+              />
+            </div>
             <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"

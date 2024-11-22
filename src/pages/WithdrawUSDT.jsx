@@ -3,6 +3,8 @@ import Axios from "axios";
 import styles from "../style";
 import { Footer, FooterDashboard, UserNavbar } from "../components";
 import WithdrawCardUSDT from "../components/WithdrawCardUSDT";
+import { API_ENDPOINT } from "../constants";
+
 import Modal from "react-modal";
 const customStyles = {
   content: {
@@ -41,6 +43,27 @@ const WithdrawUSDT = () => {
     setNotificationModalOpen(false); // Close the notification and continue logic
     window.location.href = "/dashboard";
   };
+
+  const [balance, setBalance] = useState(0);
+  useEffect(() => {
+    let config = {
+      method: "get",
+      url: `${API_ENDPOINT}management/balance/${walletAddress}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        setBalance(response.data.balances[0].balance);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
@@ -53,7 +76,7 @@ const WithdrawUSDT = () => {
         <div className={`${styles.boxWidthDashboard}`}>
           {isInTree === "true" ? (
             <>
-              <WithdrawCardUSDT />
+              <WithdrawCardUSDT balance={balance} />
             </>
           ) : (
             <></>

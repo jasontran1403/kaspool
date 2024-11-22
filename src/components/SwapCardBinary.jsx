@@ -26,7 +26,7 @@ const SwapCardBinary = () => {
       method: "get",
       url: `${API_ENDPOINT}management/swap-history/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -36,7 +36,10 @@ const SwapCardBinary = () => {
         setSwapHistory(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Please try again later", {
+          position: "top-right",
+          autoClose: 1500,
+        });
       });
   }, []);
 

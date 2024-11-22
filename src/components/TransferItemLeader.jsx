@@ -32,7 +32,7 @@ const TransferItemLeader = ({ swapHistory }) => {
       method: "get",
       url: `${API_ENDPOINT}management/balance/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -97,7 +97,7 @@ const TransferItemLeader = ({ swapHistory }) => {
           url: `${API_ENDPOINT}management/transfer-balance`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
@@ -127,7 +127,10 @@ const TransferItemLeader = ({ swapHistory }) => {
           .catch((error) => {
             setButtonDisabled(false);
 
-            console.log(error);
+            toast.error("Please try again later", {
+              position: "top-right",
+              autoClose: 1500,
+            });
           });
       }
     });

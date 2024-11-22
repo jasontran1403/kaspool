@@ -8,7 +8,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import 'sweetalert2/src/sweetalert2.scss';
 import { API_ENDPOINT } from "../constants";
 
-const WithdrawItemUSDT = ({ depositHistory }) => {
+const WithdrawItemUSDT = ({ depositHistory, balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -25,10 +25,8 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
     setNetworkSelected(listNetwork[0].id);
   }, []);
 
-  console.log(depositHistory)
   const [amount, setAmount] = useState(0);
   const [toWallet, setToWallet] = useState("");
-  const [balance, setBalance] = useState(100);
 
   const handleWithdraw = () => {
     if (toWallet === "") {
@@ -69,7 +67,7 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
           walletType: networkSelected,
           type: 1,
         });
-    
+
         let config = {
           method: "post",
           maxBodyLength: Infinity,
@@ -77,12 +75,12 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              `Bearer ${accessToken}`,
+              `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,
         };
-    
+
         Axios
           .request(config)
           .then((response) => {
@@ -100,12 +98,15 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
             }
           })
           .catch((error) => {
-            console.log(error);
+            toast.error("Please try again later", {
+              position: "top-right",
+              autoClose: 1500,
+            });
           });
       }
     });
 
-    
+
   };
 
   return (
@@ -114,8 +115,23 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
         className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
       >
         <div className="flex-1 flex flex-col">
-          <h2 className={styles.heading2}>Withdraw</h2>
+          <h2 className={styles.heading2}>Withdraw BEP20-USDT wallet</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-6">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="tokenBalance"
+              >
+                Current Available Balance
+              </label>
+              <input
+                className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                id="tokenBalance"
+                type="text"
+                value={balance}
+                readOnly
+              />
+            </div>
             <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"
@@ -134,6 +150,7 @@ const WithdrawItemUSDT = ({ depositHistory }) => {
                 }}
               />
             </div>
+
             <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"

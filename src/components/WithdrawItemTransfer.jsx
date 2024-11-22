@@ -8,7 +8,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import 'sweetalert2/src/sweetalert2.scss';
 import { API_ENDPOINT } from "../constants";
 
-const WithdrawItemDaily = ({ depositHistory, balance }) => {
+const WithdrawItemTransfer = ({ depositHistory, balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -18,7 +18,7 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
   const [networkSelected, setNetworkSelected] = useState("");
 
   const [listNetwork, setListNetwork] = useState([
-    { id: 2, name: "KASPOOL TOKEN" },
+    { id: 1, name: "Binance Smart Chain" },
   ]);
 
   useEffect(() => {
@@ -45,11 +45,11 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
     }
 
     Swal.fire({
-      title: 'Confirm Transfer',
+      title: 'Confirm withdraw',
       text: `Are you sure you want to withdraw ${amount} to ${toWallet}?`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, transfer it!',
+      confirmButtonText: 'Yes, confirm it!',
       cancelButtonText: 'No, cancel',
       reverseButtons: true,
       customClass: {
@@ -61,13 +61,13 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
       if (result.isConfirmed) {
         let data = JSON.stringify({
           walletAddress: walletAddress,
-          toWalletAddress: toWallet,  
+          toWalletAddress: toWallet,
           amount: amount,
-          method: 7,
+          method: 1,
           walletType: networkSelected,
-          type: 7,
+          type: 8,
         });
-    
+
         let config = {
           method: "post",
           maxBodyLength: Infinity,
@@ -80,7 +80,7 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
           },
           data: data,
         };
-    
+
         Axios
           .request(config)
           .then((response) => {
@@ -106,18 +106,18 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
       }
     });
 
-    
+
   };
 
   return (
-    <div className={`investment-container $`}>
+    <div className={`investment-container`}>
       <section
         className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
       >
         <div className="flex-1 flex flex-col">
-          <h2 className={styles.heading2}>Withdraw</h2>
+          <h2 className={styles.heading2}>Withdraw transfer wallet</h2>
           <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-6">
+            <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"
                 htmlFor="tokenBalance"
@@ -128,7 +128,6 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
                 className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
-                placeholder="Wallet address that recevive that withdraw order amount"
                 value={balance}
                 readOnly
               />
@@ -151,6 +150,7 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
                 }}
               />
             </div>
+
             <div className="mb-6">
               <label
                 className="block text-white text-sm font-bold mb-2"
@@ -207,4 +207,4 @@ const WithdrawItemDaily = ({ depositHistory, balance }) => {
   );
 };
 
-export default WithdrawItemDaily;
+export default WithdrawItemTransfer;

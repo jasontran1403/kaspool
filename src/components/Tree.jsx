@@ -42,6 +42,7 @@ const Tree = () => {
   const [treeData, setTreeData] = useState(null);
   const [modalReflink, setModalReflink] = useState(false);
   const [refInfo, setRefInfo] = useState({});
+  const [currentShow, setCurrentShow] = useState(2);
 
   useEffect(() => {
     fetchTreeByRoot(currWallet); // Fetch tree using current wallet
@@ -57,7 +58,7 @@ const Tree = () => {
       url: `${API_ENDPOINT}management/userMapDown5Level`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
       data: data,
     };
@@ -100,7 +101,7 @@ const Tree = () => {
       url: `${API_ENDPOINT}management/generate-ref-link`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
       data: data,
     };
@@ -127,7 +128,6 @@ const Tree = () => {
 
   const handleCopyRefLink = (refCode) => {
     const currentUrl = `${window.location.origin}/refcode=${refCode}`;
-    console.log(currentUrl);
 
     navigator.clipboard.writeText(currentUrl)
       .then(() => {
@@ -144,7 +144,7 @@ const Tree = () => {
         });
       });
   };
-  
+
 
   const handleClick = (address) => {
     setPrevWallets((prev) => [...prev, currWallet]); // Push current wallet to prev wallets stack
@@ -152,17 +152,36 @@ const Tree = () => {
   };
 
   const handleGoBack = () => {
+    if (findValue != "") setFindValue("");
     setPrevWallets((prev) => {
       if (prev.length === 0) return prev; // No previous wallets
       const lastWallet = prev[prev.length - 1]; // Get the last wallet
       setCurrWallet(lastWallet); // Set it as current wallet
-      console.log("ok");
       return prev.slice(0, -1); // Remove the last wallet from the stack
     });
   };
 
+  const handleShowMore = () => {
+    if (currentShow < 4) {
+      setCurrentShow(prev => prev + 1);
+    }
+  }
+
+  const handleShowLess = () => {
+    if (currentShow > 2) {
+      setCurrentShow(prev => prev - 1);
+    }
+  }
+
+  const [findValue, setFindValue] = useState("");
+  const handleFind = () => {
+    if (findValue === "") return;
+    setPrevWallets((prev) => [...prev, localStorage.getItem("walletAddress")]);
+    setCurrWallet(findValue); // Set it as current wallet
+  }
+
   const renderTree = (node, depth = 0, position = 0, parent, side) => {
-    if (depth > 4) return null; // Limit depth to 5 levels (0-4)
+    if (depth > currentShow) return null; // Limit depth to 5 levels (0-4)
 
     const displayName = node?.userInfo?.displayName || null;
 
@@ -226,15 +245,38 @@ const Tree = () => {
     );
   };
 
+
+
   return (
-    <div className="tree mt-[50px]">
-      <button
-        className="glass-button"
-        onClick={handleGoBack}
-        disabled={prevWallets.length === 0}
-      >
-        Back
-      </button>
+    <div className={`tree ${currentShow == 3 ? "tree-2" : currentShow == 4 ? "tree-3" : "tree"} mt-[100px]`}>
+      <div className="glass-button-container">
+        <button
+          className="glass-button"
+          onClick={handleGoBack}
+          disabled={prevWallets.length === 0}
+        >
+          Back
+        </button>
+        <button
+          className="glass-button"
+          onClick={handleShowMore}
+        >
+          Show more
+        </button>
+        <button
+          className="glass-button"
+          onClick={handleShowLess}
+        >
+          Show less
+        </button>
+        <input className="glass-button" type="text" placeholder="Wallet address to find" value={findValue} onChange={(e) => {setFindValue(e.target.value)}} />
+        <button
+          className="glass-button"
+          onClick={handleFind}
+        >
+          Find
+        </button>
+      </div>
       <ul className="tree-ul">
         {renderTree(treeData)} {/* Render the entire tree */}
       </ul>

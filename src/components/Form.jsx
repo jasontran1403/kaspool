@@ -26,7 +26,7 @@ const Form = ({ refcode }) => {
       maxBodyLength: Infinity,
       url: `${API_ENDPOINT}management/get-ref-link-info/${refcode}`,
       headers: { 
-        Authorization: accessToken,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       }
     };
     
@@ -38,7 +38,10 @@ const Form = ({ refcode }) => {
 
     })
     .catch((error) => {
-      console.log(error);
+      toast.error("Please try again later", {
+        position: "top-right",
+        autoClose: 1500,
+      });
     });
     
   }, []);
@@ -90,7 +93,7 @@ const Form = ({ refcode }) => {
           url: `${API_ENDPOINT}management/updateRef`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: accessToken,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,

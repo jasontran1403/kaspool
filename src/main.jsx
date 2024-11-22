@@ -8,6 +8,7 @@ import { API_ENDPOINT } from "./constants";
 import "./index.css";
 import { ThirdwebProvider } from "thirdweb/react";
 import { ToastContainer } from "react-toastify";
+import HashLoader from "react-spinners/HashLoader";
 
 function App() {
   const [isConnected, setIsConnected] = useState(
@@ -16,6 +17,9 @@ function App() {
   const [lastStatus, setLastStatus] = useState();
   const isAdmin = window.location.href.includes("/admin"); // Kiểm tra URL có chứa '/admin' không
   const id = location.pathname.split("/admin/dashboard/")[1]; // Lấy ID từ URL
+  const [loading, setLoading] = useState(true);
+  let [color] = useState("#08e0c5");
+
 
   const locationRef = useLocation();
 
@@ -25,6 +29,14 @@ function App() {
   // Check if the path matches "refcode=<actual-code>"
   const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
   const refcode = refcodeMatch ? refcodeMatch[1] : null;
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2400);
+
+    return () => clearTimeout(timeout); // Dọn dẹp timeout khi component unmount
+  }, []);
 
   useEffect(() => {
     if (isAdmin && id) {
@@ -103,6 +115,18 @@ function App() {
     }
   }, [isConnected, isAdmin, id, lastStatus]);
 
+  if (loading) {
+    return (
+      <div className="sweet-loading">
+        <HashLoader  
+          color={color}
+          loading={loading}
+          size={50}
+        />
+      </div>
+    );
+  }
+
   return <Router />;
 }
 
@@ -112,7 +136,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThirdwebProvider>
       <App />
-      <ToastContainer stacked />
+      <ToastContainer
+        newestOnTop={true}
+      />
     </ThirdwebProvider>
   </BrowserRouter>
 );

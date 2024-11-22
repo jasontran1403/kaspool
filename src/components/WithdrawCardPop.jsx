@@ -17,7 +17,7 @@ const TABLE_HEAD = [
   "Note",
 ];
 
-const WithdrawCardPop = () => {
+const WithdrawCardPop = ({ balance }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -32,7 +32,7 @@ const WithdrawCardPop = () => {
       method: "get",
       url: `${API_ENDPOINT}management/withdraw-history/${walletAddress}/6`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -49,7 +49,7 @@ const WithdrawCardPop = () => {
   return (
     <>
       <div className="investment-container">
-        <WithdrawItemPop />
+        <WithdrawItemPop balance={balance} />
       </div>
 
       <div className={`${styles.flexCenter}`}>

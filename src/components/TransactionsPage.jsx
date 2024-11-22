@@ -29,7 +29,7 @@ const TransactionsPage = () => {
       method: "get",
       url: `${API_ENDPOINT}management/all-transactions/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };

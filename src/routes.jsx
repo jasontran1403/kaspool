@@ -10,6 +10,7 @@ import SwapUsdtMCT from "./pages/SwapUsdtMCT";
 import Transfer from "./pages/Transfer";
 import TransferUSDT from "./pages/TransferUSDT";
 import WithdrawUSDT from "./pages/WithdrawUSDT";
+import WithdrawTransfer from "./pages/WithdrawTransfer";
 import WithdrawMCT from "./pages/WithdrawMCT";
 import Tree from "./pages/Tree";
 import Transactions from "./pages/Transactions";
@@ -81,6 +82,10 @@ export default function Router() {
         {
             path: "/withdraw-usdt",
             element: isConnectedToWallet ? <WithdrawUSDT /> : <Navigate to="/" />
+        },
+        {
+            path: "/withdraw-transfer",
+            element: isConnectedToWallet ? <WithdrawTransfer /> : <Navigate to="/" />
         },
         {
             path: "/withdraw-kaspool",

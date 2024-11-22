@@ -24,7 +24,7 @@ const DirectTreeView = () => {
       url: `${API_ENDPOINT}auth/direct-tree/${address}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: access_token,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };

@@ -34,7 +34,7 @@ const TransferItem = ({ swapHistory }) => {
       method: "get",
       url: `${API_ENDPOINT}management/balance/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -99,7 +99,7 @@ const TransferItem = ({ swapHistory }) => {
           url: `${API_ENDPOINT}management/transfer-balance`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,

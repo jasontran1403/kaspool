@@ -34,7 +34,7 @@ const DepositMCTCard = () => {
       method: "get",
       url: `${API_ENDPOINT}management/deposit-history/${walletAddress}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
       },
     };
@@ -44,7 +44,10 @@ const DepositMCTCard = () => {
         setDepositHistory(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Please try again later", {
+          position: "top-right",
+          autoClose: 1500,
+        });
       });
   }, []);
 

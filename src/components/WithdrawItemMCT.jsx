@@ -76,7 +76,7 @@ const WithdrawItemMCT = ({ depositHistory }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              `Bearer ${accessToken}`,
+              `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
           data: data,

@@ -8,7 +8,7 @@ import gsap from 'gsap';
 import beeModel from "../assets/model/pyramid_glass_full_new.glb";
 import IMAGE from "../assets/model/night-9.jpg";
 import TrustWalletConnect from "../components/TrustWalletConnect";
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import * as THREE from 'three';
 import { PerspectiveCamera } from "@react-three/drei";
 import ModalSection1 from "../components/ModalSection1";
@@ -18,6 +18,7 @@ import ModalSection4 from "../components/ModalSection4";
 import logo from "../landingpage-assets/img/resources/logo-white.png";
 import { useLocation } from "react-router-dom";
 import "../landingpage-assets/css/main.css";
+import soundFile from "../assets/music/music.mp3"; // Đường dẫn file âm thanh
 
 const coordinates = [
     { index: 0, name: "Default", rotation: { x: 0, y: 0, z: 0 }, content: "" },
@@ -35,14 +36,14 @@ const Model = ({ rotation, actionIndex, onActionComplete, isRetrieve }) => {
 
     const resetCameraPosition = () => {
         gsap.to(camera.position, {
-          x: 0,
-          y: 35,
-          z: 30,
-          duration: 1, // Thời gian chuyển đổi (giây)
-          ease: "power2.inOut", // Hiệu ứng easing
-          onUpdate: () => camera.lookAt(0, 0, 0), // Cập nhật hướng nhìn trong quá trình di chuyển
+            x: 0,
+            y: 35,
+            z: 30,
+            duration: 1, // Thời gian chuyển đổi (giây)
+            ease: "power2.inOut", // Hiệu ứng easing
+            onUpdate: () => camera.lookAt(0, 0, 0), // Cập nhật hướng nhìn trong quá trình di chuyển
         });
-      };
+    };
 
     useEffect(() => {
         let timeoutId;
@@ -59,16 +60,15 @@ const Model = ({ rotation, actionIndex, onActionComplete, isRetrieve }) => {
                 action.setLoop(THREE.LoopOnce);
                 action.clampWhenFinished = true;
                 if (actionIndex === 1) {
-                    action.startAt(mixer.current.time - 6.5);
+                    action.startAt(mixer.current.time - 7);
                     action.play();
-
                 } else if (actionIndex === 2) {
-                    action.startAt(mixer.current.time - 2.5);
+                    action.startAt(mixer.current.time - 3);
                     action.play();
                 } else if (actionIndex === 3) {
                     timeoutAction = setTimeout(() => {
                         action.play();
-                    }, 1000);
+                    }, 600);
                 }
             } else if (actionIndex == 4) {
                 const action = mixer.current.clipAction(gltf.animations[3]);
@@ -80,7 +80,7 @@ const Model = ({ rotation, actionIndex, onActionComplete, isRetrieve }) => {
                 action.setDuration(3.6); // Chạy trong 2 giây
                 action.play();
 
-                
+
             } else if (actionIndex == 0 && isRetrieve) {
                 const action = mixer.current.clipAction(gltf.animations[4]);
                 action.reset();
@@ -153,7 +153,7 @@ const Model = ({ rotation, actionIndex, onActionComplete, isRetrieve }) => {
 
     // Apply gsap rotation when rotation changes
     useEffect(() => {
-        
+
     }, [actionIndex]);
 
 
@@ -171,8 +171,49 @@ const Pyramid = () => {
     const [defaultCamera] = useState({ x: 0, y: 35, z: 30 });
     let toastId = null;
 
+    const audioRef = useRef(new Audio(soundFile));
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const handlePlay = () => {
+        const audio = audioRef.current;
+        if (!isPlaying) {
+            audio.currentTime = 0; // Bắt đầu từ đầu
+            audio.play().then(() => {
+                setIsPlaying(true);
+                gradualVolumeIncrease(audio, 0.4); // Tăng âm lượng dần đến 0.4
+            }).catch((error) => {
+                console.error("Audio playback failed:", error);
+            });
+        }
+    };
+
+    const gradualVolumeIncrease = (audio, targetVolume) => {
+        const step = 0.02; // Mỗi bước tăng 0.02
+        const interval = 100; // Mỗi 100ms tăng 1 bước
+        audio.volume = 0; // Bắt đầu từ 0
+
+        const volumeInterval = setInterval(() => {
+            if (audio.volume < targetVolume) {
+                audio.volume = Math.min(audio.volume + step, targetVolume); // Đảm bảo không vượt targetVolume
+            } else {
+                clearInterval(volumeInterval); // Dừng lại khi đạt targetVolume
+            }
+        }, interval);
+    };
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        audio.loop = true; // Lặp âm thanh
+        handlePlay(); // Tự động phát khi tải trang
+
+        return () => {
+            audio.pause(); // Dừng phát khi component bị unmount
+            audio.currentTime = 0; // Reset thời gian phát lại
+        };
+    }, []);
+
     const location = useLocation();
-  
+
     const fullPath = location.pathname.slice(1); // Remove leading "/"
     // Check if the path matches "refcode=<actual-code>"
     const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
@@ -181,7 +222,6 @@ const Pyramid = () => {
     const randomAmount = (min = 5, max = 200) => {
         return (Math.random() * (max - min) + min).toFixed(2);
     };
-
 
     useEffect(() => {
         if (currentCoordinate.index === 0) {
@@ -196,39 +236,29 @@ const Pyramid = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             notify();
-        }, 30000);
-
-        toast.dismiss();
+        }, 3000);
+        
         return () => clearInterval(interval);
     }, []);
 
     const notify = () => {
         const content = (
             <div className="toast-content">
-                Mined {randomAmount(5, 200)}KAS at {new Date().getUTCHours()}:{new Date().getUTCMinutes()}:{new Date().getUTCSeconds()} {new Date().toLocaleDateString('us')}  
+                Mined {randomAmount(5, 200)}KAS at {new Date().getUTCHours()}:{new Date().getUTCMinutes()}:{new Date().getUTCSeconds()} {new Date().toLocaleDateString('us')}
             </div>
         );
-
-        // Check if the toast already exists, update it instead of dismissing
-        if (toastId) {
-            toast.update(toastId, {
-                render: content,
-            });
-        } else {
-            toastId = toast(content, {
-                position: "bottom-center",
-                autoClose: false,
-                limit: 1,
-                hideProgressBar: true,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: false,
-                progress: undefined,
-                theme: "light",
-                closeButton: false,
-                className: "custom-toast",
-            });
-        }
+    
+        toast(content, {
+            position: "bottom-center",
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            closeButton: false,
+            className: "custom-toast",
+        });
     };
 
     const next = () => {
@@ -264,6 +294,7 @@ const Pyramid = () => {
     const [isDragging, setIsDragging] = useState(false);
 
     const handlePointerDown = () => {
+        handlePlay();
         setIsDragging(false); // Reset trạng thái
     };
 
@@ -286,7 +317,7 @@ const Pyramid = () => {
         } else if (id === 3) {
             url = "https://t.me/kaspool_official";
         }
-    
+
         // Mở link trong cửa sổ mới
         window.open(url, '_blank');
     }
@@ -313,16 +344,16 @@ const Pyramid = () => {
                 </div>
             </header>
 
-            <Canvas onPointerDown={handlePointerDown} 
-                    onPointerMove={handlePointerMove} 
-                    onPointerUp={handlePointerUp}
+            <Canvas onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
             >
                 <PerspectiveCamera makeDefault position={[defaultCamera.x, defaultCamera.y, defaultCamera.z]} fov={60} />
                 <Environment files={IMAGE} background backgroundBlurriness={0.07} />
-                <directionalLight 
-                    position={[5, -10, 5]} 
-                    intensity={8000} 
-                    color="#ffffff" 
+                <directionalLight
+                    position={[5, -10, 5]}
+                    intensity={8000}
+                    color="#ffffff"
                 />
                 <ambientLight intensity={3} color="#ffffff" />
                 <Model

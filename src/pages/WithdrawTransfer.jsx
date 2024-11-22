@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styles from "../style";
 import { Footer, FooterDashboard, UserNavbar } from "../components";
-import Modal from "react-modal";
-import WithdrawCardDaily from "../components/WithdrawCardDaily";
+import WithdrawCardTransfer from "../components/WithdrawCardTransfer";
 import { API_ENDPOINT } from "../constants";
 
+import Modal from "react-modal";
 const customStyles = {
   content: {
     top: "50%",
@@ -25,7 +25,7 @@ const customStyles = {
   },
 };
 
-const WithdrawDaily = () => {
+const WithdrawTransfer = () => {
   const isSmallScreen = window.innerWidth <= 768;
 
   const [walletAddress, setWalletAddress] = useState(
@@ -57,25 +57,26 @@ const WithdrawDaily = () => {
 
     Axios.request(config)
       .then((response) => {
-        setBalance(response.data.balances[8].balance);
+        setBalance(response.data.balances[6].balance);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
   return (
-    <div className=" w-full h-full">
+    <div className="w-full h-full">
       <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
         <div className={`${styles.boxWidth}`}>
           <UserNavbar />
         </div>
       </div>
 
-      <div className={` ${styles.flexStart} bg-image`}>
+      <div className={`${styles.flexStart} bg-image`}>
         <div className={`${styles.boxWidthDashboard}`}>
           {isInTree === "true" ? (
             <>
-              <WithdrawCardDaily balance={balance} />
+              <WithdrawCardTransfer balance={balance} />
             </>
           ) : (
             <></>
@@ -95,4 +96,4 @@ const WithdrawDaily = () => {
   );
 };
 
-export default WithdrawDaily;
+export default WithdrawTransfer;
