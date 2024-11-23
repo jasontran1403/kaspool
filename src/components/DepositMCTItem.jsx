@@ -225,7 +225,7 @@ const DepositItem = ({ depositHistory }) => {
             </div>
           </div>
 
-          {/* <ToastContainer stacked /> */}
+          <ToastContainer stacked />
         </div>
       </section>
     </div>
