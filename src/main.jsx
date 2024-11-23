@@ -136,9 +136,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThirdwebProvider>
       <App />
-      <ToastContainer
-        newestOnTop={true}
-      />
+      {/* <ToastContainer
+        stacked={true}
+      /> */}
     </ThirdwebProvider>
   </BrowserRouter>
 );

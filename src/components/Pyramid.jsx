@@ -236,18 +236,18 @@ const Pyramid = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             notify();
-        }, 30000);
-        
+        }, 3000);
+
         return () => clearInterval(interval);
     }, []);
 
     const notify = () => {
         const content = (
-            <div className="toast-content">
+            <div style={{ textAlign: "center" }}>
                 Mined {randomAmount(5, 200)}KAS at {new Date().getUTCHours()}:{new Date().getUTCMinutes()}:{new Date().getUTCSeconds()} {new Date().toLocaleDateString('us')}
             </div>
         );
-    
+
         toast(content, {
             position: "bottom-center",
             hideProgressBar: true,
@@ -257,7 +257,7 @@ const Pyramid = () => {
             progress: undefined,
             theme: "light",
             closeButton: false,
-            className: "custom-toast",
+            // className: "custom-toast",
         });
     };
 
@@ -373,6 +373,18 @@ const Pyramid = () => {
             <ModalSection2 isOpen={activeModal === 2} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
             <ModalSection3 isOpen={activeModal === 3} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
             <ModalSection4 isOpen={activeModal === 4} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
+
+            <ToastContainer
+                position="bottom-center"
+                autoClose={9000}
+                stacked
+                newestOnTop={false}
+                closeOnClick={false}
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                theme="light"
+            />
         </div>
     );
 };

@@ -340,17 +340,6 @@ body {
   margin: 5px;
 }
 
-.custom-toast {
-  /* position: relative; */
-  min-width: 12svw;
-  color: whitesmoke;
-  background-color: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.6); /* Viền ngoài */
-  border-radius: 20px; /* Góc bo tròn */
-  animation: glowing 1s infinite;
-  text-wrap: nowrap;
-}
-
 @keyframes glowing {
   0% {
     box-shadow: 0 0 2px rgba(255, 255, 255, 0.8),
@@ -423,6 +412,7 @@ body {
 
 .toast-content {
   text-align: center;
+  width: 100%;
 }
 
 /* Media query for mobile devices */
@@ -471,11 +461,6 @@ body {
     /* Remove negative margin for slider */
   }
 
-  .custom-toast {
-    width: 70svw;
-    font-weight: bold;
-    margin: 0 auto;
-  }
 }
 
 .member-container {
@@ -500,20 +485,28 @@ body {
 
 .Toastify__toast-container {
   bottom: 3%;
-  background-color: transparent;
-  width: auto;
+  
+  /*width: 10svw;
   padding-left: 20px;
   padding-right: 20px;
   height: 90px;
   overflow: hidden;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column-reverse; */
+}
+
+.Toastify__toast {
+  background: linear-gradient(50deg, #fff, #999); /* Tạo gradient */
+  color: #555;
+  box-shadow:
+    .5px -.5px 1px 1px #fff,
+    -1px 1px 1px 1px #999,
+    -5px 8px 15px 1px #999;
+  border-radius: 30px;
 }
 
 @media (min-width: 769px) and (max-width: 1919px) {
-  .custom-toast {
-    width: auto;
-  }
+  
   
 }
 
@@ -539,66 +532,6 @@ body {
   left: 0;
   width: 100vw;
   z-index: 9999;
-}
-
-.obj-1 {
-  width: 240px;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 0;
-  left: -200px;
-  z-index: 99999999;
-}
-
-.obj-2 {
-  width: 200px;
-  height: 180px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 450px;
-  left: -250px;
-  z-index: 99999999;
-}
-
-.obj-3 {
-  width: 220px;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 200px;
-  left: 200px;
-  z-index: 99999999;
-}
-
-.obj-4 {
-  width: 260px;
-  height: 240px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 50px;
-  left: 700px;
-  z-index: 99999999;
-}
-
-.obj-5 {
-  width: 280;
-  height: 260px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 0px;
-  right: -200px;
-  z-index: 99999999;
-}
-
-.obj-6 {
-  width: 230px;
-  height: 210px;
-  position: absolute;
-  cursor: pointer;
-  bottom: 400px;
-  right: -150px;
-  z-index: 99999999;
 }
 
 .navbar {
@@ -836,14 +769,18 @@ header .content-fit nav ul .landingpage-nav {
     padding: 10px;
   }
 
+  .Toastify__toast {
+    height: 30px!important;
+  }
+
   .Toastify__toast-container {
-    bottom: 5%;
-    background-color: transparent;
+    bottom: 5%; 
+    /* background-color: transparent;
     width: 100svw;
     height: 64px;
     overflow: hidden;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column-reverse; */
   }
 
   .item modal-1-content {
