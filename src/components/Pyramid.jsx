@@ -236,7 +236,7 @@ const Pyramid = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             notify();
-        }, 30000);
+        }, 3000);
 
         return () => clearInterval(interval);
     }, []);
@@ -376,7 +376,8 @@ const Pyramid = () => {
 
             <ToastContainer
                 position="bottom-center"
-                autoClose={80000}
+                autoClose={2900}
+                limit={1}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick={false}
