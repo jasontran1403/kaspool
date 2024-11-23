@@ -251,7 +251,7 @@ const Pyramid = () => {
         toast(content, {
             position: "bottom-center",
             hideProgressBar: true,
-            closeOnClick: true,
+            closeOnClick: false,
             pauseOnHover: false,
             draggable: false,
             progress: undefined,
@@ -377,12 +377,13 @@ const Pyramid = () => {
             <ToastContainer
                 position="bottom-center"
                 autoClose={80000}
-                stacked
+                hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick={false}
-                pauseOnHover={false}
+                rtl={false}
                 pauseOnFocusLoss={false}
                 draggable={false}
+                pauseOnHover={false}
                 theme="light"
             />
         </div>
