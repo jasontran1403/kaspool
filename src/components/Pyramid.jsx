@@ -236,7 +236,7 @@ const Pyramid = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             notify();
-        }, 3000);
+        }, 30000);
         
         return () => clearInterval(interval);
     }, []);

@@ -129,8 +129,8 @@ body {
   display: flex;
   gap: 5px;
   bottom: 2%;
-  left: 51%;
-  transform: translate(-51%, -2%);
+  left: 50%;
+  transform: translate(-50%, -2%);
   align-items: center;
   z-index: 9999999999;
 }
@@ -504,7 +504,7 @@ body {
   width: auto;
   padding-left: 20px;
   padding-right: 20px;
-  height: 250px;
+  height: 90px;
   overflow: hidden;
   display: flex;
   flex-direction: column-reverse;
@@ -840,7 +840,7 @@ header .content-fit nav ul .landingpage-nav {
     bottom: 5%;
     background-color: transparent;
     width: 100svw;
-    height: 192px;
+    height: 64px;
     overflow: hidden;
     display: flex;
     flex-direction: column-reverse;
