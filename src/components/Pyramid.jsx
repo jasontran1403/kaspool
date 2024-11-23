@@ -251,7 +251,7 @@ const Pyramid = () => {
         toast(content, {
             position: "bottom-center",
             hideProgressBar: true,
-            closeOnClick: false,
+            closeOnClick: true,
             pauseOnHover: false,
             draggable: false,
             progress: undefined,
@@ -376,7 +376,7 @@ const Pyramid = () => {
 
             <ToastContainer
                 position="bottom-center"
-                autoClose={89000}
+                autoClose={80000}
                 stacked
                 newestOnTop={false}
                 closeOnClick={false}

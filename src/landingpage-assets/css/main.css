@@ -769,13 +769,12 @@ header .content-fit nav ul .landingpage-nav {
     padding: 10px;
   }
 
-  .Toastify__toast {
-    height: 30px!important;
-    min-width: 60svw;
-  }
-
   .Toastify__toast-container {
-    bottom: 5%; 
+    bottom: 5%;
+    width: 70svw;
+    margin-left: 15%;
+    display: inline-block;
+    text-align: center;
     /* background-color: transparent;
     width: 100svw;
     height: 64px;
