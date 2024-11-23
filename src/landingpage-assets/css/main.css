@@ -771,6 +771,7 @@ header .content-fit nav ul .landingpage-nav {
 
   .Toastify__toast {
     height: 30px!important;
+    min-width: 60svw;
   }
 
   .Toastify__toast-container {
