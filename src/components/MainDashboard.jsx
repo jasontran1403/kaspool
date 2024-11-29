@@ -112,7 +112,7 @@ const MainDashboard = () => {
               justifyContent: "center", // Distributes items evenly
               width: "100%",
               gap: "20px",
-              marginTop: "100px",
+              marginTop: "20px",
             }}
             className="flex-wrap" // Allow wrapping on small screens
           >

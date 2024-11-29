@@ -20,6 +20,9 @@
 
 body {
   overscroll-behavior: none;
+  width: 100svw;
+  height: auto;
+  overflow-x: hidden;
 }
 
 .tw-connect-wallet {
@@ -485,7 +488,6 @@ body {
 
 .Toastify__toast-container {
   bottom: 3%;
-  
   /*width: 10svw;
   padding-left: 20px;
   padding-right: 20px;
@@ -502,7 +504,6 @@ body {
     .5px -.5px 1px 1px #fff,
     -1px 1px 1px 1px #999,
     -5px 8px 15px 1px #999;
-  border-radius: 30px;
 }
 
 @media (min-width: 769px) and (max-width: 1919px) {

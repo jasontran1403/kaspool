@@ -8,17 +8,31 @@
     /* display: flex; */
     flex-direction: column; /* Ensure the tree layout aligns vertically */
     height: auto;
-    min-width: 700px;
     width: auto;
     margin: 0 auto;
 }
 
 .tree ul {
     padding-top: 20px;
+    width: 100%;
     position: relative;
     margin: 0 auto;
     transition: all 0.5s;
+    text-align: center;
 }
+/* 
+
+
+.tree ul {
+    padding-top: 20px;
+    position: relative;
+    margin: 0 auto;
+    transition: all 0.5s;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
 
 .tree li {
     float: left;
@@ -35,6 +49,7 @@
     margin-bottom: 20px;
     justify-items: center;
     align-items: center;
+    justify-content: start;
 }
 
 /* Connectors */
@@ -43,7 +58,7 @@
     position: absolute;
     top: 0;
     right: 50%;
-    border-top: 1px solid #ccc;
+    border-top: 3px solid #ccc;
     width: 50%;
     height: 20px;
 }
@@ -51,7 +66,7 @@
 .tree li::after {
     right: auto;
     left: 50%;
-    border-left: 1px solid #ccc;
+    border-left: 3px solid #ccc;
 }
 
 /* Remove connectors for only children and adjust spacing */
@@ -68,7 +83,7 @@
 }
 
 .tree li:last-child::before {
-    border-right: 1px solid #ccc;
+    border-right: 3px solid #ccc;
     border-radius: 0 5px 0 0;
 }
 
@@ -94,7 +109,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    border-left: 1px solid #ccc;
+    border-left: 3px solid #ccc;
     width: 0;
     height: 20px;
 }
@@ -107,12 +122,14 @@
 
 .tree li a {
     border: 1px solid #ccc;
+    border-radius: 20px;
     width: auto;
     height: auto;
-    min-width: 150px;
+    min-width: 140px;
     min-height: 120px;
+    padding-top: 10px;
     text-decoration: none;
-    color: #fc3535;
+    color: green;
     font-weight: bold;
     font-family: arial, verdana, tahoma;
     font-size: 15px;
@@ -130,12 +147,10 @@ ul li a {
     background: rgba(255, 255, 255, 0.1); /* Light background with transparency */
     border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
     border-radius: 10px; /* Rounded corners */
-    color: lightblue; /* Text color */
-    padding: 10px 20px; /* Padding for the button */
+    color: rgb(255, 255, 255)!important; /* Text color */
+    padding: 10px 10px; /* Padding for the button */
     font-size: 16px; /* Font size */
     width: auto;
-    padding-left: 20px;
-    padding-right: 20px;
     cursor: pointer; /* Pointer on hover */
     backdrop-filter: blur(10px); /* Blur effect for glass morphism */
     transition: all 0.3s ease; /* Smooth transition */
@@ -143,6 +158,8 @@ ul li a {
     margin-left: 5%; /* Margin on the left */
     z-index: 9999;
 }
+
+
 
 .glass-button:hover {
     background: rgba(255, 255, 255, 0.3); /* Change background on hover */
@@ -152,7 +169,12 @@ ul li a {
 
 @media (max-width: 768px) {
     .tree {
-        min-width: 900px;
+        min-width: 450px;
+    }
+
+    .tree-view-item {
+        overflow-x: scroll;
+        scroll-behavior: smooth;;
     }
 
     .tree-2 {

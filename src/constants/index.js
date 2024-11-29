@@ -143,6 +143,34 @@ export const userNavLinks = [
   },
 ];
 
+export const newUserNavLinks = [
+  {
+    id: "account",
+    index: 1,
+    title: "Account",
+  },
+  {
+    id: "affiliate",
+    index: 2,
+    title: "Affiliate",
+  },
+  {
+    id: "dashboard",
+    index: 3,
+    title: "Dashboard",
+  },
+  {
+    id: "history",
+    index: 4,
+    title: "History",
+  },
+  {
+    id: "d&h",
+    index: 5,
+    title: "D&H",
+  },
+];
+
 export const features = [
   {
     id: "feature-1",

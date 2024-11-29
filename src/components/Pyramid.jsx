@@ -242,23 +242,23 @@ const Pyramid = () => {
     }, []);
 
     const notify = () => {
-        const content = (
-            <div style={{ textAlign: "center" }}>
-                Mined {randomAmount(5, 200)}KAS at {new Date().getUTCHours()}:{new Date().getUTCMinutes()}:{new Date().getUTCSeconds()} {new Date().toLocaleDateString('us')}
-            </div>
-        );
+        // const content = (
+        //     <div style={{ textAlign: "center" }}>
+        //         Mined {randomAmount(5, 200)}KAS at {new Date().getUTCHours()}:{new Date().getUTCMinutes()}:{new Date().getUTCSeconds()} {new Date().toLocaleDateString('us')}
+        //     </div>
+        // );
 
-        toast(content, {
-            position: "bottom-center",
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            closeButton: false,
-            // className: "custom-toast",
-        });
+        // toast(content, {
+        //     position: "bottom-center",
+        //     hideProgressBar: true,
+        //     closeOnClick: false,
+        //     pauseOnHover: false,
+        //     draggable: false,
+        //     progress: undefined,
+        //     theme: "light",
+        //     closeButton: false,
+        //     // className: "custom-toast",
+        // });
     };
 
     const next = () => {
@@ -334,7 +334,7 @@ const Pyramid = () => {
                     <nav>
                         <ul className="landingpage-nav">
                             <li className="navbar-item">
-                                {fullPath?.length > 0 ? <a href={`/dashboard/${fullPath}`} className="tw-connect-wallet">Dashboard</a> : <a href={`/dashboard`} className="tw-connect-wallet">Dashboard</a>}
+                                {fullPath?.length > 0 ? <a href={`/dashboard2/${fullPath}`} className="tw-connect-wallet">Dashboard</a> : <a href={`/dashboard2`} className="tw-connect-wallet">Dashboard</a>}
                             </li>
                             <li>
                                 <TrustWalletConnect label={"connect"} />
@@ -374,19 +374,7 @@ const Pyramid = () => {
             <ModalSection3 isOpen={activeModal === 3} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
             <ModalSection4 isOpen={activeModal === 4} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
 
-            <ToastContainer
-                position="bottom-center"
-                autoClose={29000}
-                limit={1}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss={false}
-                draggable={false}
-                pauseOnHover={false}
-                theme="light"
-            />
+            
         </div>
     );
 };

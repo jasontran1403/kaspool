@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import 'sweetalert2/src/sweetalert2.scss';
 import styles from "../style";
@@ -9,8 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 
 const TransferUSDTItem = ({ swapHistory }) => {
+  const { multiTabDetect } = useContext(MultiTabDetectContext);
+
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [walletAddress, setWalletAddress] = useState(localStorage.getItem("walletAddress"));
   const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
@@ -18,14 +21,18 @@ const TransferUSDTItem = ({ swapHistory }) => {
   const [balance, setBalance] = useState(0);
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
-  const [listWalletType] = useState([
-    { id: 1, name: "USDT Wallet" },
+  const [networkSelected, setNetworkSelected] = useState("1");
+  const [listNetwork, setListNetwork] = useState([
+    { id: 1, name: "USDT BEP20" },
+    { id: 2, name: "Transfer" },
   ]);
   const [balances, setBalances] = useState([]);
+  const [transfer, setTransfer] = useState();
+  const [currentBalance, setCurrentBalance] = useState(0);
   const [amountSwap, setAmountSwap] = useState(0);
 
   const [listBalance, setListBalance] = useState([]);
-  
+
   useEffect(() => {
     let config = {
       method: "get",
@@ -40,6 +47,8 @@ const TransferUSDTItem = ({ swapHistory }) => {
       .then((response) => {
         setBalances(response.data.balances);
         setBalance(response.data.balances[0].balance);
+        setTransfer(response.data.balances[6].balance)
+        setCurrentBalance(response.data.balances[0].balance);
       })
       .catch((error) => {
         console.log(error);
@@ -79,6 +88,14 @@ const TransferUSDTItem = ({ swapHistory }) => {
   };
 
   const handleCreateDeposit = () => {
+    if (multiTabDetect) {
+      toast.error("Multiple browser tab was opend, please close all old browser tab", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      return;
+    }
+
     if (buttonDisabled) return;
     if (amount <= 0) {
       toast.error("Swap amount must > 0!", {
@@ -98,7 +115,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
 
     // SweetAlert2 confirmation modal
     Swal.fire({
-      title: 'Confirm Transfer',
+      title: 'Confirm transfer',
       text: `Are you sure you want to transfer ${amount} to ${to}?`,
       icon: 'warning',
       showCancelButton: true,
@@ -183,105 +200,120 @@ const TransferUSDTItem = ({ swapHistory }) => {
     }
   };
 
+  useEffect(() => {
+    if (networkSelected == 1) {
+      setCurrentBalance(balance);
+    } else {
+      setCurrentBalance(transfer);
+    }
+    console.log(networkSelected)
+  }, [networkSelected]);
+
   return (
-    <div className={`investment-container $`}>
-      <section
-        className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
-      >
-        <div className="flex-1 flex flex-col">
-          <h2 className={styles.heading2}>Internal Transfer</h2>
-          <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
-                Balance
-              </label>
+    <section
+      className={``}
+    >
+      <div className="flex-1 flex flex-col">
+        <div className="rounded">
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="packageName"
+            >
+              Wallet source
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="packageName"
+              value={networkSelected}
+              onChange={(e) => {
+                setNetworkSelected(e.target.value);
+              }}
+            >
+              {listNetwork.map((network) => (
+                <option key={network.id} value={network.id}>
+                  {network.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
+              Balance
+            </label>
+            <input
+              className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tokenBalance"
+              type="text"
+              value={currentBalance}
+              readOnly
+            />
+          </div>
+
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="tokenBalance"
+            >
+              Transfer to
+            </label>
+            <div className="flex items-center bg-white shadow border rounded w-full">
               <input
-                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="bg-white text-dark w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="tokenBalance"
                 type="text"
-                value={balance}
-                readOnly
+                placeholder="Display name or wallet address"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
               />
-            </div>
-
-            <div className="mb-6">
-              <label
-                className="block text-white text-sm font-bold mb-2"
-                htmlFor="tokenBalance"
-              >
-                Transfer to
-              </label>
-              <div className="flex items-center bg-white shadow border rounded w-full">
-                <input
-                  className="bg-white text-dark w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="tokenBalance"
-                  type="text"
-                  placeholder="Display name or wallet address"
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
-                />
-                <FontAwesomeIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={handleGetDisplayName}
-                  icon={faMagnifyingGlass}
-                  className="text-gray-500 mr-3"
-                />
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <label
-                className="block text-white text-sm font-bold mb-2"
-                htmlFor="tokenBalance"
-              >
-                Display name of receiver
-              </label>
-              <input
-                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="tokenBalance"
-                type="text"
-                value={displayName}
-                readOnly
+              <FontAwesomeIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleGetDisplayName}
+                icon={faMagnifyingGlass}
+                className="text-gray-500 mr-3"
               />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
-                Amount
-              </label>
-              <input
-                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="tokenBalance"
-                type="text"
-                value={amount}
-                onChange={(e) => {
-                  handleChangeAmount(e.target.value);
-                }}
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
-                Fee
-              </label>
-              <input
-                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="tokenBalance"
-                type="text"
-                value={fee}
-                readOnly
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <Button handleClick={handleCreateDeposit} content={"Transfer"} />
             </div>
           </div>
 
-          <ToastContainer stacked />
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="tokenBalance"
+            >
+              Display name of receiver
+            </label>
+            <input
+              className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tokenBalance"
+              type="text"
+              value={displayName}
+              readOnly
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="tokenBalance">
+              Amount
+            </label>
+            <input
+              className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tokenBalance"
+              type="text"
+              value={amount}
+              onChange={(e) => {
+                handleChangeAmount(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button onClick={handleCreateDeposit} className="button-43">Transfer</button>
+          </div>
         </div>
-      </section>
-    </div>
+
+        {/* <ToastContainer stacked /> */}
+      </div>
+    </section>
   );
 };
 

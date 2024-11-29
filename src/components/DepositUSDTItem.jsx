@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "../style";
 import Button from "./Button";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,8 +9,11 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { Tooltip } from "@mui/material";
 import CopyIcon from '@mui/icons-material/FileCopy';
+import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 
 const DepositUSDTItem = ({ depositHistory }) => {
+  const { multiTabDetect } = useContext(MultiTabDetectContext);
+
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -37,6 +40,14 @@ const DepositUSDTItem = ({ depositHistory }) => {
   };
 
   const handleCreateDeposit = () => {
+    if (multiTabDetect) {
+      toast.error("Multiple browser tab was opend, please close all old browser tab", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      return;
+    }
+    
     if (amount <= 0) {
       return;
     }
@@ -51,8 +62,8 @@ const DepositUSDTItem = ({ depositHistory }) => {
       text: `Are you sure you want to deposit ${amount}?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, transfer it!",
-      cancelButtonText: "No, cancel",
+      confirmButtonText: "Yes, confirm it!",
+      cancelButtonText: "No, cancel it",
       reverseButtons: true,
       customClass: {
         confirmButton: "custom-confirm-button", // Custom class for confirm button
@@ -79,7 +90,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
             const qrCodeBlob = response.data;
             const qrCodeUrl = URL.createObjectURL(qrCodeBlob);
             setQrImage(qrCodeUrl);
-            toast.success("Created deposit order!", {
+            toast.success("Created deposit order successful!", {
               position: "top-right",
               autoClose: 1500,
             });
@@ -115,8 +126,8 @@ const DepositUSDTItem = ({ depositHistory }) => {
       text: `Are you sure you want to cancel ${amount}?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, transfer it!",
-      cancelButtonText: "No, cancel",
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, do not cancel it",
       reverseButtons: true,
       customClass: {
         confirmButton: "custom-confirm-button", // Custom class for confirm button
@@ -161,17 +172,15 @@ const DepositUSDTItem = ({ depositHistory }) => {
   };
 
   return (
-    <div className={`investment-container`}>
     <section
-      className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow `}
+      className={``}
     >
       <div
         className="flex-1 flex flex-col"
-        style={{ overflow: "hidden", width: "90svw" }}
+        style={{ overflow: "hidden" }}
       >
-        <h2 className={styles.heading2}>Deposit</h2>
-        <div className="shadow-md rounded-lg px-4 py-6 sm:px-8 sm:py-8  mb-4">
-          <div className="mb-4">
+        <div className="rounded-lg">
+          <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
               htmlFor="packageName"
@@ -199,7 +208,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
               Amount
             </label>
             <input
-              className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-dark mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
               value={amount}
@@ -247,7 +256,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
                   className="ml-2 p-1 rounded hover:bg-gray-200"
                   aria-label="Copy wallet address"
                 >
-                  <CopyIcon style={{ color: "white" }}/>
+                  <CopyIcon style={{ color: "white" }} />
                 </button>
               </div>
             </div>
@@ -255,15 +264,14 @@ const DepositUSDTItem = ({ depositHistory }) => {
 
           <div className="flex items-center justify-between">
             {qrImage.length === 0 ? (
-              <Button handleClick={handleCreateDeposit} content={"Deposit"} />
+              <button onClick={handleCreateDeposit} className="button-43">Deposit</button>
             ) : (
-              <Button handleClick={handleCancelDeposit} content={"Cancel"} />
+              <button onClick={handleCancelDeposit} className="button-43">Cancel</button>
             )}
           </div>
         </div>
       </div>
     </section>
-    </div>
   );
 };
 

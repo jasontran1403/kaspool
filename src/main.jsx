@@ -9,6 +9,7 @@ import "./index.css";
 import { ThirdwebProvider } from "thirdweb/react";
 import { ToastContainer } from "react-toastify";
 import HashLoader from "react-spinners/HashLoader";
+import { MultiTabDetectProvider } from "./components/MultiTabDetectContext";
 
 function App() {
   const [isConnected, setIsConnected] = useState(
@@ -20,6 +21,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   let [color] = useState("#08e0c5");
 
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
 
   const locationRef = useLocation();
 
@@ -33,7 +37,7 @@ function App() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 2400);
+    }, 3000);
 
     return () => clearTimeout(timeout); // Dọn dẹp timeout khi component unmount
   }, []);
@@ -117,12 +121,14 @@ function App() {
 
   if (loading) {
     return (
-      <div className="sweet-loading">
-        <HashLoader  
-          color={color}
-          loading={loading}
-          size={50}
-        />
+      <div className="loading-container">
+        <div className="sweet-loading">
+          <HashLoader
+            color={color}
+            loading={loading}
+            size={50}
+          />
+        </div>
       </div>
     );
   }
@@ -133,12 +139,21 @@ function App() {
 Modal.setAppElement("#root"); // Thiết lập Modal
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <ThirdwebProvider>
-      <App />
-      {/* <ToastContainer
-        stacked={true}
-      /> */}
-    </ThirdwebProvider>
-  </BrowserRouter>
+  <MultiTabDetectProvider>
+    <BrowserRouter>
+      <ThirdwebProvider>
+        <App />
+        <ToastContainer
+          stacked
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          theme="light"
+        />
+      </ThirdwebProvider>
+    </BrowserRouter>
+  </MultiTabDetectProvider>
 );

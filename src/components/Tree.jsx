@@ -42,7 +42,7 @@ const Tree = () => {
   const [treeData, setTreeData] = useState(null);
   const [modalReflink, setModalReflink] = useState(false);
   const [refInfo, setRefInfo] = useState({});
-  const [currentShow, setCurrentShow] = useState(2);
+  const [currentShow, setCurrentShow] = useState(1);
 
   useEffect(() => {
     fetchTreeByRoot(currWallet); // Fetch tree using current wallet
@@ -174,11 +174,27 @@ const Tree = () => {
   }
 
   const [findValue, setFindValue] = useState("");
+
+  let timeoutFind;
+
   const handleFind = () => {
     if (findValue === "") return;
+    if (timeoutFind) {
+      clearTimeout(timeoutFind);
+    }
+
     setPrevWallets((prev) => [...prev, localStorage.getItem("walletAddress")]);
-    setCurrWallet(findValue); // Set it as current wallet
+
+    timeoutFind = setTimeout(() => {
+      setCurrWallet(findValue); // Set it as current wallet
+    }, 900);
   }
+
+  const formatNumber = (numberString) => {
+    // Format the number with commas
+    const formattedNumber = new Intl.NumberFormat("en-US").format(numberString);
+    return formattedNumber;
+  };
 
   const renderTree = (node, depth = 0, position = 0, parent, side) => {
     if (depth > currentShow) return null; // Limit depth to 5 levels (0-4)
@@ -186,37 +202,37 @@ const Tree = () => {
     const displayName = node?.userInfo?.displayName || null;
 
     return (
-      <li key={`${depth}-${position}`}>
-        <div className={`node  ${!displayName ? "placeholder" : ""}`}>
+      <li key={`${depth}-${position}`} >
+        <div className={`node  ${!displayName ? "placeholder" : ""} `}>
           {displayName ? (
             <a
-              className="glass"
+              className="glass card-blue-green"
               onClick={() => {
                 handleClick(node.userInfo.walletAddress);
               }}
             >
-              <p>{displayName}</p>
+              <p style={{ color: "green" }}>{displayName}</p>
 
-              <p className="sponsor">
-                Sponsor: {node.userInfo?.rootDisplayName || "N/A"}
+              <p className="sponsor" style={{ color: "green" }}>
+                {node.userInfo?.rootDisplayName || "N/A"}
               </p>
               <p className="sponsor">Sales: {node.userInfo?.sales || 0}</p>
               <p className="sponsor">
-                Left: {node.userInfo?.teamSalesLeft || 0}
+                Left: {formatNumber(node.userInfo?.teamSalesLeft) || 0}
               </p>
               <p className="sponsor">
-                Right: {node.userInfo?.teamSalesRight || 0}
+                Right: {formatNumber(node.userInfo?.teamSalesRight) || 0}
               </p>
             </a>
           ) : parent ? (
-            <a
+            <a className="card-blue-green"
               onClick={() => {
                 handleGenerateRefLink(root.walletAddress, parent, side);
               }}
             >
               <FontAwesomeIcon
                 icon={faUserPlus}
-                style={{ fontSize: "30px", paddingTop: "30px" }}
+                style={{ color: "green", fontSize: "30px", paddingTop: "30px" }}
               />
             </a>
           ) : (
@@ -245,11 +261,14 @@ const Tree = () => {
     );
   };
 
-
-
   return (
-    <div className={`tree ${currentShow == 3 ? "tree-2" : currentShow == 4 ? "tree-3" : "tree"} mt-[100px]`}>
+    <div className={`tree  ${currentShow == 3 ? "tree-2" : currentShow == 4 ? "tree-3" : "tree"} animation-show-dashboard tree-view-item`}>
       <div className="glass-button-container">
+        <input className="glass-button " type="text" placeholder="Search by wallet address" value={findValue} onChange={(e) => {
+          setFindValue(e.target.value);
+          handleFind();
+        }} />
+
         <button
           className="glass-button"
           onClick={handleGoBack}
@@ -257,27 +276,8 @@ const Tree = () => {
         >
           Back
         </button>
-        <button
-          className="glass-button"
-          onClick={handleShowMore}
-        >
-          Show more
-        </button>
-        <button
-          className="glass-button"
-          onClick={handleShowLess}
-        >
-          Show less
-        </button>
-        <input className="glass-button" type="text" placeholder="Wallet address to find" value={findValue} onChange={(e) => {setFindValue(e.target.value)}} />
-        <button
-          className="glass-button"
-          onClick={handleFind}
-        >
-          Find
-        </button>
       </div>
-      <ul className="tree-ul">
+      <ul className="tree-ul"  >
         {renderTree(treeData)} {/* Render the entire tree */}
       </ul>
 
@@ -325,16 +325,16 @@ const Tree = () => {
           }}
         >
           <section
-            className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
+            className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} card-blue-green rounded-lg `}
           >
-            <div className="flex-1 flex flex-col">
-              <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className=" flex flex-col">
+              <div className=" rounded px-8 pt-6 pb-8 mb-4">
                 <div>
                   <label className="block text-white text-sm font-bold mb-2">
                     Display name of root
                   </label>
                   <input
-                    className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     value={refInfo.rootDisplayName}
                     readOnly
@@ -346,7 +346,7 @@ const Tree = () => {
                     Display name of placement
                   </label>
                   <input
-                    className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     value={refInfo.placementDisplayName}
                     readOnly
@@ -358,7 +358,7 @@ const Tree = () => {
                     Side
                   </label>
                   <input
-                    className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     value={refInfo.side}
                     readOnly
@@ -385,7 +385,7 @@ const Tree = () => {
           </section>
         </div>
       </ReflinkModal>
-      <ToastContainer stacked />
+      {/* <ToastContainer stacked /> */}
     </div>
   );
 };

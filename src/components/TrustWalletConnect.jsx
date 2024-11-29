@@ -43,7 +43,7 @@ const TrustWalletConnect = ({ transparent, label }) => {
   });
 
   useEffect(() => {
-    if (activeAccount?.address) {
+    if (activeAccount !== undefined && activeAccount.address) {
       if (localStorage.getItem("walletAddress") !== activeAccount.address) {
         toast.success("Connect wallet success", {
           position: "top-right",
@@ -107,7 +107,7 @@ const TrustWalletConnect = ({ transparent, label }) => {
         onConnect={() => handleConnect()}
         onDisconnect={() => disconnectWallet()}
       />
-      <ToastContainer stacked />
+      {/* <ToastContainer stacked /> */}
     </div>
   );
 };

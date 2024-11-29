@@ -106,7 +106,7 @@ const Dashboard = () => {
 
       {/* Lock Modal */}
       {isInTree === "true" && (
-        <div className={`${styles.flexStart} bg-image`}>
+        <div className={`${styles.flexStart} bg-image pt-[100px]`}>
           <MainDashboard />
         </div>
       )}

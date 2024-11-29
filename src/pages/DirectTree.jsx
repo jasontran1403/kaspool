@@ -149,7 +149,7 @@ const DirectTree = () => {
         // Modal noti
       )}
 
-{isInTree === "true" && (
+      {isInTree === "true" && (
         <div className={`${styles.paddingX} ${styles.flexCenterNav}`}>
           <div className={`${styles.boxWidthDashboard}`}>
             <FooterDashboard />

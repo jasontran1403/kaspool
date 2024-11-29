@@ -48,16 +48,16 @@ const DirectTreeView = () => {
 
   const renderTree = (node) => (
     <div key={node.walletAddress} className="ml-1 mb-2">
-      <div className={`flex items-center space-x-2 cursor-pointer ${expandedNodes[node.walletAddress] ? "bg-blue-100" : ""}`}>
+      <div className={`flex items-center text-white space-x-2 cursor-pointer ${expandedNodes[node.walletAddress] ? "" : ""}`}>
         {node.listF1 && node.listF1.length > 0 && (
           <button
             onClick={() => handleToggleExpand(node.walletAddress)}
             className="focus:outline-none text-blue-500 font-bold"
           >
             {expandedNodes[node.walletAddress] ? (
-              <span className="text-xl">−</span>
+              <span className="text-xl text-white">−</span>
             ) : (
-              <span className="text-xl">+</span>
+              <span className="text-xl text-white">+</span>
             )}
           </button>
         )}
@@ -75,8 +75,8 @@ const DirectTreeView = () => {
   );
 
   return (
-    <div className="p-6 mt-[50px]">
-      <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+    <div className="w-full animation-show-dashboard">
+      <div className="">
         {loading ? ( // Show loading spinner if loading is true
           <div className="flex items-center justify-center" style={{ height: '39svw' }}>
             <div className="spinner"></div>

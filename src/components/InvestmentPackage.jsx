@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "../style";
 import Button from "./Button";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -7,8 +7,11 @@ import "sweetalert2/src/sweetalert2.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
+import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 
 const InvestmentPackage = ({ packages = [], balance = 0 }) => {
+  const { multiTabDetect } = useContext(MultiTabDetectContext);
+
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
@@ -61,6 +64,15 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
   };
 
   const buyPackage = () => {
+    if (multiTabDetect) {
+      toast.error("Multiple browser tab was opend, please close all old browser tab", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      return;
+    }
+
+    if (miningAmount <= 0) return;
     if (buttonDisabled) return;
     if (selectedPackageId === "" || !listPackages.length) return;
 
@@ -76,12 +88,12 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
     }
 
     Swal.fire({
-      title: "Confirm cancel deposit",
-      text: `Are you sure you want to cancel?`,
+      title: `Confirm mining $${miningAmount}`,
+      text: `Are you sure you want mine?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, transfer it!",
-      cancelButtonText: "No, cancel",
+      confirmButtonText: "Yes, confirm it!",
+      cancelButtonText: "No, cancel it",
       reverseButtons: true,
       customClass: {
         confirmButton: "custom-confirm-button", // Custom class for confirm button
@@ -113,7 +125,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
           .then((response) => {
             if (response.data === "ok") {
               setButtonDisabled(true);
-              toast.success("Invest success!", {
+              toast.success("Mine successfull!", {
                 position: "top-right",
                 autoClose: 1500,
                 onClose: () => window.location.reload(),
@@ -165,32 +177,10 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
 
   return (
     <section
-      className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} investment-card sm:flex-row flex-col bg-black-gradient-2 rounded-[20px] box-shadow`}
+      className={` sm:flex-row flex-col rounded-[20px] `}
     >
       <div className="flex-1 flex flex-col">
-        <h4 className={styles.heading4}>Staking information</h4>
-        <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          {/* <div className="mb-4">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="packageName"
-            >
-              Staking name
-            </label>
-            <select
-              className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="packageName"
-              value={selectedPackageId}
-              onChange={(e) => handleSelectPackage(e.target.value)}
-            >
-              {listPackages.map((pkg) => (
-                <option key={pkg.id} value={pkg.id}>
-                  {pkg.name}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
+        <div className="rounded">
           <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
@@ -202,8 +192,9 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
               className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="number"
+              min={0}
               value={miningAmount}
-              onChange={e => {setMiningAmount(e.target.value)}}
+              onChange={e => { setMiningAmount(e.target.value) }}
             />
           </div>
 
@@ -238,11 +229,11 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <Button handleClick={buyPackage} content={"Stake"} />
+            <button onClick={buyPackage} className="button-43">Mine</button>
           </div>
         </div>
 
-        <ToastContainer stacked />
+        {/* <ToastContainer stacked /> */}
       </div>
     </section>
   );
