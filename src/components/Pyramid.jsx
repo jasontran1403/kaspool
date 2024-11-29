@@ -334,7 +334,7 @@ const Pyramid = () => {
                     <nav>
                         <ul className="landingpage-nav">
                             <li className="navbar-item">
-                                {fullPath?.length > 0 ? <a href={`/dashboard2/${fullPath}`} className="tw-connect-wallet">Dashboard</a> : <a href={`/dashboard2`} className="tw-connect-wallet">Dashboard</a>}
+                                {fullPath?.length > 0 ? <a href={`/dashboard/${fullPath}`} className="tw-connect-wallet">Dashboard</a> : <a href={`/dashboard`} className="tw-connect-wallet">Dashboard</a>}
                             </li>
                             <li>
                                 <TrustWalletConnect label={"connect"} />

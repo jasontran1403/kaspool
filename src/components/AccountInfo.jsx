@@ -89,7 +89,7 @@ const AccountInfo = (props) => {
         </div>
 
         <div className="text-center pb-[20px]">
-          <button class="button-43" onClick={handleUpdateInfo} role="button">Update Info</button>
+          <button className="button-43" onClick={handleUpdateInfo} role="button">Update Info</button>
         </div>
       </div>
     </div>
