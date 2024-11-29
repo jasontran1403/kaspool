@@ -31,7 +31,6 @@ import SwapItemUsdtMCT from "./SwapItemUsdtMCT";
 import SwapCardMCTUsdt from "./SwapCardMCTUsdt";
 import SwapItemMCTUsdt from "./SwapItemMCTUsdt";
 import FooterDashboard from "./FooterDashboard";
-import HashRate from "./HashRate";
 
 export {
   FooterDashboard,
@@ -66,6 +65,5 @@ export {
   SwapCardUsdtMCT,
   SwapItemUsdtMCT,
   SwapCardMCTUsdt,
-  SwapItemMCTUsdt,
-  HashRate
+  SwapItemMCTUsdt
 };

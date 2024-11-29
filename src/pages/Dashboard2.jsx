@@ -18,8 +18,8 @@ import WithdrawHistoryTab from "../components/WithdrawHistoryTab";
 import TransferHistoryTab from "../components/TransferHistoryTab";
 import MiningHistoryTab from "../components/MiningHistoryTab";
 import BalanceSwitch from "../components/BalanceSwitch";
-import { HashRate } from "../components/index";
 import Download from "../components/Download";
+import Download2 from "../components/Download2";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
 import logo from "../landingpage-assets/img/resources/logo-white.png";
@@ -294,7 +294,7 @@ const Dashboard2 = () => {
         <Download
         />
 
-        <HashRate
+        <Download2
         />
       </div>}
 
