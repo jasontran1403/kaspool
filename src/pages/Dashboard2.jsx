@@ -18,7 +18,7 @@ import WithdrawHistoryTab from "../components/WithdrawHistoryTab";
 import TransferHistoryTab from "../components/TransferHistoryTab";
 import MiningHistoryTab from "../components/MiningHistoryTab";
 import BalanceSwitch from "../components/BalanceSwitch";
-import HashRate from "../components/HashRate";
+// import HashRate from "../components/HashRate";
 import Download from "../components/Download";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
@@ -294,8 +294,8 @@ const Dashboard2 = () => {
         <Download
         />
 
-        <HashRate
-        />
+        {/* <HashRate
+        /> */}
       </div>}
 
       {currentNavigationTab === 2 && <div className="dashboard-container animation-show-dashboard sm:mt-[0px]">
