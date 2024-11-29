@@ -875,15 +875,9 @@ header .content-fit nav ul .landingpage-nav {
   /* Animation to move and resize */
 }
 
-#root {
-}
-
 .globeAnimation.return {
   animation: returnToOriginal 1.5s forwards;
   /* Animation to return to original */
-}
-
-.logo-glow {
 }
 
 a {

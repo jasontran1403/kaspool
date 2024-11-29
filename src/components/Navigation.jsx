@@ -25,7 +25,7 @@ const Navigation = (props) => {
                                 className={`pt-[20px] pb-[20px] text-l cursor-pointer duration-500 ${i === active && "drop-shadow-icon-2"
                                     }`}
                             >
-                                <img src={`../src/assets/navicon/${menu.icon}.png`} width={30} height={30} alt="" />
+                                <img src={`/navicon/${menu.icon}.png`} width={30} height={30} alt="" />
                             </span>
 
                         </a>

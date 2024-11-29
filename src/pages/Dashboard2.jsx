@@ -18,7 +18,7 @@ import WithdrawHistoryTab from "../components/WithdrawHistoryTab";
 import TransferHistoryTab from "../components/TransferHistoryTab";
 import MiningHistoryTab from "../components/MiningHistoryTab";
 import BalanceSwitch from "../components/BalanceSwitch";
-import HashRate from "../components/HashRate";
+import { HashRate } from "../components/index";
 import Download from "../components/Download";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
@@ -181,7 +181,7 @@ const Dashboard2 = () => {
   }
 
   return (
-    <div className="w-full h-auto">
+    <div className="">
       <div className={` hidden sm:flex`}>
         <div className={``}>
           <DashboardNavbar handleSwitchNavbar={handleSwitchNavbar} />
