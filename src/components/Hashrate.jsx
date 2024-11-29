@@ -1,4 +1,4 @@
-const Hashrate = (props) => {
+const HashRate = (props) => {
   const isAdmin = window.location.href.includes('/admin');
   const id = location.pathname.split('/admin/dashboard/')[1];
 
@@ -39,4 +39,4 @@ const Hashrate = (props) => {
   );
 };
 
-export default Hashrate;
+export default HashRate;

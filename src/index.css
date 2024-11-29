@@ -181,7 +181,6 @@ body {
   background: url('/src/assets/background.jpg') center center / cover no-repeat;
   width: 100svw;
   height: 100svh;
-  overflow: hidden;
   overscroll-behavior: none;
 }
 
