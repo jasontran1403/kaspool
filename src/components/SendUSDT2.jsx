@@ -40,16 +40,19 @@ function App() {
         </div>
         {account && (
           <>
-            <div className="mx-auto sm:mb-[30px] flex flex-col justify-between items-center gap-[50px] animation-show-dashboard border border-gray-200 rounded-lg shadow card-blue-green flex flex-row justify-between items-center w-full h-full">
-              <div className="transaction-details">
-                <label htmlFor="receiver">Receiver wallet</label>
-                <input id="receiver" type="text" placeholder="Receiver wallet address...." value={walletReceiver} onChange={(e) => setWalletReceiver(e.target.value)} />
-              </div>
-              <div className="transaction-details">
-                <label htmlFor="amount">Amount</label>
-                <input id="amount" type="text" placeholder="Amount to send..." value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <div className="mx-auto animation-show-dashboard border border-gray-200 rounded-lg card-blue-green">
+              <div className="pt-[20px] pb-[20px] pl-[20px] pr-[20px] flex flex-col justify-center items-center gap-[50px]">
+                <div className="transaction-details flex flex-col justify-between gap-[20px]">
+                  <label htmlFor="receiver">Receiver wallet</label>
+                  <input id="receiver" className="p-3 text-center" type="text" placeholder="Receiver wallet address...." value={walletReceiver} onChange={(e) => setWalletReceiver(e.target.value)} />
+                </div>
+                <div className="transaction-details flex flex-col justify-between gap-[20px]">
+                  <label htmlFor="amount">Amount</label>
+                  <input id="amount" className="p-3 text-center" type="text" placeholder="Amount to send..." value={amount} onChange={(e) => setAmount(e.target.value)} />
+                </div>
               </div>
             </div>
+
             <TransactionButton
               transaction={() => {
                 // Create a transaction object and return it
