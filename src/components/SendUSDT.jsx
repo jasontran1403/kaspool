@@ -19,8 +19,6 @@ const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955";  // US
 function App() {
   const account = useActiveAccount();
 
-  console.log(contract);
-
   return (
     <div className="flex py-12 px-3">
       <div className="m-auto max-w-[550px] text-center">
