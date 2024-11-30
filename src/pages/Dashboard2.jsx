@@ -56,6 +56,14 @@ const Dashboard2 = () => {
 
   const refcodeMatch = fullPath.match(/^refcode=(.+)$/);
   const refcode = refcodeMatch ? refcodeMatch[1] : null;
+  const [kaspa, setKaspa] = useState(0);
+  const [kaspaRatio, setKaspaRatio] = useState(0);
+  const [nacho, setNacho] = useState(0);
+  const [nachoRatio, setNachoRatio] = useState(0);
+  const [kaspy, setKaspy] = useState(0);
+  const [kaspyRatio, setKaspyRatio] = useState(0);
+  const [kasper, setKasper] = useState(0);
+  const [kasperRatio, setKasperRatio] = useState(0);
 
   function handleOpenModal(open) {
     closeLockModal();
@@ -251,14 +259,14 @@ const Dashboard2 = () => {
           <BalanceTab
             className="w-full"
             usdt={usdt}
-            kaspa={200}
-            ratioKaspa={0.1533}
-            nacho={300}
-            ratioNacho={0.0001424}
-            kaspy={400}
-            ratioKaspy={0.00003199}
-            kasper={500}
-            ratioKasper={0.0002701}
+            kaspa={kaspa}
+            ratioKaspa={kaspaRatio}
+            nacho={nacho}
+            ratioNacho={nachoRatio}
+            kaspy={kaspy}
+            ratioKaspy={kaspyRatio}
+            kasper={kasper}
+            ratioKasper={kasperRatio}
           /></>}
       </div>}
 
