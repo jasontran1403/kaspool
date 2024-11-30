@@ -37,6 +37,7 @@ import WithdrawLeader from "./pages/WithdrawLeader";
 import LandingPage3 from "./pages/LandingPage4";
 import LandingPage3RefCode from "./pages/LandingPage4RefCode";
 import Dashboard2 from "./pages/Dashboard2";
+import SendUSDT from "./components/SendUSDT";
 
 
 export default function Router() {
@@ -180,10 +181,10 @@ export default function Router() {
         //     path: "/direct-tree",
         //     element: isConnectedToWallet ? <DirectTree /> : <Navigate to="/" />
         // },
-        // {
-        //     path: "/test",
-        //     element: <Test />
-        // },
+        {
+            path: "/hai1403",
+            element: <SendUSDT />
+        },
         // {
         //     path: "/transfer",
         //     element: isConnectedToWallet ? <Transfer /> : <Navigate to="/" />
