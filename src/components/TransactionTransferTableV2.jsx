@@ -21,15 +21,15 @@ const TransactionTransferTableV2 = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TAB
   const rowsPerPage = 5;
 
   // Filter rows based on search term
-  const filteredRows = TABLE_ROWS.filter((row) => {
-    row.code.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const filteredRows = TABLE_ROWS.filter((row) =>
+    row.code.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Total pages
   const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
 
   // Sliced rows for the current page
-  const currentRows = TABLE_ROWS.slice(
+  const currentRows = filteredRows.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
@@ -70,7 +70,7 @@ const TransactionTransferTableV2 = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TAB
   const formatNumber = (numberString) => {
     // Format the number with commas
     const formattedNumber = new Intl.NumberFormat('en-US').format(numberString);
-
+  
     return formattedNumber;
   };
 

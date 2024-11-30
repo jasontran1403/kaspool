@@ -26,7 +26,7 @@ const GeneralWallet = (props) => {
   };
 
   return (
-    <div className="card-blue-green sm:w-[80svw] w-[80svw] mx-auto animation-show-dashboard  flex flex-row justify-between items-center w-full h-full border border-gray-200 rounded-lg shadow">
+    <div className="card-blue-green sm:w-[80svw] w-[80svw] mx-auto animation-show-dashboard  flex flex-row justify-between items-center w-full h-full border border-gray-200 rounded-lg shadow sm:mb-[30px]">
       <div className="pl-[20px] pr-[20px] pt-[20px] pb-[20px] flex flex-col w-full gap-[20px]">
         <div className="balance-item">
           <span>USDT-BEP20</span>
