@@ -59,7 +59,7 @@ const Download2 = (props) => {
 
   return (
     <div className="card-blue-green sm:w-[80svw] w-[80svw] flex flex-col sm:mb-[30px] mx-auto border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <h3 className="text-white text-xl flex document pt-[20px] pb-[10px] pl-[20px] pr-[20px]">Hashrate</h3>
+      <h3 className="text-white text-xl flex document pt-[20px] pb-[10px] pl-[20px] pr-[20px]">HashRate</h3>
       <div className="flex flex-row w-full justify-around items-center documents pt-[10px] pb-[20px] pl-[20px] pr-[20px]">
         <div className="flex flex-col items-center">
           <h5 className="mb-1 text-xl font-medium dark:text-gray-200 text-white text-center">
