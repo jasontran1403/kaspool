@@ -69,7 +69,7 @@ export default function Router() {
             element: <LandingPage3RefCode />
         },
         {
-            path: "/dashboard",
+            path: "/home",
             element: isConnectedToWallet ? <Dashboard2 /> : <Navigate to="/" />
         },
         // {

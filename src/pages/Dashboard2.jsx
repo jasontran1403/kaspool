@@ -214,7 +214,7 @@ const Dashboard2 = () => {
             <div className="relative inline-block">
               <img
                 className={`${currentNavigationTab === 3 && rank > 0 ? "rank" : "logo"}`}
-                src={currentNavigationTab === 3 ? (rank > 0 ? `src/assets/rank/${rank}.png` : logo) : logo}
+                src={currentNavigationTab === 3 ? (rank > 0 ? `../../public/${rank}.png` : logo) : logo}
                 width={80}
                 height={80}
                 alt=""
