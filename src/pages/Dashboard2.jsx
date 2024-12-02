@@ -22,7 +22,7 @@ import Download from "../components/Download";
 import Download2 from "../components/Download2";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
-import logo from "../landingpage-assets/img/resources/logo-white.png";
+import logo from "../../public/logo-white.png";
 import AccountInfo from "../components/AccountInfo";
 import DirectTreeView from "../components/DirectTreeView";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";

@@ -23,6 +23,25 @@ const AccountInfo = (props) => {
     return formattedNumber;
   };
 
+  const handleCopyRefLink = (refCode) => {
+    const currentUrl = `${refCode}`;
+
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {
+        // You can also trigger a toast or visual feedback here if needed
+        toast.success("Referral link copied to clipboard", {
+          position: "top-right",
+          autoClose: 1500,
+        });
+      })
+      .catch((error) => {
+        toast.error("Failed to copy referral link: ", error, {
+          position: "top-right",
+          autoClose: 1500,
+        });
+      });
+  };
+
   const handleUpdateInfo = () => {
     if (displayName === "" || kaspaWallet === "") {
       toast.error("Input field is required", {
@@ -130,12 +149,12 @@ const AccountInfo = (props) => {
 
         <div className="info-details-item pb-[10px]">
           <span>Left reflink</span>
-          <input type="text" value={props.leftRefLink} readOnly disabled />
+          <input type="text" className="cursor-pointer bg-gray-400" value={props.leftRefLink} onClick={() => handleCopyRefLink(props.leftRefLink)} readOnly />
         </div>
 
         <div className="info-details-item pb-[10px]">
           <span>Right reflink</span>
-          <input type="text" value={props.rightRefLink} readOnly disabled />
+          <input type="text" className="cursor-pointer bg-gray-400" value={props.rightRefLink} onClick={() => handleCopyRefLink(props.rightRefLink)} readOnly />
         </div>
 
         <div className="text-center pb-[20px]">

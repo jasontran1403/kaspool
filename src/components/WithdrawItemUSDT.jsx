@@ -181,7 +181,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
               Current Available Balance
             </label>
             <input
-              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-400 text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
               value={formatNumber(currentBalance)}

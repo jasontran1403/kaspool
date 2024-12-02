@@ -42,7 +42,7 @@ const Tree = () => {
   const [treeData, setTreeData] = useState(null);
   const [modalReflink, setModalReflink] = useState(false);
   const [refInfo, setRefInfo] = useState({});
-  const [currentShow, setCurrentShow] = useState(2);
+  const [currentShow, setCurrentShow] = useState(1);
 
   useEffect(() => {
     fetchTreeByRoot(currWallet); // Fetch tree using current wallet
