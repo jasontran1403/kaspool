@@ -197,10 +197,10 @@ export default function Router() {
         //     element: isConnectedToWallet ? <Tree /> : <Navigate to="/" />
         // },
         // here
-        // {
-        //     path: "/admin/dashboard/:id",
-        //     element: isAdmin ? <Dashboard /> : <Navigate to="/" />
-        // },
+        {
+            path: "/admin/home/:id",
+            element: isAdmin ? <Dashboard2 /> : <Navigate to="/" />
+        },
         // {
         //     path: "/admin/staking/:id",
         //     element: isAdmin ? <Investment /> : <Navigate to="/" />
