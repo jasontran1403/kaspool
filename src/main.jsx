@@ -19,6 +19,7 @@ function App() {
   const isAdmin = window.location.href.includes("/admin"); // Kiểm tra URL có chứa '/admin' không
   const id = location.pathname.split("/admin/dashboard/")[1]; // Lấy ID từ URL
   const [loading, setLoading] = useState(true);
+  const [] = useState("");
   let [color] = useState("#08e0c5");
 
   useEffect(() => {
@@ -72,6 +73,7 @@ function App() {
         walletAddress: localStorage.getItem("walletAddress"),
         publicKey: localStorage.getItem("walletAddress"),
         walletStateInit: localStorage.getItem("walletAddress"),
+        refCode: refcode
       });
 
       const config = {

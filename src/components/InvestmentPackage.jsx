@@ -8,9 +8,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
+import MineOption2 from "./MineOption2";
 
-const InvestmentPackage = ({ packages = [], balance = 0 }) => {
+const InvestmentPackage = ({ packages = [], balance = 0, connectedBalance }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
+
+  const [listNetwork] = useState([
+    { id: 1, name: "Connected USDT Wallet" },
+    { id: 2, name: "USDT BEP20" },
+  ]);
+
+  const [networkSelected, setNetworkSelected] = useState(1);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [walletAddress, setWalletAddress] = useState(
@@ -50,9 +58,30 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
   const [selectedPackageId, setSelectedPackageId] = useState("");
   const [walletType, setWalletType] = useState(1);
   const [miningAmount, setMiningAmount] = useState(0);
+  const [walletReceiver, setWalletReceiver] = useState("");
+
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      url: `${API_ENDPOINT}management/get-direct-wallet-address/${localStorage.getItem("walletAddress")}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        setWalletReceiver(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
 
   const formattedPrice = (amount) => {
-    let currencyCode = "USDT";
     const formattedNumber = new Intl.NumberFormat("en-US", {
       style: "decimal",
       minimumFractionDigits: 2,
@@ -60,7 +89,7 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
     }).format(amount);
 
     // Append the currency code after the formatted number
-    return `${formattedNumber} ${currencyCode.toUpperCase()}`;
+    return `${formattedNumber}`;
   };
 
   const buyPackage = () => {
@@ -151,6 +180,11 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
     // Add code to handle the purchase here
   };
 
+  const handleChangeWalletType = (walletType) => {
+    console.log(walletType);
+    setNetworkSelected(walletType);
+  };
+
   useEffect(() => {
     if (packages.length > 0) {
       setListPackages(packages);
@@ -201,6 +235,27 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
           <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
+              htmlFor="packageName"
+            >
+              Wallet type
+            </label>
+            <select
+              className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="packageName"
+              value={networkSelected}
+              onChange={(e) => { handleChangeWalletType(e.target.value) }}
+            >
+              {listNetwork.map((network) => (
+                <option key={network.id} value={network.id}>
+                  {network.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
               htmlFor="balance"
             >
               USDT Balance
@@ -227,9 +282,9 @@ const InvestmentPackage = ({ packages = [], balance = 0 }) => {
               value={formattedPrice(transfer)}
               readOnly
             />
-          </div>
+          </div> */}
           <div className="flex items-center justify-between">
-            <button onClick={buyPackage} className="button-43">Mine</button>
+            {networkSelected == 1 ? <MineOption2 walletAddress={localStorage.getItem("walletAddress")} walletReceiver={walletReceiver} amount={miningAmount} connectedBalance={connectedBalance} /> : <button onClick={buyPackage} className="button-43">Mine</button>}
           </div>
         </div>
 

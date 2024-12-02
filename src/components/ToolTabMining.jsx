@@ -32,7 +32,7 @@ const ToolTabMining = (props) => {
   return (
     <div className="sm:w-[80svw] mx-auto sm:mb-[30px] w-[80svw] animation-show-dashboard card-blue-green flex flex-row justify-between border border-gray-200 items-center rounded-lg w-full h-full">
       <div className="w-full pt-[20px] pb-[20px] pl-[20px] pr-[20px]">
-        <InvestmentPackage packages={packages} balance={balance} />
+        <InvestmentPackage packages={packages} balance={balance} connectedBalance={props.connectedBalance} />
       </div>
     </div>
   );

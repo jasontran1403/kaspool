@@ -12,6 +12,7 @@ import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 const WithdrawItemUSDT = ({ balance, transfer }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
 
+  const [loading, setLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
@@ -21,8 +22,21 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
 
   const [listNetwork] = useState([
     { id: 1, name: "USDT BEP20" },
-    { id: 2, name: "Transfer" },
+    // { id: 2, name: "Transfer" },
   ]);
+
+  const formatNumber = (numberString) => {
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  
+    return formattedNumber;
+  };
 
   useEffect(() => {
     setNetworkSelected(listNetwork[0].id);
@@ -33,8 +47,6 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
   }, [balance]);  // Now it updates whenever balance changes
 
   const [amount, setAmount] = useState(0);
-  const [toWallet, setToWallet] = useState("");
-
 
   useEffect(() => {
     if (networkSelected == 1) {
@@ -53,7 +65,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
       return;
     }
 
-    if (toWallet === "") {
+    if (walletAddress === "") {
       toast.error("Wallet address must not be null", {
         position: "top-right",
         autoClose: 1500,
@@ -68,9 +80,10 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
       return;
     }
 
+    setLoading(true);
     Swal.fire({
       title: 'Confirm withdraw',
-      text: `Are you sure you want to withdraw ${amount} to ${toWallet}?`,
+      text: `Are you sure you want to withdraw ${amount} to ${localStorage.getItem("walletAddress")}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, confirm withdraw!',
@@ -85,7 +98,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
       if (result.isConfirmed) {
         let data = JSON.stringify({
           walletAddress: walletAddress,
-          toWalletAddress: toWallet,
+          toWalletAddress: localStorage.getItem("walletAddress"),
           amount: amount,
           method: 1,
           walletType: networkSelected,
@@ -115,6 +128,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
                 onClose: () => window.location.reload(),
               });
             } else {
+              setLoading(false);
               toast.error(response.data, {
                 position: "top-right",
                 autoClose: 1500,
@@ -122,6 +136,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
             }
           })
           .catch((error) => {
+            setLoading(false);
             toast.error("Please try again later", {
               position: "top-right",
               autoClose: 1500,
@@ -169,7 +184,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
               className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
-              value={currentBalance}
+              value={formatNumber(currentBalance)}
               readOnly
               disabled
             />
@@ -182,14 +197,13 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
               Wallet Address
             </label>
             <input
-              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-300 text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
               placeholder="Wallet address that recevive that withdraw order amount"
-              value={toWallet}
-              onChange={(e) => {
-                setToWallet(e.target.value);
-              }}
+              value={localStorage.getItem("walletAddress")}
+              readOnly
+              disabled
             />
           </div>
 
@@ -241,7 +255,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button onClick={handleWithdraw} className="button-43">Withdraw</button>
+            <button onClick={handleWithdraw} disabled={loading} className="button-43">Withdraw</button>
           </div>
         </div>
       </div>

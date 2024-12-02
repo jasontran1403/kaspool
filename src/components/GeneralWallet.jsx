@@ -10,8 +10,15 @@ const GeneralWallet = (props) => {
   const id = location.pathname.split('/admin/dashboard/')[1];
 
   const formatNumber = (numberString) => {
-    // Format the number with commas
-    const formattedNumber = new Intl.NumberFormat("en-US").format(numberString);
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  
     return formattedNumber;
   };
 
@@ -29,7 +36,7 @@ const GeneralWallet = (props) => {
     <div className="card-blue-green sm:w-[80svw] w-[80svw] mx-auto animation-show-dashboard  flex flex-row justify-between items-center w-full h-full border border-gray-200 rounded-lg shadow sm:mb-[30px]">
       <div className="pl-[20px] pr-[20px] pt-[20px] pb-[20px] flex flex-col w-full gap-[20px]">
         <div className="balance-item">
-          <span>USDT-BEP20</span>
+          <span>Connected wallet</span>
           <span>{formatNumber(props.usdt)}</span>
         </div>
 
@@ -44,13 +51,6 @@ const GeneralWallet = (props) => {
           <span>Total Mining</span>
           <div className="balance-details">
             <span>{formatNumber(props.totalMining)}</span>
-          </div>
-        </div>
-
-        <div className="balance-item">
-          <span>Daily Reward</span>
-          <div className="balance-details">
-            <span>{formatNumber(props.dailyReward)}</span>
           </div>
         </div>
       </div>

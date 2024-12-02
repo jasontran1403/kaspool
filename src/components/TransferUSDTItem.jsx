@@ -14,6 +14,7 @@ import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 const TransferUSDTItem = ({ swapHistory }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
 
+  const [loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [walletAddress, setWalletAddress] = useState(localStorage.getItem("walletAddress"));
   const [accessToken, setAccessToken] = useState(localStorage.getItem("access_token"));
@@ -54,6 +55,19 @@ const TransferUSDTItem = ({ swapHistory }) => {
         console.log(error);
       });
   }, []);
+
+  const formatNumber = (numberString) => {
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  
+    return formattedNumber;
+  };
 
   const [displayName, setDisplayName] = useState("Display name of receiver");
 
@@ -96,7 +110,6 @@ const TransferUSDTItem = ({ swapHistory }) => {
       return;
     }
 
-    if (buttonDisabled) return;
     if (amount <= 0) {
       toast.error("Swap amount must > 0!", {
         position: "top-right",
@@ -113,6 +126,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
       return;
     }
 
+    setLoading(true);
     // SweetAlert2 confirmation modal
     Swal.fire({
       title: 'Confirm transfer',
@@ -129,7 +143,6 @@ const TransferUSDTItem = ({ swapHistory }) => {
       buttonsStyling: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        setButtonDisabled(true);
         let data = JSON.stringify({
           from: walletAddress,
           to: to,
@@ -164,7 +177,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
                 },
               });
             } else {
-              setButtonDisabled(false);
+              setLoading(false);
 
               toast.error(response.data, {
                 position: "top-right",
@@ -173,7 +186,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
             }
           })
           .catch((error) => {
-            setButtonDisabled(false);
+            setLoading(false);
 
             toast.error("Please try again later", {
               position: "top-right",
@@ -246,7 +259,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
               className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
-              value={currentBalance}
+              value={formatNumber(currentBalance)}
               readOnly
             />
           </div>
@@ -284,7 +297,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
               Display name of receiver
             </label>
             <input
-              className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-400 text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
               value={displayName}
@@ -307,7 +320,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button onClick={handleCreateDeposit} className="button-43">Transfer</button>
+            <button onClick={handleCreateDeposit} disabled={loading} className="button-43">Transfer</button>
           </div>
         </div>
 

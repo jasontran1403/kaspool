@@ -2,15 +2,20 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+import Axios from "axios";
 import { API_ENDPOINT } from "../constants";
-import { useState } from "react";
 
 const AccountInfo = (props) => {
   const isAdmin = window.location.href.includes('/admin');
   const id = location.pathname.split('/admin/dashboard/')[1];
   const [displayName, setDisplayName] = useState("");
-  const [usdtWallet, setUsdtWallet] = useState("");
   const [kaspaWallet, setKaspaWallet] = useState("");
+
+  useEffect(() => {
+    setDisplayName(props.displayName);
+    setKaspaWallet(props.kaspaWallet);
+  }, [props.displayName, props.kaspaWallet]);
 
   const formatNumber = (numberString) => {
     // Format the number with commas
@@ -19,7 +24,7 @@ const AccountInfo = (props) => {
   };
 
   const handleUpdateInfo = () => {
-    if (displayName === "" || usdtWallet === "" || kaspaWallet === "") {
+    if (displayName === "" || kaspaWallet === "") {
       toast.error("Input field is required", {
         position: "top-right",
         autoClose: 1500,
@@ -43,13 +48,48 @@ const AccountInfo = (props) => {
       buttonsStyling: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        toast.success("Update account info successful", {
-          position: "top-right",
-          autoClose: 1500,
-          onClose: () => {
-            window.location.reload();
-          }
+
+        let data = JSON.stringify({
+          "walletAddress": `${localStorage.getItem("walletAddress")}`,
+          "displayName": displayName,
+          "kaspaWallet": kaspaWallet
         });
+
+        let config = {
+          method: 'post',
+          url: `${API_ENDPOINT}management/update-account-info`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            "ngrok-skip-browser-warning": "69420",
+          },
+          data: data
+        };
+
+        Axios.request(config)
+          .then((response) => {
+            if (response.data === "ok") {
+              toast.success("Update account info successful", {
+                position: "top-right",
+                autoClose: 1500,
+                onClose: () => {
+                  window.location.reload();
+                }
+              });
+            } else {
+              toast.error(response.data, {
+                position: "top-right",
+                autoClose: 1500
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Please try again later!", {
+              position: "top-right",
+              autoClose: 1500
+            });
+          });
       }
     });
   }
@@ -60,17 +100,17 @@ const AccountInfo = (props) => {
       <div className="flex flex-col mx-[20px] justify-start content-center items-center pt-[20px] gap-[20px]">
         <div className="info-details-item relative pb-[20px] border-b border-gray-300">
           <span>Name</span>
-          <input type="text" placeholder="Display name, default is xxxx...xxxx" />
+          <input type="text" placeholder="Display name, default is xxxx...xxxx" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
         </div>
 
         <div className="info-details-item pb-[10px]">
-          <span>USDT(BEP20)</span>
-          <input type="text" placeholder="USDT BEP20 wallet address" />
+          <span>Connected Wallet Address</span>
+          <input type="text" placeholder="Connected wallet address..." value={props.usdtWallet} readOnly disabled />
         </div>
 
         <div className="info-details-item pb-[10px]">
           <span>KASPA</span>
-          <input type="text" placeholder="KASPA wallet address" />
+          <input type="text" placeholder="KASPA wallet address" value={kaspaWallet} onChange={(e) => setKaspaWallet(e.target.value)} />
         </div>
 
         <div className="info-details-item pb-[10px]">
@@ -86,6 +126,16 @@ const AccountInfo = (props) => {
         <div className="info-details-item pb-[10px]">
           <span>Sponsor</span>
           <input type="text" value={props.root} readOnly disabled />
+        </div>
+
+        <div className="info-details-item pb-[10px]">
+          <span>Left reflink</span>
+          <input type="text" value={props.leftRefLink} readOnly disabled />
+        </div>
+
+        <div className="info-details-item pb-[10px]">
+          <span>Right reflink</span>
+          <input type="text" value={props.rightRefLink} readOnly disabled />
         </div>
 
         <div className="text-center pb-[20px]">

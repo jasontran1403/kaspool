@@ -1,5 +1,6 @@
 import usdt from "../assets/icons/usdt.png";
 import kaspa from "../assets/icons/kaspa.png";
+import kaspool from "../assets/icons/kaspool.jpg";
 import kasper from "../assets/icons/kasper.png";
 import kaspy from "../assets/icons/kaspy.png";
 import nacho from "../assets/icons/nacho.png";
@@ -7,9 +8,17 @@ import nacho from "../assets/icons/nacho.png";
 const BalanceTab = (props) => {
   const isAdmin = window.location.href.includes('/admin');
   const id = location.pathname.split('/admin/dashboard/')[1];
+  
   const formatNumber = (numberString) => {
-    // Format the number with commas
-    const formattedNumber = new Intl.NumberFormat("en-US").format(numberString);
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  
     return formattedNumber;
   };
 
@@ -29,6 +38,19 @@ const BalanceTab = (props) => {
           <div className="token-details">
             <img src={kaspa} width={32} height={32} alt="" />
             <span>KASPA</span>
+          </div>
+          <div className="">
+            <div className="balance-details">
+              <span>{formatNumber(props.kaspa)}</span>
+              <small style={{ fontStyle: "italic" }}>~{formatNumber(props.kaspa * props.ratioKaspa)}USDT</small>
+            </div>
+          </div>
+        </div>
+
+        <div className="balance-item">
+          <div className="token-details">
+            <img src={kaspool} width={32} height={32} alt="" />
+            <span>KASPOOL</span>
           </div>
           <div className="">
             <div className="balance-details">

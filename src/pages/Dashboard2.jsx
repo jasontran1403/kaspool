@@ -26,7 +26,6 @@ import logo from "../landingpage-assets/img/resources/logo-white.png";
 import AccountInfo from "../components/AccountInfo";
 import DirectTreeView from "../components/DirectTreeView";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
-import Socials from "../components/Socials";
 import DashboardNavbar from "../components/DashboardNavbar";
 
 const Dashboard2 = () => {
@@ -58,6 +57,8 @@ const Dashboard2 = () => {
   const refcode = refcodeMatch ? refcodeMatch[1] : null;
   const [kaspa, setKaspa] = useState(0);
   const [kaspaRatio, setKaspaRatio] = useState(0);
+  const [kaspool, setKaspool] = useState(0);
+  const [kaspoolRatio, setKaspoolRatio] = useState(0);
   const [nacho, setNacho] = useState(0);
   const [nachoRatio, setNachoRatio] = useState(0);
   const [kaspy, setKaspy] = useState(0);
@@ -103,7 +104,7 @@ const Dashboard2 = () => {
     }
   };
 
-  const [currentNavigationTab, setCurrentNavigationTab] = useState(1);
+  const [currentNavigationTab, setCurrentNavigationTab] = useState(3);
   const handleSwitchNavbar = (id) => {
     if (currentNavigationTab !== id) {
       setCurrentNavigationTab(id);
@@ -130,7 +131,12 @@ const Dashboard2 = () => {
   const [totalBinary, setTotalBinary] = useState(0);
   const [totalLeader, setTotalLeader] = useState(0);
   const [totalPop, setTotalPop] = useState(0);
-
+  const [displayName, setDisplayName] = useState("");
+  const [leftRefLink, setLeftRefLink] = useState("");
+  const [rightRefLink, setRightRefLink] = useState("");
+  const [kaspaWallet, setKaspaWallet] = useState("");
+  const [usdtWallet, setUsdtWallet] = useState("");
+  const [connectedBalance, setConnectedBalance] = useState(0);
 
   useEffect(() => {
     let config = {
@@ -171,7 +177,13 @@ const Dashboard2 = () => {
         setTeamSalesRIght(response.data.rightTeamSales);
         setTotalSales(response.data.totalSales);
         setTotalMining(response.data.totalMining);
-        console.log(response.data.totalSales);
+
+        setDisplayName(response.data.displayName);
+        setKaspaWallet(response.data.kaspaWallet);
+        setUsdtWallet(response.data.getWalletAddress);
+        setLeftRefLink(response.data.leftRefLink);
+        setRightRefLink(response.data.rightRefLink);
+        setConnectedBalance(response.data.connectedBalance);
       })
       .catch((error) => {
         console.log(error);
@@ -201,7 +213,7 @@ const Dashboard2 = () => {
           <a className="cursor-pointer pl-[30px] relative" href="/">
             <div className="relative inline-block">
               <img
-                className={`${currentNavigationTab === 3 ? "rank" : "logo"}`}
+                className={`${currentNavigationTab === 3 && rank > 0 ? "rank" : "logo"}`}
                 src={currentNavigationTab === 3 ? (rank > 0 ? `src/assets/rank/${rank}.png` : logo) : logo}
                 width={80}
                 height={80}
@@ -229,11 +241,18 @@ const Dashboard2 = () => {
 
         {currentToolTab === 2 &&
           <ToolTabMining
+            connectedBalance={connectedBalance}
           />
         }
 
         {currentToolTab === 3 &&
           <ToolTabDeposit
+            directCommission={direct}
+            binaryCommission={binary}
+            leaderCommission={leader}
+            popCommission={pop}
+            dailyReward={dailyReward}
+            transferWallet={transfer}
           />
         }
 
@@ -248,7 +267,7 @@ const Dashboard2 = () => {
         }
 
         {currentToolTab === 1 && <><GeneralWallet
-          usdt={usdt}
+          usdt={connectedBalance}
           transfer={transfer}
           totalMining={totalMining}
           dailyReward={dailyReward}
@@ -261,6 +280,8 @@ const Dashboard2 = () => {
             usdt={usdt}
             kaspa={kaspa}
             ratioKaspa={kaspaRatio}
+            kaspool={kaspool}
+            kaspoolRatio={kaspoolRatio}
             nacho={nacho}
             ratioNacho={nachoRatio}
             kaspy={kaspy}
@@ -345,6 +366,11 @@ const Dashboard2 = () => {
       {currentNavigationTab === 1 && <div className="dashboard-container animation-show-dashboard sm:mt-[0px]">
         <AccountInfo
           totalSales={totalSales}
+          usdtWallet={localStorage.getItem("walletAddress")}
+          leftRefLink={leftRefLink}
+          rightRefLink={rightRefLink}
+          kaspaWallet={kaspaWallet}
+          displayName={displayName}
           maxout={maxout}
           root="root"
         />

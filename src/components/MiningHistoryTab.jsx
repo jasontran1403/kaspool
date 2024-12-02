@@ -9,6 +9,8 @@ const MiningHistoryTab = (props) => {
   const id = location.pathname.split('/admin/dashboard/')[1];
   const [listTransaction, setListTransaction] = useState([]);
 
+  
+
   useEffect(() => {
     let config = {
       method: "get",

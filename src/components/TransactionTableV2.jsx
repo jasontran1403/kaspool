@@ -68,8 +68,14 @@ const TransactionTableV2 = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TABLE_ROWS 
   };
 
   const formatNumber = (numberString) => {
-    // Format the number with commas
-    const formattedNumber = new Intl.NumberFormat('en-US').format(numberString);
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
   
     return formattedNumber;
   };

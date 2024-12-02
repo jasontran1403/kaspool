@@ -6,7 +6,8 @@
 .tree {
     overflow: hidden;
     /* display: flex; */
-    flex-direction: column; /* Ensure the tree layout aligns vertically */
+    flex-direction: column;
+    /* Ensure the tree layout aligns vertically */
     height: auto;
     width: auto;
     margin: 0 auto;
@@ -20,6 +21,7 @@
     transition: all 0.5s;
     text-align: center;
 }
+
 /* 
 
 
@@ -43,17 +45,48 @@
     transition: all 0.5s;
 }
 
-.glass-button-container {
+.input-search {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
-    justify-content: start;
 }
 
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.glass-button-container {
+    display: flex;
+    width: 75svw;
+    flex-direction: column;
+    margin-bottom: 20px;
+    justify-items: center;
+    align-items: stretch;
+    justify-content: center;
+}
+
+svg.cursor-pointer {
+    position: absolute;
+    left: 90%;
+    top: 40%;
+    z-index: 999999;
+}
+.glass-button {
+    flex: 1;
+    padding-right: 2rem; /* Add padding to avoid overlap with SVG */
+    padding-left: 0.5rem;
+    height: 2.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+  }
+
 /* Connectors */
-.tree li::before, .tree li::after {
+.tree li::before,
+.tree li::after {
     content: '';
     position: absolute;
     top: 0;
@@ -70,7 +103,8 @@
 }
 
 /* Remove connectors for only children and adjust spacing */
-.tree li:only-child::after, .tree li:only-child::before {
+.tree li:only-child::after,
+.tree li:only-child::before {
     display: none;
 }
 
@@ -78,7 +112,8 @@
     padding-top: 0;
 }
 
-.tree li:first-child::before, .tree li:last-child::after {
+.tree li:first-child::before,
+.tree li:last-child::after {
     border: 0 none;
 }
 
@@ -92,17 +127,23 @@
 }
 
 .glass {
-    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-    backdrop-filter: blur(10px); /* Glass morph effect */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-    cursor: pointer; /* Change cursor to pointer on hover */
-  }
-  
-  /* Glass morph effect on hover */
-  .glass:hover {
-    background: rgba(255, 255, 255, 0.5); /* More visible on hover */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  }
+    background: rgba(255, 255, 255, 0.1);
+    /* Slightly transparent background */
+    backdrop-filter: blur(10px);
+    /* Glass morph effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth transition */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+}
+
+/* Glass morph effect on hover */
+.glass:hover {
+    background: rgba(255, 255, 255, 0.5);
+    /* More visible on hover */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    /* Shadow effect */
+}
 
 .tree ul ul::before {
     content: '';
@@ -143,28 +184,43 @@ ul li a {
     /* padding-bottom: 10px; */
     cursor: pointer;
 }
+
 .glass-button {
-    background: rgba(255, 255, 255, 0.1); /* Light background with transparency */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
-    border-radius: 10px; /* Rounded corners */
-    color: rgb(255, 255, 255)!important; /* Text color */
-    padding: 10px 10px; /* Padding for the button */
-    font-size: 16px; /* Font size */
+    background: rgba(255, 255, 255, 0.1);
+    /* Light background with transparency */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Light border */
+    border-radius: 10px;
+    /* Rounded corners */
+    color: rgb(255, 255, 255) !important;
+    /* Text color */
+    padding: 10px 10px;
+    /* Padding for the button */
+    font-size: 16px;
+    /* Font size */
     width: auto;
-    cursor: pointer; /* Pointer on hover */
-    backdrop-filter: blur(10px); /* Blur effect for glass morphism */
-    transition: all 0.3s ease; /* Smooth transition */
-    margin-top: 2%; /* Margin at the top */
-    margin-left: 5%; /* Margin on the left */
+    cursor: pointer;
+    /* Pointer on hover */
+    backdrop-filter: blur(10px);
+    /* Blur effect for glass morphism */
+    transition: all 0.3s ease;
+    /* Smooth transition */
+    margin-top: 2%;
+    /* Margin at the top */
+    margin-left: 5%;
+    /* Margin on the left */
     z-index: 9999;
 }
 
 
 
 .glass-button:hover {
-    background: rgba(255, 255, 255, 0.3); /* Change background on hover */
-    border: 1px solid rgba(255, 255, 255, 0.6); /* Darker border on hover */
-    color: white; /* Change text color on hover */
+    background: rgba(255, 255, 255, 0.3);
+    /* Change background on hover */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Darker border on hover */
+    color: white;
+    /* Change text color on hover */
 }
 
 @media (max-width: 768px) {
@@ -174,7 +230,8 @@ ul li a {
 
     .tree-view-item {
         overflow-x: scroll;
-        scroll-behavior: smooth;;
+        scroll-behavior: smooth;
+        ;
     }
 
     .tree-2 {

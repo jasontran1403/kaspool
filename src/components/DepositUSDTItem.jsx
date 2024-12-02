@@ -11,7 +11,7 @@ import { Tooltip } from "@mui/material";
 import CopyIcon from '@mui/icons-material/FileCopy';
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 
-const DepositUSDTItem = ({ depositHistory }) => {
+const DepositUSDTItem = (props) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
 
   const [walletAddress, setWalletAddress] = useState(
@@ -25,6 +25,8 @@ const DepositUSDTItem = ({ depositHistory }) => {
   const [listNetwork, setListNetwork] = useState([
     { id: 1, name: "USDT BEP20" },
   ]);
+
+  const [loading, setLoading] = useState(false);
 
   const [amount, setAmount] = useState(0);
   const [qrImage, setQrImage] = useState("");
@@ -47,19 +49,15 @@ const DepositUSDTItem = ({ depositHistory }) => {
       });
       return;
     }
-    
-    if (amount <= 0) {
-      return;
-    }
+
+    setLoading(true);
     let data = JSON.stringify({
       walletAddress: walletAddress,
-      amount: amount,
-      method: 1,
     });
 
     Swal.fire({
-      title: "Confirm deposit",
-      text: `Are you sure you want to deposit ${amount}?`,
+      title: "Confirm claim all amount of commission and transfer wallet",
+      text: `Are you sure you want to claim all?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, confirm it!",
@@ -73,33 +71,56 @@ const DepositUSDTItem = ({ depositHistory }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         let config = {
-          method: "post",
-          url: `${API_ENDPOINT}management/generate-qr`,
+          method: "get",
+          url: `${API_ENDPOINT}management/claim-all/${localStorage.getItem("walletAddress")}`,
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             "ngrok-skip-browser-warning": "69420",
           },
-          data: data,
-          responseType: "blob",
         };
 
         Axios.request(config)
           .then((response) => {
             // Assuming response.data contains the image URL or base64 string
-            const qrCodeBlob = response.data;
-            const qrCodeUrl = URL.createObjectURL(qrCodeBlob);
-            setQrImage(qrCodeUrl);
-            toast.success("Created deposit order successful!", {
+            if (response.data === "ok") {
+              
+              toast.success("Claim all successful!", {
+                position: "top-right",
+                autoClose: 1500,
+                onClose: () => {
+                  window.location.reload();
+                }
+              });
+            } else {
+              setLoading(false);
+              toast.error("Please try again!", {
+                position: "top-right",
+                autoClose: 1500,
+              });
+            }
+          })
+          .catch((error) => {
+            setLoading(false)
+            toast.error("Please try later", {
               position: "top-right",
               autoClose: 1500,
             });
-          })
-          .catch((error) => {
-            console.log(error);
           });
       }
     });
+  };
+
+  const formatNumber = (numberString) => {
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+
+    return formattedNumber;
   };
 
   const handleCopy = () => {
@@ -180,7 +201,7 @@ const DepositUSDTItem = ({ depositHistory }) => {
         style={{ overflow: "hidden" }}
       >
         <div className="rounded-lg">
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
               htmlFor="packageName"
@@ -199,38 +220,82 @@ const DepositUSDTItem = ({ depositHistory }) => {
                 </option>
               ))}
             </select>
+          </div> */}
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>Direct Commission</span>
+              <span>{formatNumber(props.directCommission)}</span>
+            </div>
           </div>
-          <div className="mb-6">
+
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>Binary Commission</span>
+              <span>{formatNumber(props.binaryCommission)}</span>
+            </div>
+          </div>
+
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>Leader Commission</span>
+              <span>{formatNumber(props.leaderCommission)}</span>
+            </div>
+          </div>
+
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>POP Commission</span>
+              <span>{formatNumber(props.popCommission)}</span>
+            </div>
+          </div>
+
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>Daily Reward</span>
+              <span>{formatNumber(props.dailyReward)}</span>
+            </div>
+          </div>
+
+          <div className="mb-6 flex flex-col justify-between">
+            <div className="balance-item">
+              <span>Transfer Wallet</span>
+              <span>{formatNumber(props.transferWallet)}</span>
+            </div>
+          </div>
+
+          {/* <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
               htmlFor="tokenBalance"
             >
-              Amount
+              Direct Commission
             </label>
             <input
               className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-dark leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
-              value={amount}
-              min="10"
-              onChange={(e) => {
-                const value = e.target.value;
+              value={formatNumber(10)}
+              disabled
+              readOnly
+              // min="10"
+              // onChange={(e) => {
+              //   const value = e.target.value;
 
-                const regex = /^[0-9]*\.?[0-9]*$/;
+              //   const regex = /^[0-9]*\.?[0-9]*$/;
 
-                if (regex.test(value)) {
-                  const numericValue = parseFloat(value);
-                  if (!isNaN(numericValue) && numericValue > 0) {
-                    setAmount(value);
-                  } else {
-                    setAmount("");
-                  }
-                }
-              }}
+              //   if (regex.test(value)) {
+              //     const numericValue = parseFloat(value);
+              //     if (!isNaN(numericValue) && numericValue > 0) {
+              //       setAmount(value);
+              //     } else {
+              //       setAmount("");
+              //     }
+              //   }
+              // }}
             />
-          </div>
+          </div> */}
 
-          {qrImage && (
+          {/* {qrImage && (
             <div className="mb-6 flex flex-col justify-center gap-5">
               <img
                 src={qrImage}
@@ -260,11 +325,11 @@ const DepositUSDTItem = ({ depositHistory }) => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="flex items-center justify-between">
             {qrImage.length === 0 ? (
-              <button onClick={handleCreateDeposit} className="button-43">Deposit</button>
+              <button onClick={handleCreateDeposit} disabled={loading} className="button-43">Claim All</button>
             ) : (
               <button onClick={handleCancelDeposit} className="button-43">Cancel</button>
             )}

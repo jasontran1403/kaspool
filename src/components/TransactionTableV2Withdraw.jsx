@@ -14,6 +14,10 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import { API_ENDPOINT } from "../constants";
+import Axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TransactionTableV2Withdraw = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TABLE_ROWS }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,14 +72,64 @@ const TransactionTableV2Withdraw = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TAB
   };
 
   const formatNumber = (numberString) => {
-    // Format the number with commas
-    const formattedNumber = new Intl.NumberFormat('en-US').format(numberString);
-  
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+
     return formattedNumber;
   };
 
+
   const handleUpperCase = (text) => {
     return text.toUpperCase();
+  }
+
+  const [loadingCancel, setLoadingCancel] = useState(false);
+
+  const handleCancelWithdraw = (code) => {
+    if (code === "" || loadingCancel === true) return;
+
+    setLoadingCancel(true);
+
+    let config = {
+      method: "get",
+      url: `${API_ENDPOINT}management/cancel-withdraw/${code}/1`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        if (response.data === "ok") {
+          toast.success("Withdraw cancel successful!", {
+            position: "top-right",
+            autoClose: 1500,
+            onClose: () => window.location.reload(),
+          });
+        } else {
+          setLoadingCancel(false);
+          toast.error(response.data, {
+            position: "top-right",
+            autoClose: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        setLoadingCancel(false);
+
+        toast.error("Please try again later!", {
+          position: "top-right",
+          autoClose: 1500,
+        });
+      });
   }
 
   return (
@@ -182,7 +236,12 @@ const TransactionTableV2Withdraw = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TAB
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className={`font-normal ${status === "pending" ? "text-yellow" : status === "success" ? "text-green" : "text-red"}`}
+                        onClick={() => {
+                          if (status === "pending") {
+                            handleCancelWithdraw(code);
+                          }
+                        }}
+                        className={`font-normal ${status === "pending" ? "text-yellow cursor-pointer font-bold" : status === "success" ? "text-green" : "text-red"}`}
                       >
                         {handleUpperCase(status)}
                       </Typography>

@@ -68,8 +68,14 @@ const TransactionTableV2Mining = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TABLE
   };
 
   const formatNumber = (numberString) => {
-    // Format the number with commas
-    const formattedNumber = new Intl.NumberFormat('en-US').format(numberString);
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
+  
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
   
     return formattedNumber;
   };
@@ -130,6 +136,7 @@ const TransactionTableV2Mining = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TABLE
                 },
                 index
               ) => {
+                console.log(status)
                 const isLast = index === currentRows.length - 1;
                 const classes = isLast
                   ? "pt-4 pl-4 pr-4"
@@ -168,9 +175,9 @@ const TransactionTableV2Mining = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TABLE
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className={`font-normal ${status === 0 ? "text-blue" : "text-green"}`}
+                        className={`font-normal ${status === "Running" ? "text-green" : "text-red"}`}
                       >
-                        {status === 0 ? "RUNNING" : "COMPLETED"}
+                        {status}
                       </Typography>
                     </td>
                   </tr>

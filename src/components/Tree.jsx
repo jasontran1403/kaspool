@@ -42,13 +42,15 @@ const Tree = () => {
   const [treeData, setTreeData] = useState(null);
   const [modalReflink, setModalReflink] = useState(false);
   const [refInfo, setRefInfo] = useState({});
-  const [currentShow, setCurrentShow] = useState(1);
+  const [currentShow, setCurrentShow] = useState(2);
 
   useEffect(() => {
     fetchTreeByRoot(currWallet); // Fetch tree using current wallet
-  }, [currWallet]);
+  }, []);
 
   const fetchTreeByRoot = (rootAddress) => {
+    if (rootAddress === "") return;
+
     let data = JSON.stringify({
       walletAddress: rootAddress,
     });
@@ -65,10 +67,18 @@ const Tree = () => {
 
     Axios.request(config)
       .then((response) => {
-        setTreeData(response.data.root);
-        setUserRoot(response.data.root.userInfo);
-        if (Object.keys(root).length === 0) {
-          setRoot(response.data.root.userInfo);
+        if (response.data.root !== undefined) {
+          setPrevWallets((prev) => [...prev, currWallet]); // Push current wallet to prev wallets stack
+          setTreeData(response.data.root);
+          setUserRoot(response.data.root.userInfo);
+          if (Object.keys(root).length === 0) {
+            setRoot(response.data.root.userInfo);
+          }
+        } else {
+          toast.error("Cannt find this wallet address or display name", {
+            position: "top-right",
+            autoClose: 1800
+          });
         }
       })
       .catch((error) => {
@@ -147,8 +157,8 @@ const Tree = () => {
 
 
   const handleClick = (address) => {
-    setPrevWallets((prev) => [...prev, currWallet]); // Push current wallet to prev wallets stack
     setCurrWallet(address); // Update current wallet to the new address
+    fetchTreeByRoot(address);
   };
 
   const handleGoBack = () => {
@@ -157,38 +167,17 @@ const Tree = () => {
       if (prev.length === 0) return prev; // No previous wallets
       const lastWallet = prev[prev.length - 1]; // Get the last wallet
       setCurrWallet(lastWallet); // Set it as current wallet
+      fetchTreeByRoot(lastWallet);
       return prev.slice(0, -1); // Remove the last wallet from the stack
     });
   };
 
-  const handleShowMore = () => {
-    if (currentShow < 4) {
-      setCurrentShow(prev => prev + 1);
-    }
-  }
-
-  const handleShowLess = () => {
-    if (currentShow > 2) {
-      setCurrentShow(prev => prev - 1);
-    }
-  }
-
   const [findValue, setFindValue] = useState("");
 
-  let timeoutFind;
-
-  const handleFind = () => {
-    if (findValue === "") return;
-    if (timeoutFind) {
-      clearTimeout(timeoutFind);
-    }
-
+  const handleSearch = () => {
     setPrevWallets((prev) => [...prev, localStorage.getItem("walletAddress")]);
-
-    timeoutFind = setTimeout(() => {
-      setCurrWallet(findValue); // Set it as current wallet
-    }, 900);
-  }
+    fetchTreeByRoot(findValue);
+  };
 
   const formatNumber = (numberString) => {
     // Format the number with commas
@@ -264,11 +253,6 @@ const Tree = () => {
   return (
     <div className={`tree  ${currentShow == 3 ? "tree-2" : currentShow == 4 ? "tree-3" : "tree"} animation-show-dashboard tree-view-item`}>
       <div className="glass-button-container">
-        <input className="glass-button " type="text" placeholder="Search by wallet address" value={findValue} onChange={(e) => {
-          setFindValue(e.target.value);
-          handleFind();
-        }} />
-
         <button
           className="glass-button"
           onClick={handleGoBack}
@@ -276,6 +260,32 @@ const Tree = () => {
         >
           Back
         </button>
+
+        <div className="input-search">
+          <div className="input-container">
+            <input
+              className="glass-button"
+              type="text"
+              placeholder="Search by wallet address"
+              value={findValue}
+              onChange={(e) => setFindValue(e.target.value)}
+            />
+            <svg
+              onClick={handleSearch}
+              disabled={findValue.length === 0}
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="cursor-pointer bi bi-search"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+          </div>
+        </div>
+
+
       </div>
       <ul className="tree-ul"  >
         {renderTree(treeData)} {/* Render the entire tree */}
@@ -316,74 +326,65 @@ const Tree = () => {
             strokeWidth="2"
           />
         </CloseButton>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%", // Ensure the content takes the full height of the modal
-          }}
+        <section
+          className={`card-blue-green rounded-lg `}
         >
-          <section
-            className={`${styles.flexCenter} ${styles.marginY} ${styles.padding} card-blue-green rounded-lg `}
-          >
-            <div className=" flex flex-col">
-              <div className=" rounded px-8 pt-6 pb-8 mb-4">
-                <div>
-                  <label className="block text-white text-sm font-bold mb-2">
-                    Display name of root
-                  </label>
-                  <input
-                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    value={refInfo.rootDisplayName}
-                    readOnly
-                  />
-                </div>
+          <div className="flex flex-col">
+            <div className=" rounded px-8 pt-6 pb-8 mb-4">
+              <div>
+                <label className="block text-white text-sm font-bold mb-2">
+                  Display name of root
+                </label>
+                <input
+                  className="bg-white text-dark appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={refInfo.rootDisplayName}
+                  readOnly
+                />
+              </div>
 
-                <div>
-                  <label className="block text-white text-sm font-bold mb-2">
-                    Display name of placement
-                  </label>
-                  <input
-                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    value={refInfo.placementDisplayName}
-                    readOnly
-                  />
-                </div>
+              <div>
+                <label className="block text-white text-sm font-bold mb-2">
+                  Display name of placement
+                </label>
+                <input
+                  className="bg-white text-dark appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={refInfo.placementDisplayName}
+                  readOnly
+                />
+              </div>
 
-                <div>
-                  <label className="block text-white text-sm font-bold mb-2">
-                    Side
-                  </label>
-                  <input
-                    className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    value={refInfo.side}
-                    readOnly
-                  />
-                </div>
+              <div>
+                <label className="block text-white text-sm font-bold mb-2">
+                  Side
+                </label>
+                <input
+                  className="bg-white text-dark  appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={refInfo.side}
+                  readOnly
+                />
+              </div>
 
-                <div>
-                  <label className="block text-white text-sm font-bold mb-2">
-                    Reflink
-                  </label>
-                  <div className="flex flex-row items-center relative">
-                    <input
-                      className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                      type="text"
-                      value={`https://www.kaspool.io/refcode=${refInfo.code}`}
-                      readOnly
-                      onClick={() => handleCopyRefLink(refInfo.code)}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </div>
+              <div>
+                <label className="block text-white text-sm font-bold mb-2">
+                  Reflink
+                </label>
+                <div className="flex flex-row items-center relative">
+                  <input
+                    className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    value={`https://www.kaspool.io/refcode=${refInfo.code}`}
+                    readOnly
+                    onClick={() => handleCopyRefLink(refInfo.code)}
+                    style={{ cursor: "pointer" }}
+                  />
                 </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </ReflinkModal>
       {/* <ToastContainer stacked /> */}
     </div>

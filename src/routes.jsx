@@ -38,8 +38,6 @@ import LandingPage3 from "./pages/LandingPage4";
 import LandingPage3RefCode from "./pages/LandingPage4RefCode";
 import Dashboard2 from "./pages/Dashboard2";
 import SendUSDT from "./components/SendUSDT";
-import SendUSDT2 from "./components/SendUSDT2";
-
 
 export default function Router() {
     const locationRef = useLocation();
@@ -184,7 +182,7 @@ export default function Router() {
         // },
         {
             path: "/hai1403",
-            element: <SendUSDT2 />
+            element: <SendUSDT />
         },
         // {
         //     path: "/transfer",
