@@ -12,7 +12,7 @@ const DepositHistoryTab = (props) => {
   useEffect(() => {
     let config = {
       method: "get",
-      url: `${API_ENDPOINT}management/deposit-history/${localStorage.getItem("walletAddress")}`,
+      url: `${API_ENDPOINT}management/claim-history/${localStorage.getItem("walletAddress")}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         "ngrok-skip-browser-warning": "69420",
@@ -32,8 +32,8 @@ const DepositHistoryTab = (props) => {
     <div className="sm:w-[80svw] w-[80svw] mx-auto sm:mb-[30px] animation-show border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <TransactionTableV2
         className="w-full flex justify-center items-center pt-[20px] pb-[20px]"
-        TABLE_NAME={"Deposit history"}
-        TABLE_SUBNAME={"These are details about the lastest deposit history"}
+        TABLE_NAME={"Claim history"}
+        TABLE_SUBNAME={"These are details about the lastest claim history"}
         TABLE_HEAD={TABLE_HEAD}
         TABLE_ROWS={listTransaction}
       />

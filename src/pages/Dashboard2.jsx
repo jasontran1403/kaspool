@@ -132,6 +132,7 @@ const Dashboard2 = () => {
   const [totalLeader, setTotalLeader] = useState(0);
   const [totalPop, setTotalPop] = useState(0);
   const [displayName, setDisplayName] = useState("");
+  const [root, setRoot] = useState("");
   const [leftRefLink, setLeftRefLink] = useState("");
   const [rightRefLink, setRightRefLink] = useState("");
   const [kaspaWallet, setKaspaWallet] = useState("");
@@ -179,6 +180,7 @@ const Dashboard2 = () => {
         setTotalMining(response.data.totalMining);
 
         setDisplayName(response.data.displayName);
+        setRoot(response.data.root);
         setKaspaWallet(response.data.kaspaWallet);
         setUsdtWallet(response.data.getWalletAddress);
         setLeftRefLink(response.data.leftRefLink);
@@ -372,7 +374,7 @@ const Dashboard2 = () => {
           kaspaWallet={kaspaWallet}
           displayName={displayName}
           maxout={maxout}
-          root="root"
+          root={root}
         />
       </div>}
 
