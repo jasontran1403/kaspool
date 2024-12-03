@@ -16,7 +16,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
-  const [currentBalance, setCurrentBalance] = useState(balance);
+  const [currentBalance, setCurrentBalance] = useState(0);
 
   const [networkSelected, setNetworkSelected] = useState("");
 
@@ -42,10 +42,6 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
     setNetworkSelected(listNetwork[0].id);
   }, []);
 
-  useEffect(() => {
-    setCurrentBalance(balance);
-  }, [balance]);  // Now it updates whenever balance changes
-
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
@@ -54,7 +50,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
     } else {
       setCurrentBalance(transfer);
     }
-  }, [networkSelected]);
+  }, [networkSelected, balance]);
 
   const handleWithdraw = () => {
     if (multiTabDetect) {
