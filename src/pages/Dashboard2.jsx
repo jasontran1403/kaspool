@@ -175,7 +175,7 @@ const Dashboard2 = () => {
         setTotalPop(response.data.totalPop);
         setRank(response.data.rank);
         setTeamSalesLeft(response.data.leftTeamSales);
-        setTeamSalesRIght(response.data.rightTeamSales);
+        setTeamSalesRight(response.data.rightTeamSales);
         setTotalSales(response.data.totalSales);
         setTotalMining(response.data.totalMining);
 

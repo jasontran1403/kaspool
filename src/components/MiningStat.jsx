@@ -54,7 +54,7 @@ const MiningStat = (props) => {
         {/* Row 4 */}
         <div className="card-blue-green row-item p-4 rounded-md">
           <h3 className="text-white text-lg font-semibold sales-2">Team Sales Right</h3>
-          <p className="text-white text-l font-bold" style={{ fontStyle: "italic" }}>{formatNumber(props.teamSalesLeft)}</p>
+          <p className="text-white text-l font-bold" style={{ fontStyle: "italic" }}>{formatNumber(props.teamSalesRight)}</p>
         </div>
         <div className="card-blue-green row-item p-4 rounded-md">
           <h3 className="text-white text-lg font-semibold sales">POP Commission</h3>

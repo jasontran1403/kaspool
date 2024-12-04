@@ -261,7 +261,7 @@ const Tree = () => {
           Back
         </button>
 
-        <div className="input-search">
+        <div className="glass-button">
           <div className="input-container">
             <input
               className="glass-button"
