@@ -121,7 +121,7 @@ const Dashboard2 = () => {
   const [binary, setBinary] = useState(0);
   const [leader, setLeader] = useState(0);
   const [teamSalesLeft, setTeamSalesLeft] = useState(0);
-  const [teamSalesRight, setTeamSalesRIght] = useState(0);
+  const [teamSalesRight, setTeamSalesRight] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [pop, setPop] = useState(0);
   const [usdt, setUsdt] = useState(0);
