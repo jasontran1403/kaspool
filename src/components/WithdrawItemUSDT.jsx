@@ -12,6 +12,7 @@ import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
   const [currentWallet, setCurrentWallet] = useState("");
+  const [currentkaspaWallet, setCurrentKaspaWallet] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState(
@@ -51,6 +52,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
     setNetworkSelected(listNetwork[0].id);
     setCurrentWallet(usdtWallet);
     setWalletSourceSelected(walletSource[0].id);
+    setCurrentKaspaWallet(kaspaWallet);
     setCurrency("USDT");
   }, []);
 
@@ -63,14 +65,12 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
       let actualFee = feeAmount > 1 ? feeAmount : 1
       setFee(amount > 4 ? actualFee : 0);
       setCurrentBalance(balance);
-      setCurrentWallet(usdtWallet);
       setCurrency("USDT");
       setEstimateReceive(amount > 4 && (amount - actualFee) > 0 ? (amount - actualFee) : 0)
     } else {
       let feeAmount = amount / kasPrice * 2 / 100;
       let actualFee = feeAmount > 1 ? feeAmount : 1
       setFee(amount > 4 ? actualFee : 0);
-      setCurrentWallet(kaspaWallet);
       setCurrency("KAS");
       setEstimateReceive(amount > 4 && (amount / kasPrice - actualFee) > 0 ? (amount / kasPrice - actualFee) : 0)
     }
@@ -104,7 +104,6 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
 
     Axios.request(config)
       .then((response) => {
-        console.log(response.data);
         setKasPrice(response.data);
       });
   };
@@ -136,7 +135,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
     setLoading(true);
     Swal.fire({
       title: 'Confirm withdraw',
-      text: `Are you sure you want to withdraw ${amount} to ${localStorage.getItem("walletAddress")}?`,
+      text: `Are you sure you want to withdraw ${amount} to ${networkSelected == 1 ? currentWallet : currentkaspaWallet}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, confirm withdraw!',
@@ -151,7 +150,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
       if (result.isConfirmed) {
         let data = JSON.stringify({
           walletAddress: walletAddress,
-          toWalletAddress: localStorage.getItem("walletAddress"),
+          toWalletAddress: networkSelected == 1 ? currentWallet : currentkaspaWallet,
           amount: amount,
           method: networkSelected,
           walletType: networkSelected,
@@ -237,7 +236,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               className="bg-gray-400 text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenBalance"
               type="text"
-              value={formatNumber(currentBalance)}
+              value={formatNumber(balance)}
               readOnly
               disabled
             />
@@ -291,9 +290,9 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               id="tokenBalance"
               type="text"
               placeholder="Wallet address that recevive that withdraw order amount"
-              value={currentWallet}
+              value={currentkaspaWallet}
               onChange={(e) => {
-                setCurrentWallet(e.target.value)
+                setCurrentKaspaWallet(e.target.value);
               }}
             />
           </div>}
