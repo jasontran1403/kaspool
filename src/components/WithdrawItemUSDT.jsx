@@ -9,8 +9,9 @@ import 'sweetalert2/src/sweetalert2.scss';
 import { API_ENDPOINT } from "../constants";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
 
-const WithdrawItemUSDT = ({ balance, transfer }) => {
+const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
+  const [currentWallet, setCurrentWallet] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState(
@@ -22,7 +23,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
 
   const [listNetwork] = useState([
     { id: 1, name: "USDT BEP20" },
-    // { id: 2, name: "Transfer" },
+    { id: 2, name: "KASPA" },
   ]);
 
   const formatNumber = (numberString) => {
@@ -40,16 +41,22 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
 
   useEffect(() => {
     setNetworkSelected(listNetwork[0].id);
+    setCurrentWallet(usdtWallet);
   }, []);
 
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
+    console.log(networkSelected + " " + currentWallet);
+
     if (networkSelected == 1) {
       setCurrentBalance(balance);
+      setCurrentWallet(usdtWallet);
     } else {
-      setCurrentBalance(transfer);
+      setCurrentWallet(kaspaWallet);
     }
+
+
   }, [networkSelected, balance]);
 
   const handleWithdraw = () => {
@@ -96,7 +103,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
           walletAddress: walletAddress,
           toWalletAddress: localStorage.getItem("walletAddress"),
           amount: amount,
-          method: 1,
+          method: networkSelected,
           walletType: networkSelected,
           type: 1,
         });
@@ -185,7 +192,7 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
               disabled
             />
           </div>
-          <div className="mb-6">
+          {networkSelected == 1 ? <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
               htmlFor="tokenBalance"
@@ -197,11 +204,28 @@ const WithdrawItemUSDT = ({ balance, transfer }) => {
               id="tokenBalance"
               type="text"
               placeholder="Wallet address that recevive that withdraw order amount"
-              value={localStorage.getItem("walletAddress")}
+              value={currentWallet}
               readOnly
               disabled
             />
-          </div>
+          </div> : <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="tokenBalance"
+            >
+              Wallet Address
+            </label>
+            <input
+              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tokenBalance"
+              type="text"
+              placeholder="Wallet address that recevive that withdraw order amount"
+              value={currentWallet}
+              onChange={(e) => {
+                setCurrentWallet(e.target.value)
+              }}  
+            />
+          </div>}
 
           <div className="mb-6">
             <label

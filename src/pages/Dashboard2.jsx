@@ -22,7 +22,7 @@ import Download from "../components/Download";
 import Download2 from "../components/Download2";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
-import logo from "../../public/logo-white.png";
+import logo from "../../logo-white.png";
 import AccountInfo from "../components/AccountInfo";
 import DirectTreeView from "../components/DirectTreeView";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
@@ -181,8 +181,8 @@ const Dashboard2 = () => {
 
         setDisplayName(response.data.displayName);
         setRoot(response.data.root);
-        setKaspaWallet(response.data.kaspaWallet);
-        setUsdtWallet(response.data.getWalletAddress);
+        setKaspaWallet(response.data.kaspaWallet ? response.data.kaspaWallet : "");
+        setUsdtWallet(response.data.walletAddress);
         setLeftRefLink(response.data.leftRefLink);
         setRightRefLink(response.data.rightRefLink);
         setConnectedBalance(response.data.connectedBalance);
@@ -260,6 +260,8 @@ const Dashboard2 = () => {
 
         {currentToolTab === 4 &&
           <ToolTabWithdraw
+            usdtWallet={usdtWallet}
+            kaspaWallet={kaspaWallet}
           />
         }
 
