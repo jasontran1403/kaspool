@@ -221,7 +221,7 @@ const TransactionTableV2Withdraw = ({ TABLE_NAME, TABLE_SUBNAME, TABLE_HEAD, TAB
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {formatNumber(amount)}
+                        {formatNumber(amount)} {currency}
                       </Typography>
 
                       <Typography

@@ -20,44 +20,94 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
   const [currentBalance, setCurrentBalance] = useState(0);
 
   const [networkSelected, setNetworkSelected] = useState("");
+  const [walletSourceSelected, setWalletSourceSelected] = useState("");
+  const [fee, setFee] = useState(0);
+  const [currency, setCurrency] = useState("");
+  const [estimateReceive, setEstimateReceive] = useState(0);
+
+  const [walletSource] = useState([
+    { id: 1, name: "USDT BEP20" }
+  ]);
 
   const [listNetwork] = useState([
-    { id: 1, name: "USDT BEP20" },
-    { id: 2, name: "KASPA" },
+    { id: 1, name: "Binance Smart Chain" },
+    { id: 2, name: "Kaspa" },
   ]);
 
   const formatNumber = (numberString) => {
     // Parse the input to ensure it's a number
     const number = parseFloat(numberString);
-  
+
     // Format the number with commas and two decimal places
     const formattedNumber = new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(number);
-  
+
     return formattedNumber;
   };
 
   useEffect(() => {
     setNetworkSelected(listNetwork[0].id);
     setCurrentWallet(usdtWallet);
+    setWalletSourceSelected(walletSource[0].id);
+    setCurrency("USDT");
   }, []);
 
   const [amount, setAmount] = useState(0);
+  const [kasPrice, setKasPrice] = useState(0);
 
   useEffect(() => {
-    console.log(networkSelected + " " + currentWallet);
-
     if (networkSelected == 1) {
+      let feeAmount = amount * 2 / 100;
+      let actualFee = feeAmount > 1 ? feeAmount : 1
+      setFee(amount > 4 ? actualFee : 0);
       setCurrentBalance(balance);
       setCurrentWallet(usdtWallet);
+      setCurrency("USDT");
+      setEstimateReceive(amount > 4 && (amount - actualFee) > 0 ? (amount - actualFee) : 0)
     } else {
+      let feeAmount = amount / kasPrice * 2 / 100;
+      let actualFee = feeAmount > 1 ? feeAmount : 1
+      setFee(amount > 4 ? actualFee : 0);
       setCurrentWallet(kaspaWallet);
+      setCurrency("KAS");
+      setEstimateReceive(amount > 4 && (amount / kasPrice - actualFee) > 0 ? (amount / kasPrice - actualFee) : 0)
     }
+  }, [networkSelected, balance, amount, kasPrice]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchKasPrice();
+    }, 15000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchKasPrice();
+  }, []);
 
 
-  }, [networkSelected, balance]);
+  const fetchKasPrice = () => {
+    let config = {
+      method: 'get',
+      url: `${API_ENDPOINT}management/get-kas-price`,
+      headers: {
+        Authorization:
+          `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        console.log(response.data);
+        setKasPrice(response.data);
+      });
+  };
 
   const handleWithdraw = () => {
     if (multiTabDetect) {
@@ -161,7 +211,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               className="block text-white text-sm font-bold mb-2"
               htmlFor="packageName"
             >
-              Wallet source
+              Wallet Type
             </label>
             <select
               className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -169,7 +219,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               value={networkSelected}
               onChange={(e) => setNetworkSelected(e.target.value)}
             >
-              {listNetwork.map((network) => (
+              {walletSource.map((network) => (
                 <option key={network.id} value={network.id}>
                   {network.name}
                 </option>
@@ -191,6 +241,27 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               readOnly
               disabled
             />
+          </div>
+
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="packageName"
+            >
+              Network
+            </label>
+            <select
+              className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="packageName"
+              value={networkSelected}
+              onChange={(e) => setNetworkSelected(e.target.value)}
+            >
+              {listNetwork.map((network) => (
+                <option key={network.id} value={network.id}>
+                  {network.name}
+                </option>
+              ))}
+            </select>
           </div>
           {networkSelected == 1 ? <div className="mb-6">
             <label
@@ -223,7 +294,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
               value={currentWallet}
               onChange={(e) => {
                 setCurrentWallet(e.target.value)
-              }}  
+              }}
             />
           </div>}
 
@@ -234,30 +305,60 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
             >
               Amount
             </label>
-            <input
-              className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="tokenBalance"
-              type="text" // Use "text" to fully control input validation
-              value={amount}
-              min="0.1"
-              onChange={(e) => {
-                const value = e.target.value;
+            <div className="relative">
+              <input
+                className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="tokenBalance"
+                type="text" // Use "text" to fully control input validation
+                value={amount}
+                min="0.1"
+                onChange={(e) => {
+                  const value = e.target.value;
 
-                // Regex to allow only numbers and decimals
-                const regex = /^[0-9]*\.?[0-9]*$/;
+                  // Regex to allow only numbers and decimals
+                  const regex = /^[0-9]*\.?[0-9]*$/;
 
-                // Check if the input value matches the regex (valid number format)
-                if (regex.test(value)) {
-                  const numericValue = parseFloat(value);
-                  if (!isNaN(numericValue) && numericValue > 0) {
-                    setAmount(value); // Keep the valid input
-                  } else {
-                    setAmount(""); // Reset if invalid
+                  // Check if the input value matches the regex (valid number format)
+                  if (regex.test(value)) {
+                    const numericValue = parseFloat(value);
+                    if (!isNaN(numericValue) && numericValue > 0) {
+                      setAmount(value); // Keep the valid input
+                    } else {
+                      setAmount(""); // Reset if invalid
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+              <span className="absolute inset-y-0 right-3 flex items-center text-gray-500 pointer-events-none">
+                USDT
+              </span>
+            </div>
           </div>
+
+          <div className="mb-6">
+            <label
+              className="block text-white text-sm font-bold mb-2"
+              htmlFor="tokenBalance"
+            >
+              Receive
+            </label>
+            <div className="relative">
+              <input
+                className="bg-gray-400 text-dark shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="tokenBalance"
+                type="text" // Use "text" to fully control input validation
+                value={estimateReceive}
+                min="0.1"
+                readOnly
+                disabled
+              />
+              <span className="absolute inset-y-0 right-3 flex items-center text-gray-500 pointer-events-none">
+                {currency}
+              </span>
+            </div>
+            {networkSelected == 2 && <small style={{ fontStyle: "italic", color: "orangered" }}>Current KAS Price 1KAS ~ {kasPrice.toFixed(5)}USDT</small>}
+          </div>
+
           <div className="mb-6">
             <label
               className="block text-white text-sm font-bold mb-2"
@@ -265,14 +366,22 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
             >
               Fee
             </label>
-            <input
-              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="tokenBalance"
-              type="text"
-              placeholder="Fee 2% of total withdrawal amount, min is $1"
-              readOnly
-              disabled
-            />
+
+            <div className="relative">
+              <input
+                className="bg-gray-400 text-dark shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="tokenBalance"
+                type="text" // Use "text" to fully control input validation
+                value={fee}
+                min="0.1"
+                disabled
+                readOnly
+              />
+              <span className="absolute inset-y-0 right-3 flex items-center text-gray-500 pointer-events-none">
+                {currency}
+              </span>
+            </div>
+            <small style={{ fontStyle: "italic", color: "orangered" }}>Fee 2% of total withdrawal amount, min is 1.00USDT</small>
           </div>
           <div className="flex items-center justify-between">
             <button onClick={handleWithdraw} disabled={loading} className="button-43">Withdraw</button>
