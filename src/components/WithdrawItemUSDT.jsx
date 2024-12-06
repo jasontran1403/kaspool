@@ -32,7 +32,7 @@ const WithdrawItemUSDT = ({ balance, kaspa, usdtWallet, kaspaWallet }) => {
 
   const [listNetwork] = useState([
     { id: 1, name: "Binance Smart Chain" },
-    { id: 2, name: "Kaspa" },
+    { id: 2, name: "Kaspa Chain" },
   ]);
 
   const formatNumber = (numberString) => {
