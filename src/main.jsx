@@ -17,7 +17,7 @@ function App() {
   ); // Kiểm tra trạng thái kết nối ví
   const [lastStatus, setLastStatus] = useState();
   const isAdmin = window.location.href.includes("/admin"); // Kiểm tra URL có chứa '/admin' không
-  const id = location.pathname.split("/admin/dashboard/")[1]; // Lấy ID từ URL
+  const id = location.pathname.split("/admin/home/")[1]; // Lấy ID từ URL
   const [loading, setLoading] = useState(true);
   const [] = useState("");
   let [color] = useState("#08e0c5");
