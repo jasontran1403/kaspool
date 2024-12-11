@@ -2,7 +2,6 @@ import { useState } from "react";
 import Axios from "axios";
 import { API_ENDPOINT } from "../constants";
 import { close, menu } from "../assets";
-import logo from "../assets/logo.png";
 import { connectedNavLinks } from "../constants";
 import TrustWalletConnect from "./TrustWalletConnect";
 

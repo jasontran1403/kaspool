@@ -18,7 +18,6 @@ const AccountInfo = (props) => {
   }, [props.displayName, props.kaspaWallet]);
 
   const formatNumber = (numberString) => {
-    // Format the number with commas
     const formattedNumber = new Intl.NumberFormat("en-US").format(numberString);
     return formattedNumber;
   };

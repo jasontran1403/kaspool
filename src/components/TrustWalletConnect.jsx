@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import { createThirdwebClient, defineChain } from "thirdweb";
 import {
   ConnectButton,
@@ -18,6 +19,12 @@ const client = createThirdwebClient({
 const BACKGROUND_COLOR = "#272487";
 const TEXT_COLOR = "#E8FE61";
 
+const USDT_CONTRACT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955"; // USDT BEP20 Contract Address
+const USDT_ABI = [
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)",
+];
+
 const BSC_CHAIN_ID = 56; // Binance Smart Chain Mainnet Chain ID
 
 const wallets = [
@@ -33,21 +40,56 @@ const TrustWalletConnect = ({ transparent, label }) => {
   const activeAccount = useActiveAccount();
   const { isConnected } = useWalletInfo(client);
   const disconnect = useDisconnect(); // Sử dụng hook useDisconnect
+  const [usdtBalance, setUsdtBalance] = useState(0);
   const [isLocalConnected, setIsLocalConnected] = useState(
     localStorage.getItem("walletAddress")?.length > 0
   );
+
+  const getUSDTBalance = async (walletAddress) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        "https://bsc-dataseed.binance.org/"
+      );
+      const usdtContract = new ethers.Contract(
+        USDT_CONTRACT_ADDRESS,
+        USDT_ABI,
+        provider
+      );
+
+      // Lấy số dư token
+      const rawBalance = await usdtContract.balanceOf(walletAddress);
+      const decimals = await usdtContract.decimals();
+
+      const balance = ethers.utils.formatUnits(rawBalance, decimals);
+      return balance;
+    } catch (error) {
+      console.error("Error fetching USDT balance:", error);
+      return "0";
+    }
+  };
 
   const bscChain = defineChain({
     id: 56, // BSC Mainnet chain ID
     rpc: "https://bsc-dataseed.binance.org/", // BSC RPC endpoint
   });
 
+  // useEffect(() => {
+  //   const fetchBalance = async () => {
+  //     if (activeAccount?.address) {
+  //       const balance = await getUSDTBalance(activeAccount.address);
+  //       setUsdtBalance(balance);
+  //     }
+  //   };
+
+  //   fetchBalance();
+  // }, [activeAccount]);
+
   useEffect(() => {
     if (activeAccount !== undefined && activeAccount.address) {
       if (localStorage.getItem("walletAddress") !== activeAccount.address) {
         toast.success("Connect wallet success", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 1500,
           onClose: (() => {
             window.location.reload();
           })

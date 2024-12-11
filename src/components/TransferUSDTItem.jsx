@@ -23,6 +23,8 @@ const TransferUSDTItem = ({ swapHistory }) => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [networkSelected, setNetworkSelected] = useState("1");
+
+
   const [listNetwork, setListNetwork] = useState([
     { id: 1, name: "USDT BEP20" },
     { id: 2, name: "Transfer" },
@@ -219,8 +221,7 @@ const TransferUSDTItem = ({ swapHistory }) => {
     } else {
       setCurrentBalance(transfer);
     }
-    console.log(networkSelected)
-  }, [networkSelected]);
+  }, [networkSelected, balance, transfer]);
 
   return (
     <section

@@ -1,7 +1,5 @@
 import Axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import styles from "../style";
-import { FooterDashboard, TreeVisualize, UserNavbar } from "../components";
 import { useLocation } from "react-router-dom";
 import TrustWalletConnect from "../components/TrustWalletConnect";
 import Navigation from "../components/Navigation";
@@ -20,13 +18,13 @@ import MiningHistoryTab from "../components/MiningHistoryTab";
 import BalanceSwitch from "../components/BalanceSwitch";
 import Download from "../components/Download";
 import Download2 from "../components/Download2";
+import TreeVisualize from "../components/Tree";
 import { API_ENDPOINT } from "../constants";
 import Affiliate from "../components/Affiliate";
-import logo from "../../public/logo-white.png";
+import logo from "../../logo-white.png";
 import AccountInfo from "../components/AccountInfo";
 import DirectTreeView from "../components/DirectTreeView";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
-import DashboardNavbar from "../components/DashboardNavbar";
 
 const Dashboard2 = () => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);
@@ -121,7 +119,7 @@ const Dashboard2 = () => {
   const [binary, setBinary] = useState(0);
   const [leader, setLeader] = useState(0);
   const [teamSalesLeft, setTeamSalesLeft] = useState(0);
-  const [teamSalesRight, setTeamSalesRIght] = useState(0);
+  const [teamSalesRight, setTeamSalesRight] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [pop, setPop] = useState(0);
   const [usdt, setUsdt] = useState(0);
@@ -132,6 +130,7 @@ const Dashboard2 = () => {
   const [totalLeader, setTotalLeader] = useState(0);
   const [totalPop, setTotalPop] = useState(0);
   const [displayName, setDisplayName] = useState("");
+  const [root, setRoot] = useState("");
   const [leftRefLink, setLeftRefLink] = useState("");
   const [rightRefLink, setRightRefLink] = useState("");
   const [kaspaWallet, setKaspaWallet] = useState("");
@@ -174,13 +173,14 @@ const Dashboard2 = () => {
         setTotalPop(response.data.totalPop);
         setRank(response.data.rank);
         setTeamSalesLeft(response.data.leftTeamSales);
-        setTeamSalesRIght(response.data.rightTeamSales);
+        setTeamSalesRight(response.data.rightTeamSales);
         setTotalSales(response.data.totalSales);
         setTotalMining(response.data.totalMining);
 
         setDisplayName(response.data.displayName);
-        setKaspaWallet(response.data.kaspaWallet);
-        setUsdtWallet(response.data.getWalletAddress);
+        setRoot(response.data.root);
+        setKaspaWallet(response.data.kaspaWallet ? response.data.kaspaWallet : "");
+        setUsdtWallet(response.data.walletAddress);
         setLeftRefLink(response.data.leftRefLink);
         setRightRefLink(response.data.rightRefLink);
         setConnectedBalance(response.data.connectedBalance);
@@ -204,7 +204,7 @@ const Dashboard2 = () => {
     <div className="">
       <div className={` hidden sm:flex`}>
         <div className={``}>
-          <DashboardNavbar handleSwitchNavbar={handleSwitchNavbar} />
+          {/* <DashboardNavbar handleSwitchNavbar={handleSwitchNavbar} /> */}
         </div>
       </div>
 
@@ -258,6 +258,8 @@ const Dashboard2 = () => {
 
         {currentToolTab === 4 &&
           <ToolTabWithdraw
+            usdtWallet={usdtWallet}
+            kaspaWallet={kaspaWallet}
           />
         }
 
@@ -372,17 +374,12 @@ const Dashboard2 = () => {
           kaspaWallet={kaspaWallet}
           displayName={displayName}
           maxout={maxout}
-          root="root"
+          root={root}
         />
       </div>}
 
       <div className="flex sm:hidden bottom-navigation">
         <Navigation handleSwitchNavbar={handleSwitchNavbar} />
-      </div>
-      <div className="hidden sm:block">
-        {isInTree === "true" && (
-          <FooterDashboard />
-        )}
       </div>
     </div>
   );

@@ -22,7 +22,21 @@ body {
   overscroll-behavior: none;
   width: 100svw;
   height: auto;
+  max-height: 100svh;
   overflow-x: hidden;
+}
+
+.loading-container {
+  width: 100svw;
+  height: 100svh;
+  background-color: #000000;
+}
+
+.sweet-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .tw-connect-wallet {
@@ -495,6 +509,11 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column-reverse; */
+}
+
+.Toastify {
+  position: absolute;
+  z-index: 99999999;
 }
 
 .Toastify__toast {

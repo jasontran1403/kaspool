@@ -252,37 +252,7 @@ const InvestmentPackage = ({ packages = [], balance = 0, connectedBalance }) => 
               ))}
             </select>
           </div>
-
-          {/* <div className="mb-6">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="balance"
-            >
-              USDT Balance
-            </label>
-            <input
-              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="balance"
-              type="text"
-              value={formattedPrice(mapchain)}
-              readOnly
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="transfer"
-            >
-              Transfer Balance
-            </label>
-            <input
-              className="bg-white text-dark shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="transfer"
-              type="text"
-              value={formattedPrice(transfer)}
-              readOnly
-            />
-          </div> */}
+          
           <div className="flex items-center justify-between">
             {networkSelected == 1 ? <MineOption2 walletAddress={localStorage.getItem("walletAddress")} walletReceiver={walletReceiver} amount={miningAmount} connectedBalance={connectedBalance} /> : <button onClick={buyPackage} className="button-43">Mine</button>}
           </div>

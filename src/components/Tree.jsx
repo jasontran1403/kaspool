@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import styled from "styled-components";
-import styles from "../style";
-
 import "../assets/css/TreeView.css";
 import { API_ENDPOINT } from "../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faMagnifyingGlass,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import ReflinkModal from "./ReflinkModal";
-import { Button } from ".";
 import { toast, ToastContainer } from "react-toastify";
 
 const CloseButton = styled.svg`
@@ -195,7 +191,7 @@ const Tree = () => {
         <div className={`node  ${!displayName ? "placeholder" : ""} `}>
           {displayName ? (
             <a
-              className="glass card-blue-green"
+              className="glass-2 card-blue-green"
               onClick={() => {
                 handleClick(node.userInfo.walletAddress);
               }}
@@ -254,35 +250,33 @@ const Tree = () => {
     <div className={`tree  ${currentShow == 3 ? "tree-2" : currentShow == 4 ? "tree-3" : "tree"} animation-show-dashboard tree-view-item`}>
       <div className="glass-button-container">
         <button
-          className="glass-button"
+          className="glass-button-2"
           onClick={handleGoBack}
           disabled={prevWallets.length === 0}
         >
           Back
         </button>
 
-        <div className="input-search">
-          <div className="input-container">
-            <input
-              className="glass-button"
-              type="text"
-              placeholder="Search by wallet address"
-              value={findValue}
-              onChange={(e) => setFindValue(e.target.value)}
-            />
-            <svg
-              onClick={handleSearch}
-              disabled={findValue.length === 0}
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              className="cursor-pointer bi bi-search"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </div>
+        <div className="glass-button-2">
+          <input
+            style={{ backgroundColor: "transparent", width: "100%", border: "none", outline: "none" }}
+            type="text"
+            placeholder="Search by wallet address"
+            value={findValue}
+            onChange={(e) => setFindValue(e.target.value)}
+          />
+          <svg
+            onClick={handleSearch}
+            disabled={findValue.length === 0}
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            className="cursor-pointer bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+          </svg>
         </div>
 
 

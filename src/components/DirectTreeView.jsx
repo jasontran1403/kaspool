@@ -8,7 +8,18 @@ const DirectTreeView = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [walletAddress] = useState(localStorage.getItem("walletAddress")); // Fetching from local storage
   const [access_token] = useState(localStorage.getItem("access_token")); // Fetching from local storage
+  const formatNumber = (numberString) => {
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
 
+    // Format the number with commas and two decimal places
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+
+    return formattedNumber;
+  };
   useEffect(() => {
     const fetchData = async () => {
       await fetchTreeData(walletAddress); // Fetch the tree data on component mount
@@ -62,7 +73,7 @@ const DirectTreeView = () => {
           </button>
         )}
         <span className="text-lg font-semibold">
-          {node.displayName} ({new Intl.NumberFormat("en-US").format(node.sales)}) ({new Intl.NumberFormat("en-US").format(node.teamSales)})
+          {node.displayName} ({formatNumber(node.sales)}) ({formatNumber(node.teamSales)})
         </span>
       </div>
 

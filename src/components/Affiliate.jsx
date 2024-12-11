@@ -1,5 +1,5 @@
 import DirectTreeView from "./DirectTreeView";
-import { TreeVisualize } from "../components";
+import Tree from "../components/Tree";
 import AffiliateSwitch from "./AffiliateSwitch";
 import { useState } from "react";
 
