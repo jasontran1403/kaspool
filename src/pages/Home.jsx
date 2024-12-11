@@ -241,14 +241,14 @@ const Home = () => {
 
             {selectedCheckbox === 'net' && <Net
                 selectedNetTab={selectedNetTab}
-                totalMining={123123.321}
-                directCommission={234234.432}
-                binaryCommission={345345.543}
-                leaderCommission={456456.654}
-                popCommission={567567.765}
-                dailyReward={678678.876}
-                teamSalesLeft={789789.987}
-                teamSalesRight={890890.098}
+                totalMining={totalMining}
+                directCommission={totalDirect}
+                binaryCommission={totalBinary}
+                leaderCommission={totalLeader}
+                popCommission={totalPop}
+                dailyReward={totalReward}
+                teamSalesLeft={teamSalesLeft}
+                teamSalesRight={teamSalesRight}
             />}
 
             {selectedCheckbox === 'das' &&

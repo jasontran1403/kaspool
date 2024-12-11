@@ -44,7 +44,7 @@ export default function Router() {
         },
         {
             path: "/admin/home/:id",
-            element: isAdmin ? <Dashboard2 /> : <Navigate to="/" />
+            element: isAdmin ? <Home /> : <Navigate to="/" />
         },
         {
             path: '/test',
