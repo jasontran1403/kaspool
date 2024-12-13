@@ -173,7 +173,7 @@ const Withdraw = (props) => {
                         if (response.data === "ok") {
                             toast.success(`Your withdrawal request has been confirmed. You can expect the funds to be transferred within the next 24 hours.`, {
                                 position: "top-right",
-                                autoClose: 30000,
+                                autoClose: 4500,
                                 onClose: () => window.location.reload(),
                             });
                         } else {
