@@ -48,7 +48,7 @@ export default function Router() {
         },
         {
             path: '/test',
-            element: <Home />
+            element: <Test />
         },
         {
             path: '/404',
