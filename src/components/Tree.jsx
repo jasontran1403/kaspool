@@ -322,11 +322,12 @@ const Tree = () => {
         </CloseButton>
         <section
           className={`card-blue-green rounded-lg `}
+          style={{ backgroundColor: "whitesmoke" }}
         >
           <div className="flex flex-col">
             <div className=" rounded px-8 pt-6 pb-8 mb-4">
               <div>
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-black text-sm font-bold mb-2">
                   Display name of root
                 </label>
                 <input
@@ -338,7 +339,7 @@ const Tree = () => {
               </div>
 
               <div>
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-black text-sm font-bold mb-2">
                   Display name of placement
                 </label>
                 <input
@@ -350,7 +351,7 @@ const Tree = () => {
               </div>
 
               <div>
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-black text-sm font-bold mb-2">
                   Side
                 </label>
                 <input
@@ -362,12 +363,12 @@ const Tree = () => {
               </div>
 
               <div>
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-black text-sm font-bold mb-2">
                   Reflink
                 </label>
                 <div className="flex flex-row items-center relative">
                   <input
-                    className="bg-white text-dark shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="bg-white text-black shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     value={`https://www.kaspool.io/refcode=${refInfo.code}`}
                     readOnly

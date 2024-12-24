@@ -15,13 +15,12 @@ const Overlay = styled(motion.div)`
 `;
 
 const ModalContainer = styled(motion.div)`
-  width: 50%;
-  height: 50%;
-  left: 25%;
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden; // Ensures the border animation stays within the container
-  transform: translate(-50%, -60%); // Centering in the middle of the screen
-  z-index: 999999999
+  margin: 0 auto;
+  z-index: 99999999999
 `;
 
 const modalVariant = {
