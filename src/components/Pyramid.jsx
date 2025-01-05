@@ -323,69 +323,59 @@ const Pyramid = () => {
         window.open(url, '_blank');
     }
 
-    const [modalOpen, setModalOpen] = useState(true);
-
-    const closeNotiModal = () => {
-        setModalOpen(prev => !prev);
-    }
-
-
     return (
         <div className="landingpage">
-            {modalOpen ?
-                <NotificationModal
-                    closeNotiModal={closeNotiModal}
-                    isOpen={modalOpen}
-                /> : <><header className="navbar">
-                    <div className="content-fit">
-                        <div className="logo">
-                            <a href="/">
-                                <img src={logo} width={80} height={20} alt="" />
-                            </a>
-                        </div>
-                        <nav>
-                            <ul className="landingpage-nav">
-                                <li className="navbar-item">
-                                    <a href={`/home`} className="tw-connect-wallet">Home</a>
-                                </li>
-                                <li>
-                                    <TrustWalletConnect label={"connect"} />
-                                </li>
-                            </ul>
-                        </nav>
+            <header className="navbar">
+                <div className="content-fit">
+                    <div className="logo">
+                        <a href="/">
+                            <img src={logo} width={80} height={20} alt="" />
+                        </a>
                     </div>
-                </header>
+                    <nav>
+                        <ul className="landingpage-nav">
+                            <li className="navbar-item">
+                                <a href={`/home`} className="tw-connect-wallet">Home</a>
+                            </li>
+                            <li>
+                                <TrustWalletConnect label={"connect"} />
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
 
-                    <Canvas onPointerDown={handlePointerDown}
-                        onPointerMove={handlePointerMove}
-                        onPointerUp={handlePointerUp}
-                    >
-                        <PerspectiveCamera makeDefault position={[defaultCamera.x, defaultCamera.y, defaultCamera.z]} fov={60} />
-                        <Environment files={IMAGE} background backgroundBlurriness={0.07} />
-                        <directionalLight
-                            position={[5, -10, 5]}
-                            intensity={8000}
-                            color="#ffffff"
-                        />
-                        <ambientLight intensity={3} color="#ffffff" />
-                        <Model
-                            rotation={currentCoordinate.rotation}
-                            actionIndex={currentCoordinate.index}
-                            onActionComplete={handleActionComplete}
-                            isRetrieve={isRetrieve}
-                        />
-                        <OrbitControls autoRotate={isRotate} enableZoom={false} enablePan={false} />
-                    </Canvas>
-                    <div className="button-container">
-                        <FaYoutube className={`button-item`} onClick={() => social(1)} />
-                        <FaSquareXTwitter className={`button-item`} onClick={() => social(2)} />
-                        <FaTelegram className={`button-item`} onClick={() => social(3)} />
-                    </div>
-                    <ModalSection1 isOpen={activeModal === 1} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
-                    <ModalSection2 isOpen={activeModal === 2} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
-                    <ModalSection3 isOpen={activeModal === 3} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
-                    <ModalSection4 isOpen={activeModal === 4} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} /></>
-            }
+            <Canvas onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+            >
+                <PerspectiveCamera makeDefault position={[defaultCamera.x, defaultCamera.y, defaultCamera.z]} fov={60} />
+                <Environment files={IMAGE} background backgroundBlurriness={0.07} />
+                <directionalLight
+                    position={[5, -10, 5]}
+                    intensity={8000}
+                    color="#ffffff"
+                />
+                <ambientLight intensity={3} color="#ffffff" />
+                <Model
+                    rotation={currentCoordinate.rotation}
+                    actionIndex={currentCoordinate.index}
+                    onActionComplete={handleActionComplete}
+                    isRetrieve={isRetrieve}
+                />
+                <OrbitControls autoRotate={isRotate} enableZoom={false} enablePan={false} />
+            </Canvas>
+            <div className="button-container">
+                <FaYoutube className={`button-item`} onClick={() => social(1)} />
+                <FaSquareXTwitter className={`button-item`} onClick={() => social(2)} />
+                <FaTelegram className={`button-item`} onClick={() => social(3)} />
+            </div>
+            <ModalSection1 isOpen={activeModal === 1} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
+            <ModalSection2 isOpen={activeModal === 2} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
+            <ModalSection3 isOpen={activeModal === 3} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
+            <ModalSection4 isOpen={activeModal === 4} isClosing={isClosing} onClose={closeModal} header={currentCoordinate.name} />
+
+
         </div>
     );
 };
