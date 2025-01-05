@@ -16,6 +16,8 @@ const listUserNav = ["User Information"];
 const listDasNav = ["Balance", "Mining", "Claim", "Withdraw", "Transfer"];
 const listHisNav = ["Mining", "Claim", "Withdraw", "Transfer"];
 const listNetNav = ["Affiliate", "Binary", "Direct"];
+const listDownNav = ["Deposit", "Staking", "My Staking"];
+
 
 const Home = () => {
     const { multiTabDetect } = useContext(MultiTabDetectContext);
@@ -29,6 +31,7 @@ const Home = () => {
     const [selectedNetTab, setSelectedNetTab] = useState("Affiliate");
     const [selectedDasTab, setSelectedDasTab] = useState("Balance");
     const [selectedHisTab, setSelectedHisTab] = useState("Mining");
+    const [selectedDownTab, setSelectedDownTab] = useState("Deposit");
 
     const [rank, setRank] = useState(0);
     const [totalMining, setTotalMining] = useState(0);
@@ -117,8 +120,10 @@ const Home = () => {
             setSelectedNetTab(tabName);
         } else if (type === 2) {
             setSelectedDasTab(tabName);
-        } else {
+        } else if (type == 3) {
             setSelectedHisTab(tabName);
+        } else {
+            setSelectedDownTab(tabName);
         }
     };
 
@@ -226,6 +231,7 @@ const Home = () => {
             {selectedCheckbox === 'net' && <SubNav listNav={listNetNav} selectedTab={selectedNetTab} handleTabClick={handleTabClick} type={1} />}
             {selectedCheckbox === 'das' && <SubNav listNav={listDasNav} selectedTab={selectedDasTab} handleTabClick={handleTabClick} type={2} />}
             {selectedCheckbox === 'his' && <SubNav listNav={listHisNav} selectedTab={selectedHisTab} handleTabClick={handleTabClick} type={3} />}
+            {selectedCheckbox === 'down' && <SubNav listNav={listDownNav} selectedTab={selectedDownTab} handleTabClick={handleTabClick} type={4} />}
 
             {selectedCheckbox === 'user' &&
                 <User
@@ -272,7 +278,20 @@ const Home = () => {
                 selectedHisTab={selectedHisTab}
             />}
 
-            {selectedCheckbox === 'down' && <Down />}
+            {selectedCheckbox === 'down' && <Down 
+                selectedDownTab={selectedDownTab}
+                connectedBalance={111}
+                usdt={222}
+                bep20={333}
+                directCommission={444}
+                binaryCommission={555}
+                leaderCommission={666}
+                popCommission={777}
+                dailyReward={888}
+                transferWallet={999}
+                usdtWallet={101010}
+                kaspaWallet={121212}
+            />}
 
 
             {/* Dock */}

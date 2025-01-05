@@ -8,12 +8,11 @@ import { API_ENDPOINT } from "../../constants";
 import { MultiTabDetectContext } from "../MultiTabDetectContext";
 import MineOption2 from "./MineOption2";
 
-const Mining = (props) => {
+const Staking = (props) => {
     const { multiTabDetect } = useContext(MultiTabDetectContext);
 
     const [listNetwork] = useState([
-        { id: 1, name: "Connected USDT Wallet" },
-        { id: 2, name: "USDT BEP20" },
+        { id: 1, name: "Kaspa Wallet" },
     ]);
 
     const [networkSelected, setNetworkSelected] = useState(1);
@@ -127,6 +126,7 @@ const Mining = (props) => {
     };
 
     const handleChangeWalletType = (walletType) => {
+        console.log(walletType);
         setNetworkSelected(walletType);
     };
 
@@ -152,7 +152,7 @@ const Mining = (props) => {
                             className="block text-white text-sm font-bold"
                             htmlFor="email"
                         >
-                            Mining package amount
+                            Staking Package
                         </label>
                         <input
                             className="bg-white text-dark shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -189,10 +189,9 @@ const Mining = (props) => {
                 </div>
             </div>
             <div className="flex items-center justify-center">
-                {networkSelected == 1 ? <MineOption2 walletAddress={props.usdtWallet} walletReceiver={props.bep20} amount={miningAmount} connectedBalance={props.connectedBalance} /> : <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Mining</button>}
-            </div>
+            <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Staking</button></div>
         </div>
     )
 };
 
-export default Mining;
+export default Staking;

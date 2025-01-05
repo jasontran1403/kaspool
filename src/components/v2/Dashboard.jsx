@@ -6,7 +6,7 @@ import Transfer from "./Transfer";
 
 const Dashboard = (props) => {
     return (
-        <>
+        <div className="fadeIn">
             {props.selectedDasTab === "Balance" && <Balance
                 connectedBalance={props.connectedBalance}
                 transferWallet={props.transferWallet}
@@ -35,7 +35,7 @@ const Dashboard = (props) => {
                 usdtBalance={props.usdt}
                 transferWallet={props.transferWallet}
             />}
-        </>
+        </div>
     )
 };
 

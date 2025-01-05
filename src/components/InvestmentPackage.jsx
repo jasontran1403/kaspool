@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../constants";
 import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
-import MineOption2 from "./MineOption2";
+import MineOption2 from "./v2/MineOption2";
 
 const InvestmentPackage = ({ packages = [], balance = 0, connectedBalance }) => {
   const { multiTabDetect } = useContext(MultiTabDetectContext);

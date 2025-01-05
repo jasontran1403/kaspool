@@ -1,27 +1,18 @@
+import { useContext, useState } from "react";
+import { API_ENDPOINT } from "../../constants";
 import Axios from "axios";
-import { useState, useEffect, useContext } from "react";
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import "sweetalert2/src/sweetalert2.scss";
+import { MultiTabDetectContext } from "../MultiTabDetectContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_ENDPOINT } from "../../constants";
-import { MultiTabDetectContext } from "../MultiTabDetectContext";
-import MineOption2 from "./MineOption2";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
-const Mining = (props) => {
+const Deposit = (props) => {
     const { multiTabDetect } = useContext(MultiTabDetectContext);
-
-    const [listNetwork] = useState([
-        { id: 1, name: "Connected USDT Wallet" },
-        { id: 2, name: "USDT BEP20" },
-    ]);
-
-    const [networkSelected, setNetworkSelected] = useState(1);
 
     const [loading, setLoading] = useState(false);
 
-    const [walletType, setWalletType] = useState(1);
-    const [miningAmount, setMiningAmount] = useState(0);
+    const [depositAmount, setDepositAmount] = useState(0);
 
     const formattedPrice = (amount) => {
         const formattedNumber = new Intl.NumberFormat("en-US", {
@@ -34,7 +25,7 @@ const Mining = (props) => {
         return `${formattedNumber}`;
     };
 
-    const buyPackage = () => {
+    const deposit = () => {
         if (multiTabDetect) {
             toast.error("Multiple browser tab was opend, please close all old browser tab", {
                 position: "top-right",
@@ -47,8 +38,8 @@ const Mining = (props) => {
 
         setLoading(true);
 
-        if (miningAmount <= 0) {
-            toast.error("Package not found!", {
+        if (depositAmount <= 0) {
+            toast.error("Deposit amount must be greater than 10!", {
                 position: "top-right",
                 autoClose: 1500,
                 onClose: () => {
@@ -59,8 +50,8 @@ const Mining = (props) => {
         }
 
         Swal.fire({
-            title: `Confirm mining $${miningAmount}`,
-            text: `Are you sure you want mine?`,
+            title: `Confirm deposit $${miningAmount}`,
+            text: `Are you sure you want deposit?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, confirm it!",
@@ -74,15 +65,13 @@ const Mining = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = JSON.stringify({
-                    packageId: 1,
                     walletAddress: props.usdtWallet,
-                    amount: miningAmount,
-                    type: walletType,
+                    amount: depositAmount,
                 });
 
                 let config = {
                     method: "post",
-                    url: `${API_ENDPOINT}management/invest`,
+                    url: `${API_ENDPOINT}management/deposit-kas`,
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -127,6 +116,7 @@ const Mining = (props) => {
     };
 
     const handleChangeWalletType = (walletType) => {
+        console.log(walletType);
         setNetworkSelected(walletType);
     };
 
@@ -147,52 +137,28 @@ const Mining = (props) => {
         <div className="fadeIn">
             <div className="card-container">
                 <div className="card-items">
-                    <div className="card-content-transaction pt-[20px]">
+                    <div className="card-content-deposit">
                         <label
                             className="block text-white text-sm font-bold"
                             htmlFor="email"
                         >
-                            Mining package amount
+                            Amount
                         </label>
                         <input
-                            className="bg-white text-dark shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="bg-white text-dark shadow appearance-none rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                             id="email"
                             type="number"
                             min={0}
-                            value={miningAmount}
-                            onChange={e => { setMiningAmount(e.target.value) }}
+                            value={depositAmount}
+                            onChange={e => { setDepositAmount(e.target.value) }}
                         />
                     </div>
-
-                    <div className="card-content-transaction mb-[20px]">
-                        <label
-                            className="block text-white text-sm font-bold"
-                            htmlFor="packageName"
-                        >
-                            Wallet type
-                        </label>
-                        <select
-                            className=" shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="packageName"
-                            value={networkSelected}
-                            onChange={(e) => { handleChangeWalletType(e.target.value) }}
-                        >
-                            {listNetwork.map((network) => (
-                                <option key={network.id} value={network.id}>
-                                    {network.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-
                 </div>
             </div>
             <div className="flex items-center justify-center">
-                {networkSelected == 1 ? <MineOption2 walletAddress={props.usdtWallet} walletReceiver={props.bep20} amount={miningAmount} connectedBalance={props.connectedBalance} /> : <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Mining</button>}
-            </div>
+            <button onClick={deposit} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Deposit</button></div>
         </div>
     )
 };
 
-export default Mining;
+export default Deposit;

@@ -12,8 +12,8 @@ const Overlay = styled(motion.div)`
 `;
 
 const ModalContainer = styled(motion.div)`
-  width: 60%;
-  height: 50%;
+  width: 50svw;
+  height: auto;
   background: rgba(130, 130, 130, 0.2); // Transparent background for glass effect
   backdrop-filter: blur(10px); // Blur effect for glassmorphism
   box-shadow: 
@@ -21,9 +21,9 @@ const ModalContainer = styled(motion.div)`
     0 0 25px rgba(173, 216, 230, 0.7),       // Increase the glow radius and opacity
     0 0 50px rgba(173, 216, 230, 0.5);       // Additional glow for shininess
   position: absolute;
-  top: 45%;
-  left: 80%;
-  transform: translate(-80%, -45%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 40px;
   overflow: hidden; // Ensures the border animation stays within the container
 
@@ -43,11 +43,11 @@ const ModalContainer = styled(motion.div)`
   }
 
   @media (max-width: 768px) {
-    width: 80%; // Adjust width for mobile
-    height: 65%; // Adjust height for mobile
+    width: 100svw; // Adjust width for mobile
+    height: auto; // Adjust height for mobile
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -40%);
+    transform: translate(-50%, -50%);
     border-radius: 8px; // Smaller border radius for mobile
   }
 
@@ -82,7 +82,7 @@ const containerVariant = {
   exit: { top: "-50%", transition: { duration: 0.5 } }, // Optional: Adjust exit duration if needed
 };
 
-const NotificationModal = ({ children, isOpen }) => {
+const NotificationModal = ({ isOpen, closeNotiModal }) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -92,8 +92,22 @@ const NotificationModal = ({ children, isOpen }) => {
           exit={"exit"}
           variants={modalVariant}
         >
-          <ModalContainer variants={containerVariant}>
-            {children}
+          <ModalContainer variants={containerVariant} style={{ cursor: "pointer" }} onClick={closeNotiModal}>
+            <div className="modal-content-container">
+              <div className="content-header">
+                <h2 className="text-[2rem]">ANNOUNCEMENT</h2>
+              </div>
+              <div className="content-body">
+                <p>Dear Investors,</p>
+                <p>We are currently updating the Kaspa deposit portal and Kaspa staking system to enhance and develop the Kaspool community for a better future.</p>
+                <p>We are committed to completing the update of the deposit and withdrawal portal no later than January 10, 2025.</p>
+                <p>We sincerely thank you for your patience and continuous support.</p>
+              </div>
+              <div className="content-footer">
+                <p>Best regards,</p>
+                <p>Kaspool Management Team</p>
+              </div>
+            </div>
           </ModalContainer>
         </Overlay>
       )}

@@ -6,8 +6,6 @@ const SubNav = ({ listNav, selectedTab, handleTabClick, type }) => {
         return input.replace(" ", "");
     }
 
-    const className = `${selectedTab.toLowerCase()}-nav`;
-
     return (
         <div className="bottom-tap-bar">
             {
@@ -19,6 +17,7 @@ const SubNav = ({ listNav, selectedTab, handleTabClick, type }) => {
                             ${selectedTab === tab && ["Affiliate", "Binary", "Direct"].includes(tab) ? "affiliate-nav" : ""}
                             ${selectedTab === tab && ["Mining", "Claim", "Withdraw", "Transfer"].includes(tab) ? "his-nav" : ""}
                             ${selectedTab === tab && ["Balance", "Mining", "Claim", "Withdraw", "Transfer"].includes(tab) ? "das-nav" : ""}
+                            ${selectedTab === tab && ["Staking", "Deposit", "My Staking"].includes(tab) ? "down-nav" : ""}
                             ${selectedTab === tab ? "expanded" : ""}`}
                         onClick={() => handleTabClick(tab, type)}
                     >

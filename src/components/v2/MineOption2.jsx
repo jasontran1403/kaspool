@@ -7,11 +7,11 @@ import {
 } from "thirdweb";
 import { bsc } from "thirdweb/chains";
 import { TransactionButton, useActiveAccount } from "thirdweb/react";
-import TrustWalletConnect from "./TrustWalletConnect";
+import TrustWalletConnect from "../TrustWalletConnect";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_ENDPOINT } from "../constants";
+import { API_ENDPOINT } from "../../constants";
 import Axios from "axios";
 
 const client = createThirdwebClient({

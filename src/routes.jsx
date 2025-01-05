@@ -34,29 +34,29 @@ export default function Router() {
             path: "/",
             element: <LandingPage4 />
         },
-        {
-            path: "/:refcode",
-            element: <LandingPage4RefCode />
-        },
-        {
-            path: "/home",
-            element: isConnectedToWallet ? <Home /> : <Navigate to="/" />
-        },
-        {
-            path: "/admin/home/:id",
-            element: isAdmin ? <Home /> : <Navigate to="/" />
-        },
-        {
-            path: '/test',
-            element: <Test />
-        },
-        {
-            path: '/404',
-            element: <Error404 />
-        },
+        // {
+        //     path: "/:refcode",
+        //     element: <LandingPage4RefCode />
+        // },
+        // {
+        //     path: "/home",
+        //     element: isConnectedToWallet ? <Home /> : <Navigate to="/" />
+        // },
+        // {
+        //     path: "/admin/home/:id",
+        //     element: isAdmin ? <Home /> : <Navigate to="/" />
+        // },
+        // {
+        //     path: '/test',
+        //     element: <Test />
+        // },
+        // {
+        //     path: '/404',
+        //     element: <Error404 />
+        // },
         {
             path: '*',
-            element: <Navigate to="/404" replace />
+            element: <Navigate to="/" replace />
         },
     ]);
 
