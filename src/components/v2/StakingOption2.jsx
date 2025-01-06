@@ -90,7 +90,7 @@ const StakingOption2 = ({
             transaction={() => {
               // Create a transaction object and return it
               if (amount <= 1) {
-                toast.error("Mining amount must be greater than 1USDT", {
+                toast.error("Staking amount must be greater than 1USDT", {
                   position: "top-right",
                   autoClose: 1800,
                 });
@@ -123,7 +123,7 @@ const StakingOption2 = ({
               });
             }}
           >
-            Mining
+            Staking
           </TransactionButton>
         </>
       )}
