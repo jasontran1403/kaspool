@@ -101,7 +101,7 @@ const Withdraw = (props) => {
 
     const handleWithdraw = () => {
         if (multiTabDetect) {
-            toast.error("Multiple browser tab was opend, please close all old browser tab", {
+            toast.error("Multiple browser tabs are open. Please close all old browser tabs.", {
                 position: "top-right",
                 autoClose: 1500,
             });

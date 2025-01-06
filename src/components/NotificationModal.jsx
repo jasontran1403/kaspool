@@ -1,4 +1,12 @@
-import React from "react";
+import { useContext, useState } from "react";
+import { API_ENDPOINT } from "../constants";
+import Axios from "axios";
+import { MultiTabDetectContext } from "../components/MultiTabDetectContext";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,6 +29,7 @@ const ModalContainer = styled(motion.div)`
     0 0 25px rgba(173, 216, 230, 0.7),       // Increase the glow radius and opacity
     0 0 50px rgba(173, 216, 230, 0.5);       // Additional glow for shininess
   position: absolute;
+  z-index: 99999999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -82,7 +91,83 @@ const containerVariant = {
   exit: { top: "-50%", transition: { duration: 0.5 } }, // Optional: Adjust exit duration if needed
 };
 
-const NotificationModal = ({ isOpen, closeNotiModal }) => {
+const NotificationModal = ({ isOpen, closeNotiModal, qrSource, manualWalletAddress, handleCopyKaspa }) => {
+  const [transactionId, setTransactionId] = useState("");
+  const { multiTabDetect } = useContext(MultiTabDetectContext);
+
+  const [loading, setLoading] = useState(false);
+  const validateTransaction = () => {
+    if (multiTabDetect) {
+      toast.error("Multiple browser tabs are open. Please close all old browser tabs.", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      return;
+    }
+
+    if (loading) return;
+
+    setLoading(true);
+
+    if (transactionId === "") {
+      toast.error("Please provide the transaction_id in the input field for validation.", {
+        position: "top-right",
+        autoClose: 1500,
+        onClose: () => {
+          setLoading(false);
+        }
+      });
+      return;
+    }
+
+    let data = JSON.stringify({
+      walletAddress: localStorage.getItem("walletAddress"),
+      transactionId: transactionId
+    });
+
+    let config = {
+      method: "post",
+      url: `${API_ENDPOINT}management/validate-kaspa-deposit`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+      data: data,
+    };
+
+    Axios.request(config)
+      .then((response) => {
+        if (response.data === "ok") {
+          toast.success("Deposit create successful!", {
+            position: "top-right",
+            autoClose: 1500,
+            onClose: () => {
+              window.location.reload();
+            }
+          });
+        } else {
+          toast.error(response.data, {
+            position: "top-right",
+            autoClose: 1500,
+            onClose: () => {
+              setLoading(false);
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Please try again later", {
+          position: "top-right",
+          autoClose: 1500,
+          onClose: () => {
+            setLoading(false);
+          }
+        });
+      });
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -92,20 +177,23 @@ const NotificationModal = ({ isOpen, closeNotiModal }) => {
           exit={"exit"}
           variants={modalVariant}
         >
-          <ModalContainer variants={containerVariant} style={{ cursor: "pointer" }} onClick={closeNotiModal}>
+          <ModalContainer variants={containerVariant} >
             <div className="modal-content-container">
-              <div className="content-header">
-                <h2 className="text-[2rem]">ANNOUNCEMENT</h2>
-              </div>
               <div className="content-body">
-                <p>Dear Investors,</p>
-                <p>We are currently updating the Kaspa deposit portal and Kaspa staking system to enhance and develop the Kaspool community for a better future.</p>
-                <p>We are committed to completing the update of the deposit and withdrawal portal no later than January 10, 2025.</p>
-                <p>We sincerely thank you for your patience and continuous support.</p>
+                <img src={qrSource} alt="" />
+                <input onClick={() => handleCopyKaspa(manualWalletAddress)} className="cursor-pointer bg-white text-dark shadow appearance-none rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:shadow-outline" type="text" value={manualWalletAddress} readOnly />
+                <input className="cursor-pointer bg-white text-dark shadow appearance-none rounded w-full py-2 px-4 text-gray-700 focus:outline-none focus:shadow-outline" type="text"
+                  value={transactionId}
+                  placeholder="Transaction ID for validation process"
+                  onChange={(e) => {
+                    setTransactionId(e.target.value)
+                  }}
+                />
+
               </div>
               <div className="content-footer">
-                <p>Best regards,</p>
-                <p>Kaspool Management Team</p>
+                <button className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]" onClick={closeNotiModal}>Close</button>
+                <button className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]" onClick={validateTransaction}>Confirm</button>
               </div>
             </div>
           </ModalContainer>

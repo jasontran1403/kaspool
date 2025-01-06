@@ -1,225 +1,252 @@
-import Axios from "axios";
-import { useState, useEffect, useContext } from "react";
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import 'sweetalert2/src/sweetalert2.scss';
-import { toast } from "react-toastify";
+import React, { useState } from "react";
+import { PencilIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_ENDPOINT } from "../../constants";
-import { MultiTabDetectContext } from "../MultiTabDetectContext";
+import {
+  Card,
+  CardHeader,
+  Typography,
+  Button,
+  CardBody,
+  Chip,
+  CardFooter,
+  Avatar,
+  IconButton,
+  Tooltip,
+  Input,
+} from "@material-tailwind/react";
 
-const MyStaking = (props) => {
-    const { multiTabDetect } = useContext(MultiTabDetectContext);
+const MyStaking = ({
+  TABLE_HEAD,
+  TABLE_ROWS,
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 4;
 
-    const [loading, setLoading] = useState(false);
-    const [walletAddress] = useState(localStorage.getItem("walletAddress"));
-    const [to, setTo] = useState("");
-    const [balance, setBalance] = useState(0);
-    const [amount, setAmount] = useState(0);
-    const [fee, setFee] = useState(0);
-    const [networkSelected, setNetworkSelected] = useState("1");
+  // Filter rows based on search term
+  const filteredRows = TABLE_ROWS.filter((row) =>
+    row.stakingCode.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const [listNetwork, setListNetwork] = useState([
-        { id: 1, name: "USDT BEP20" },
-        // { id: 2, name: "Transfer" },
-    ]);
-    const [transfer, setTransfer] = useState();
-    const [currentBalance, setCurrentBalance] = useState(0);
-    const [amountSwap, setAmountSwap] = useState(0);
+  // Total pages
+  const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
 
-    const [displayName, setDisplayName] = useState("Display name of receiver");
+  // Sliced rows for the current page
+  const currentRows = filteredRows.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
-    const handleGetDisplayName = () => {
-        if (to == "" || !to) return;
-        let config = {
-            method: "get",
-            url: `${API_ENDPOINT}auth/get-display-name/${to}`, // Adjusted URL
-            headers: {
-                "ngrok-skip-browser-warning": "69420",
-            },
-        };
+  // Next page handler
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-        Axios.request(config)
-            .then((response) => {
-                if (response.data.length > 0) {
-                    setDisplayName(response.data);
-                } else {
-                    setDisplayName("No display name was set yet");
-                }
-                toast.success("Display name field was updated", {
-                    position: "top-right",
-                    autoClose: 1000,
-                });
-            })
-            .catch(() => {
-                toast.error("An error occurred. Please try again.", {
-                    position: "top-right",
-                    autoClose: 1000,
-                });
-            });
-    };
+  // Previous page handler
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-    const handleCreateTransfer = () => {
-        if (multiTabDetect) {
-            toast.error("Multiple browser tab was opend, please close all old browser tab", {
-                position: "top-right",
-                autoClose: 1500,
-            });
-            return;
-        }
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
 
-        if (loading) return;
+    // Format the time
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    const time = `${hours}:${minutes}:${seconds}`;
 
-        if (amount <= 0) {
-            toast.error("Swap amount must > 0!", {
-                position: "top-right",
-                autoClose: 1500,
-                onClose: () => {
-                    setLoading(false);
-                }
-            });
-            return;
-        }
+    // Format the date
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
 
-        if (amount > currentBalance) {
-            toast.error("Swap amount must <= balance!", {
-                position: "top-right",
-                autoClose: 1500,
-                onClose: () => {
-                    setLoading(false);
-                }
-            });
-            return;
-        }
+    return { time, date: formattedDate };
+  };
 
-        setLoading(true);
+  const formatNumber = (numberString) => {
+    // Parse the input to ensure it's a number
+    const number = parseFloat(numberString);
 
-        Swal.fire({
-            title: 'Confirm transfer',
-            text: `Are you sure you want to transfer ${amount} to ${to}?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, transfer it!',
-            cancelButtonText: 'No, cancel',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: 'custom-confirm-button', // Custom class for confirm button
-                cancelButton: 'custom-cancel-button',   // Custom class for cancel button
-            },
-            buttonsStyling: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let data = JSON.stringify({
-                    from: walletAddress,
-                    to: to,
-                    amount: amount,
-                    status: 1,
-                    type: 1,
-                    walletType: 2,
-                });
+    if (isNaN(number)) return numberString; // Return original if parsing fails
 
-                let config = {
-                    method: "post",
-                    maxBodyLength: Infinity,
-                    url: `${API_ENDPOINT}management/transfer-balance`,
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                        "ngrok-skip-browser-warning": "69420",
-                    },
-                    data: data,
-                };
+    // Format the number with commas and two decimal places
+    return new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  };
 
-                Axios.request(config)
-                    .then((response) => {
-                        if (response.data === "Transaction success") {
-                            toast.success("Transfer success!", {
-                                position: "top-right",
-                                autoClose: 1500,
-                                onClose: () => {
-                                    window.location.reload();
-                                },
-                            });
-                        } else {
-                            toast.error(response.data, {
-                                position: "top-right",
-                                autoClose: 1500,
-                                onClose: () => {
-                                    setLoading(false);
-                                },
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        toast.error("Please try again later", {
-                            position: "top-right",
-                            autoClose: 1500,
-                            onClose: () => {
-                                setLoading(false);
-                            },
-                        });
-                    });
-            } else {
-                setLoading(false);
-            }
+  const shortenCode = (input) => {
+    if (typeof input !== "string" || input.length < 8) {
+      return input; // Return the input as is if it's not a string or too short
+    }
+    return input.substring(0, 3) + "..." + input.substring(input.length - 3);
+  };
+
+  const handleCopy = (input) => {
+    navigator.clipboard.writeText(input)
+      .then(() => {
+        // You can also trigger a toast or visual feedback here if needed
+        toast.success(`Staking code has been copied`, {
+          position: "top-right",
+          autoClose: 1500,
         });
-    };
+      })
+      .catch((error) => {
+        toast.error("Failed to copy: ", error, {
+          position: "top-right",
+          autoClose: 1500,
+        });
+      });
+  };
 
-    const handleChangeAmount = (amountToSwap) => {
-        const value = amountToSwap;
-        const regex = /^[0-9]*\.?[0-9]*$/;
-        if (regex.test(value)) {
-            const numericValue = parseFloat(value);
-            if (!isNaN(numericValue) && numericValue > 0) {
-                setAmount(value);
-                setAmountSwap(value / 0.1);
-            } else {
-                setAmount("");
-            }
-        } else {
-            setAmount("");
-        }
-    };
-
-    useEffect(() => {
-        if (to) {
-            const timer = setTimeout(() => {
-                handleGetDisplayName();
-            }, 1200);
-
-            // Cleanup timeout when `to` changes or component unmounts
-            return () => clearTimeout(timer);
-        }
-    }, [to]);
-
-    useEffect(() => {
-        if (networkSelected == 1) {
-            setCurrentBalance(props.usdtBalance);
-        } else {
-            setCurrentBalance(props.transferWallet);
-        }
-    }, [networkSelected, props.usdtBalance, props.transferWallet]);
-
-    const formatNumber = (numberString) => {
-        // Parse the input to ensure it's a number
-        const number = parseFloat(numberString);
-
-        // Format the number with commas and two decimal places
-        const formattedNumber = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(number);
-
-        return formattedNumber;
-    };
-
-    return (
-        <div className="fadeIn">
-            <div className="card-container">
-                <div className="card-items h-[60svh]">
+  return (
+    <div className="fadeIn">
+      <div className="card-container">
+        <div className="card-items">
+          <Card className="card-blue-green h-full w-full flex flex-col ">
+            <CardHeader
+              floated={false}
+              shadow={false}
+              className="bg-transparent rounded-none"
+            >
+              <div className="mb-[15px] mt-[15px] flex flex-col justify-between gap-8 md:flex-row md:items-center">
+                <div className="flex w-full ">
+                  <div className="w-full md:w-72 relative ">
+                    <input
+                      type="text"
+                      placeholder="Search by code"
+                      className="pl-4 w-full pr-10 rounded px-3 py-3 input-white"
+                      value={searchTerm}
+                      onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setCurrentPage(1); // Reset to page 1 on search
+                      }}
+                    />
+                  </div>
                 </div>
-            </div>
+              </div>
+            </CardHeader>
+            <CardBody className="flex overflow-x-auto px-0 hide-scroll">
+              <table className="w-full min-w-max table-auto">
+                <thead>
+                  <tr>
+                    {TABLE_HEAD.map((head) => (
+                      <th
+                        key={head}
+                        className={`border-y p-2 ${head === "Status" ? "text-right" : "text-left"}`}
+                      >
+                        <Typography
+                          variant="small"
+                          color="white"
+                          className="font-normal leading-none opacity-70"
+                        >
+                          {head}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="min-h-[20rem]">
+                  {currentRows.map(
+                    ({ stakingCode, amount, date, status, period, remain }, index) => {
+                      const isLast = index === currentRows.length - 1;
+                      const classes = isLast
+                        ? "pt-2 pl-2 pr-2 border-b pb-2"
+                        : "p-2 border-b border-blue-gray-50";
+
+                      return (
+                        <tr key={stakingCode}>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="white"
+                              className="font-normal cursor-pointer"
+                            >
+                              Staking
+                            </Typography>
+                            <Typography
+                              variant="small"
+                              color="white"
+                              className="font-normal cursor-pointer"
+                              onClick={() => { handleCopy(stakingCode) }}
+                            >
+                              {shortenCode(stakingCode)}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography variant="small" color="white" className="font-normal">
+                              {formatDate(date * 1000).time}
+                            </Typography>
+                            <Typography variant="small" color="white" className="font-normal">
+                              {formatDate(date * 1000).date}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="white"
+                              className="font-normal"
+                            >
+                              {formatNumber(amount)}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <div
+                              className={`w-full rounded h-4 ${remain === 0 ? 'bg-red-500' : 'bg-gray-300'}`}>
+                              <div
+                                className={`h-4 rounded ${remain === 0 ? 'bg-red-500' : 'bg-green-400'}`}
+                                style={{ width: `${(remain / period) * 100}%` }}
+                              ></div>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
+                </tbody>
+              </table>
+            </CardBody>
+            <CardFooter className="flex items-center justify-center border-blue-gray-50 mt-[-19px] mb-[-4px]">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outlined"
+                  color="white"
+                  size="sm"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+
+                <Typography variant="small" color="white">
+                  Page {currentPage} of {totalPages}
+                </Typography>
+
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  color="white"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
         </div>
-    )
+      </div>
+    </div>
+  );
 };
 
 export default MyStaking;

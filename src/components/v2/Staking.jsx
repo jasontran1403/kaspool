@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_ENDPOINT } from "../../constants";
 import { MultiTabDetectContext } from "../MultiTabDetectContext";
-import MineOption2 from "./MineOption2";
+import StakingOption2 from "./StakingOption2";
 
 const listPeriod = [
     { name: 7, rate: "0.1%" },
@@ -26,14 +26,18 @@ const Staking = (props) => {
     const { multiTabDetect } = useContext(MultiTabDetectContext);
 
     const [listNetwork] = useState([
-        { id: 1, name: "Kaspa Wallet" },
+        { id: 0, name: "KASPA Wallet" },
+        { id: 1, name: "USDT-BEP20 Wallet" },
+        { id: 2, name: "Connected Wallet" },
     ]);
 
-    const [networkSelected, setNetworkSelected] = useState(1);
+    const [balance, setBalance] = useState(props.kaspaBalance);
+    const [currency, setCurrency] = useState("KAS");
+    const [networkSelected, setNetworkSelected] = useState(0);
 
     const [loading, setLoading] = useState(false);
 
-    const [walletType, setWalletType] = useState(1);
+    const [walletType, setWalletType] = useState(0);
     const [miningAmount, setMiningAmount] = useState(0);
 
     const formattedPrice = (amount) => {
@@ -49,7 +53,7 @@ const Staking = (props) => {
 
     const buyPackage = () => {
         if (multiTabDetect) {
-            toast.error("Multiple browser tab was opend, please close all old browser tab", {
+            toast.error("Multiple browser tabs are open. Please close all old browser tabs.", {
                 position: "top-right",
                 autoClose: 1500,
             });
@@ -72,7 +76,7 @@ const Staking = (props) => {
         }
 
         Swal.fire({
-            title: `Confirm staking $${miningAmount}`,
+            title: `Confirm staking ${miningAmount} ${currency}`,
             text: `Are you sure you want staking?`,
             icon: "warning",
             showCancelButton: true,
@@ -88,13 +92,14 @@ const Staking = (props) => {
             if (result.isConfirmed) {
                 let data = JSON.stringify({
                     walletAddress: localStorage.getItem("walletAddress"),
-                    amount: miningAmount,
-                    period: periodSelected
+                    amountKaspa: miningAmount,
+                    period: periodSelected,
+                    walletType: networkSelected
                 });
 
                 let config = {
                     method: "post",
-                    url: `${API_ENDPOINT}management/invest`,
+                    url: `${API_ENDPOINT}management/staking-kaspa`,
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -103,33 +108,33 @@ const Staking = (props) => {
                     data: data,
                 };
 
-                // Axios.request(config)
-                //     .then((response) => {
-                //         if (response.data === "ok") {
-                //             toast.success("Staking successfull!", {
-                //                 position: "top-right",
-                //                 autoClose: 1500,
-                //                 onClose: () => window.location.reload(),
-                //             });
-                //         } else {
-                //             toast.error(response.data, {
-                //                 position: "top-right",
-                //                 autoClose: 1500,
-                //                 onClose: () => {
-                //                     setLoading(false);
-                //                 }
-                //             });
-                //         }
-                //     })
-                //     .catch((error) => {
-                //         toast.error("Please try again later", {
-                //             position: "top-right",
-                //             autoClose: 1500,
-                //             onClose: () => {
-                //                 setLoading(false);
-                //             }
-                //         });
-                //     });
+                Axios.request(config)
+                    .then((response) => {
+                        if (response.data === "ok") {
+                            toast.success("Staking successfull!", {
+                                position: "top-right",
+                                autoClose: 1500,
+                                onClose: () => window.location.reload(),
+                            });
+                        } else {
+                            toast.error(response.data, {
+                                position: "top-right",
+                                autoClose: 1500,
+                                onClose: () => {
+                                    setLoading(false);
+                                }
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error("Please try again later", {
+                            position: "top-right",
+                            autoClose: 1500,
+                            onClose: () => {
+                                setLoading(false);
+                            }
+                        });
+                    });
             } else {
                 setLoading(false);
             }
@@ -142,6 +147,17 @@ const Staking = (props) => {
 
     const handleChangeWalletType = (walletType) => {
         setNetworkSelected(walletType);
+        if (walletType == 0) {
+            setCurrency("KAS");
+            setBalance(props.kaspaBalance);
+        } else if (walletType == 1) {
+            setCurrency("USDT");
+            setBalance(props.usdtBalance);
+        } else {
+            setCurrency("USDT");
+            setBalance(props.connectedBalance);
+        }
+
     };
 
     const handleChangePeriod = (periodValue) => {
@@ -223,7 +239,7 @@ const Staking = (props) => {
                             id="email"
                             type="number"
                             min={0}
-                            value={props.kaspaBalance}
+                            value={balance}
                             readOnly
                             disabled
                         />
@@ -232,7 +248,17 @@ const Staking = (props) => {
                 </div>
             </div>
             <div className="flex items-center justify-center">
-                <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Staking</button></div>
+                {networkSelected < 2 && <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Staking</button>}
+
+                {networkSelected == 2 && <StakingOption2
+                    walletAddress={props.usdtWallet}
+                    walletReceiver={props.bep20}
+                    amount={miningAmount}
+                    periodSelected={periodSelected}
+                    networkSelected={networkSelected}
+                    connectedBalance={props.connectedBalance}
+                />}
+            </div>
         </div>
     )
 };

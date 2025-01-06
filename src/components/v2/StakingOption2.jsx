@@ -1,3 +1,4 @@
+import Axios from "axios";
 import {
   createThirdwebClient,
   prepareContractCall,
@@ -7,12 +8,9 @@ import {
 } from "thirdweb";
 import { bsc } from "thirdweb/chains";
 import { TransactionButton, useActiveAccount } from "thirdweb/react";
-import TrustWalletConnect from "../TrustWalletConnect";
-import { useState } from "react";
+import { API_ENDPOINT } from "../../constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_ENDPOINT } from "../../constants";
-import Axios from "axios";
 
 const client = createThirdwebClient({
   clientId: "c4917b86730652d8197cc695ca2b38eb",
@@ -26,24 +24,27 @@ const contract = getContract({
   client,
 });
 
-const MineOption2 = ({
+const StakingOption2 = ({
   walletAddress,
   amount,
   connectedBalance,
   walletReceiver,
+  periodSelected,
+  networkSelected
 }) => {
   const account = useActiveAccount();
 
   const handleDirectTransferMining = (hash) => {
     let data = JSON.stringify({
-      packageId: 1,
-      walletAddress: walletAddress,
-      amount: amount,
+      walletAddress: localStorage.getItem("walletAddress"),
+      amountKaspa: amount,
+      period: periodSelected,
+      walletType: networkSelected
     });
 
     let config = {
       method: "post",
-      url: `${API_ENDPOINT}management/invest-by-direct`,
+      url: `${API_ENDPOINT}management/staking-kaspa`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -51,10 +52,11 @@ const MineOption2 = ({
       },
       data: data,
     };
+
     Axios.request(config)
       .then((response) => {
         if (response.data === "ok") {
-          toast.success(`Minning successfull, hash: ${hash}`, {
+          toast.success("Staking successfull!", {
             position: "top-right",
             autoClose: 1500,
             onClose: () => window.location.reload(),
@@ -63,6 +65,9 @@ const MineOption2 = ({
           toast.error(response.data, {
             position: "top-right",
             autoClose: 1500,
+            onClose: () => {
+              setLoading(false);
+            }
           });
         }
       })
@@ -70,6 +75,9 @@ const MineOption2 = ({
         toast.error("Please try again later", {
           position: "top-right",
           autoClose: 1500,
+          onClose: () => {
+            setLoading(false);
+          }
         });
       });
   };
@@ -123,4 +131,4 @@ const MineOption2 = ({
   );
 };
 
-export default MineOption2;
+export default StakingOption2;

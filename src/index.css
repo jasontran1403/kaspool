@@ -365,6 +365,12 @@ input[type="password"] {
   color: #fff !important;
 }
 
+.content-footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
 .fadeIn {
   display: flex;
   flex-direction: column;

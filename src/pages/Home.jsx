@@ -61,6 +61,8 @@ const Home = () => {
     const [bep20, setBep20] = useState("");
     const [connectedBalance, setConnectedBalance] = useState(0);
     const [kaspaBalance, setKaspaBalance] = useState(0);
+    const [gKaspa, setGKaspa] = useState("");
+    
 
     useEffect(() => {
         let config = {
@@ -110,6 +112,8 @@ const Home = () => {
                 setLeftRefLink(response.data.leftRefLink);
                 setRightRefLink(response.data.rightRefLink);
                 setConnectedBalance(response.data.connectedBalance);
+                setGKaspa(response.data.gkaspa);
+                setKaspaBalance(response.data.kaspaBalance);
             })
             .catch((error) => {
                 console.log(error);
@@ -282,6 +286,11 @@ const Home = () => {
             {selectedCheckbox === 'down' && <Down 
                 selectedDownTab={selectedDownTab}
                 kaspaBalance={kaspaBalance}
+                connectedBalance={connectedBalance}
+                gKaspa={gKaspa}
+                bep20={bep20}
+                usdtBalance={usdt}
+                walletAddress={usdtWallet}
             />}
 
 
