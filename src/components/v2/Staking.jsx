@@ -103,33 +103,33 @@ const Staking = (props) => {
                     data: data,
                 };
 
-                Axios.request(config)
-                    .then((response) => {
-                        if (response.data === "ok") {
-                            toast.success("Staking successfull!", {
-                                position: "top-right",
-                                autoClose: 1500,
-                                onClose: () => window.location.reload(),
-                            });
-                        } else {
-                            toast.error(response.data, {
-                                position: "top-right",
-                                autoClose: 1500,
-                                onClose: () => {
-                                    setLoading(false);
-                                }
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        toast.error("Please try again later", {
-                            position: "top-right",
-                            autoClose: 1500,
-                            onClose: () => {
-                                setLoading(false);
-                            }
-                        });
-                    });
+                // Axios.request(config)
+                //     .then((response) => {
+                //         if (response.data === "ok") {
+                //             toast.success("Staking successfull!", {
+                //                 position: "top-right",
+                //                 autoClose: 1500,
+                //                 onClose: () => window.location.reload(),
+                //             });
+                //         } else {
+                //             toast.error(response.data, {
+                //                 position: "top-right",
+                //                 autoClose: 1500,
+                //                 onClose: () => {
+                //                     setLoading(false);
+                //                 }
+                //             });
+                //         }
+                //     })
+                //     .catch((error) => {
+                //         toast.error("Please try again later", {
+                //             position: "top-right",
+                //             autoClose: 1500,
+                //             onClose: () => {
+                //                 setLoading(false);
+                //             }
+                //         });
+                //     });
             } else {
                 setLoading(false);
             }
