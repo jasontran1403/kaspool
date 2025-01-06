@@ -8,9 +8,8 @@ const Down = (props) => {
             {props.selectedDownTab === "Deposit" && <Deposit
             />}
             {props.selectedDownTab === "Staking" && <Staking
-                connectedBalance={props.connectedBalance}
                 usdtWallet={props.usdtWallet}
-                bep20={props.bep20}
+                kaspaBalance={props.kaspaBalance}
             />}
             {props.selectedDownTab === "My Staking" && <MyStaking
                 usdtBalance={props.usdt}

@@ -8,6 +8,20 @@ import { API_ENDPOINT } from "../../constants";
 import { MultiTabDetectContext } from "../MultiTabDetectContext";
 import MineOption2 from "./MineOption2";
 
+const listPeriod = [
+    { name: 7, rate: "0.1%" },
+    { name: 15, rate: "0.12%" },
+    { name: 30, rate: "0.15%" },
+    { name: 45, rate: "0.17%" },
+    { name: 60, rate: "0.20%" },
+    { name: 90, rate: "0.30%" },
+    { name: 120, rate: "0.35%" },
+    { name: 180, rate: "0.40%" },
+    { name: 360, rate: "0.50%" },
+    { name: 540, rate: "0.60%" },
+    { name: 720, rate: "0.70%" }
+];
+
 const Staking = (props) => {
     const { multiTabDetect } = useContext(MultiTabDetectContext);
 
@@ -58,8 +72,8 @@ const Staking = (props) => {
         }
 
         Swal.fire({
-            title: `Confirm mining $${miningAmount}`,
-            text: `Are you sure you want mine?`,
+            title: `Confirm staking $${miningAmount}`,
+            text: `Are you sure you want staking?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, confirm it!",
@@ -73,10 +87,9 @@ const Staking = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = JSON.stringify({
-                    packageId: 1,
-                    walletAddress: props.usdtWallet,
+                    walletAddress: localStorage.getItem("walletAddress"),
                     amount: miningAmount,
-                    type: walletType,
+                    period: periodSelected
                 });
 
                 let config = {
@@ -93,7 +106,7 @@ const Staking = (props) => {
                 Axios.request(config)
                     .then((response) => {
                         if (response.data === "ok") {
-                            toast.success("Mine successfull!", {
+                            toast.success("Staking successfull!", {
                                 position: "top-right",
                                 autoClose: 1500,
                                 onClose: () => window.location.reload(),
@@ -125,23 +138,15 @@ const Staking = (props) => {
         // Add code to handle the purchase here
     };
 
+    const [periodSelected, setPeriodSelected] = useState(7);
+
     const handleChangeWalletType = (walletType) => {
-        console.log(walletType);
         setNetworkSelected(walletType);
     };
 
-    const formatNumber = (numberString) => {
-        // Parse the input to ensure it's a number
-        const number = parseFloat(numberString);
-
-        // Format the number with commas and two decimal places
-        const formattedNumber = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(number);
-
-        return formattedNumber;
-    };
+    const handleChangePeriod = (periodValue) => {
+        setPeriodSelected(periodValue);
+    }
 
     return (
         <div className="fadeIn">
@@ -152,19 +157,40 @@ const Staking = (props) => {
                             className="block text-white text-sm font-bold"
                             htmlFor="email"
                         >
-                            Staking Package
+                            Amount
                         </label>
                         <input
-                            className="bg-white text-dark shadow appearance-none   rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="bg-white text-dark shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="email"
                             type="number"
-                            min={0}
+                            min={1}
                             value={miningAmount}
                             onChange={e => { setMiningAmount(e.target.value) }}
                         />
                     </div>
 
-                    <div className="card-content-transaction mb-[20px]">
+                    <div className="card-content-transaction">
+                        <label
+                            className="block text-white text-sm font-bold"
+                            htmlFor="packageName"
+                        >
+                            Package
+                        </label>
+                        <select
+                            className=" shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="packageName"
+                            value={periodSelected}
+                            onChange={(e) => { handleChangePeriod(e.target.value) }}
+                        >
+                            {listPeriod.map((network, index) => (
+                                <option key={index} value={network.name}>
+                                    {network.name}days - {network.rate}/day
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="card-content-transaction ">
                         <label
                             className="block text-white text-sm font-bold"
                             htmlFor="packageName"
@@ -185,11 +211,28 @@ const Staking = (props) => {
                         </select>
                     </div>
 
+                    <div className="card-content-transaction mb-[20px]">
+                        <label
+                            className="block text-white text-sm font-bold"
+                            htmlFor="email"
+                        >
+                            Balance
+                        </label>
+                        <input
+                            className="bg-white text-dark shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="email"
+                            type="number"
+                            min={0}
+                            value={props.kaspaBalance}
+                            readOnly
+                            disabled
+                        />
+                    </div>
 
                 </div>
             </div>
             <div className="flex items-center justify-center">
-            <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Staking</button></div>
+                <button onClick={buyPackage} className="button-89 mt-[10px] mb-[20px] pt-[10px] pb-[20px]">Staking</button></div>
         </div>
     )
 };

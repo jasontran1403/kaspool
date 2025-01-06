@@ -60,6 +60,7 @@ const Home = () => {
     const [usdtWallet, setUsdtWallet] = useState("");
     const [bep20, setBep20] = useState("");
     const [connectedBalance, setConnectedBalance] = useState(0);
+    const [kaspaBalance, setKaspaBalance] = useState(0);
 
     useEffect(() => {
         let config = {
@@ -280,17 +281,7 @@ const Home = () => {
 
             {selectedCheckbox === 'down' && <Down 
                 selectedDownTab={selectedDownTab}
-                connectedBalance={111}
-                usdt={222}
-                bep20={333}
-                directCommission={444}
-                binaryCommission={555}
-                leaderCommission={666}
-                popCommission={777}
-                dailyReward={888}
-                transferWallet={999}
-                usdtWallet={101010}
-                kaspaWallet={121212}
+                kaspaBalance={kaspaBalance}
             />}
 
 
