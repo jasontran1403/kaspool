@@ -195,7 +195,7 @@ const MyStaking = ({
                               color="white"
                               className="font-normal"
                             >
-                              {remain} days left
+                              {remain}/{period}
                             </Typography>
                           </td>
                           <td className={classes}>
