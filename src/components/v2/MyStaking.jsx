@@ -190,6 +190,13 @@ const MyStaking = ({
                             >
                               {formatNumber(profit)}USDT
                             </Typography>
+                            <Typography
+                              variant="small"
+                              color="white"
+                              className="font-normal"
+                            >
+                              {remain} days left
+                            </Typography>
                           </td>
                           <td className={classes}>
                             <div
