@@ -52,7 +52,7 @@ const ModalContainer = styled(motion.div)`
   }
 
   @media (max-width: 768px) {
-    width: 100svw; // Adjust width for mobile
+    width: 80svw; // Adjust width for mobile
     height: auto; // Adjust height for mobile
     top: 50%;
     left: 50%;

@@ -157,7 +157,7 @@ const MyStaking = ({
                 </thead>
                 <tbody className="min-h-[20rem]">
                   {currentRows.map(
-                    ({ stakingCode, amount, date, status, period, remain }, index) => {
+                    ({ stakingCode, amount, date, status, period, remain, profit }, index) => {
                       const isLast = index === currentRows.length - 1;
                       const classes = isLast
                         ? "pt-2 pl-2 pr-2 border-b pb-2"
@@ -165,23 +165,6 @@ const MyStaking = ({
 
                       return (
                         <tr key={stakingCode}>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="white"
-                              className="font-normal cursor-pointer"
-                            >
-                              Staking
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="white"
-                              className="font-normal cursor-pointer"
-                              onClick={() => { handleCopy(stakingCode) }}
-                            >
-                              {shortenCode(stakingCode)}
-                            </Typography>
-                          </td>
                           <td className={classes}>
                             <Typography variant="small" color="white" className="font-normal">
                               {formatDate(date * 1000).time}
@@ -196,7 +179,16 @@ const MyStaking = ({
                               color="white"
                               className="font-normal"
                             >
-                              {formatNumber(amount)}
+                              {formatNumber(amount)}KAS
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="white"
+                              className="font-normal"
+                            >
+                              {formatNumber(profit)}USDT
                             </Typography>
                           </td>
                           <td className={classes}>

@@ -7,7 +7,7 @@ import MyStaking from "./MyStaking";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const TABLE_HEAD_MINING = ["Transaction", "Date", "Amount", "Process"];
+const TABLE_HEAD_MINING = ["Date", "Amount", "Profit", "Process"];
 
 const Down = (props) => {
     const [listTransaction, setListTransaction] = useState([]);
